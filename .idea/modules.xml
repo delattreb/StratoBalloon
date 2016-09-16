@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../PhotoBackup/.idea/PhotoBackup.iml" filepath="$PROJECT_DIR$/../PhotoBackup/.idea/PhotoBackup.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/StratoBalloon.iml" filepath="$PROJECT_DIR$/.idea/StratoBalloon.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../WebScrapper/.idea/WebScraper PodCast.iml" filepath="$PROJECT_DIR$/../WebScrapper/.idea/WebScraper PodCast.iml" />
     </modules>
   </component>
 </project>

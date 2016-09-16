@@ -15,11 +15,13 @@ from time import sleep
 
 from dal import dal_camera
 from lib import com_config
+from lib import com_logger
 
 
 def is_camera_plugged(fonction, *param, **param2):
     def not_plugged(self, *param, **param2):
-        print('Camera not plugged')
+        logger = com_logger.Logger('CAMERA')
+        logger.log.debug('Camera not plugged')
 
     if not PiCamera:
         return not_plugged
@@ -43,22 +45,22 @@ class Camera:
     @is_camera_plugged
     def __get_last_picture_id(self):
         d = dal_camera.DAL_Camera()
-        return d.getLastPictureId()
+        return d.get_last_picture_id()
 
     @is_camera_plugged
     def __set_last_picture_id(self, value):
         d = dal_camera.DAL_Camera()
-        d.setLastPictureId(value)
+        d.set_last_picture_id(value)
 
     @is_camera_plugged
     def __get_last_video_id(self):
         d = dal_camera.DAL_Camera()
-        return d.getLastVideoId()
+        return d.get_last_video_id()
 
     @is_camera_plugged
     def __set_last_video_id(self, value):
         d = dal_camera.DAL_Camera()
-        d.setLastPictureId(value)
+        d.set_last_picture_id(value)
 
     @is_camera_plugged
     def getPicture(self, path, textsize='', text=''):

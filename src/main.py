@@ -1,6 +1,6 @@
-from lib import com_camera, com_config, com_gpio    , com_lcd
+from lib import com_camera, com_config, com_gpio, com_lcd
 
-config = com_config.setConfig()
+#config = com_config.setConfig()
 
 c = com_camera.Camera()
 c.getPicture('', 10, 'text')

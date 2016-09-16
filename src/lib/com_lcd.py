@@ -7,6 +7,7 @@ Date : 12/08/2016
 from PIL import ImageFont
 
 from lib.com_ssd1306 import ssd1306
+from lib import com_logger
 
 try:
     from smbus import SMBus
@@ -22,7 +23,8 @@ STRONG_FONT = 2
 
 def is_smbus(fonction, *param, **param2):
     def not_present(self, *param, **param2):
-        print('SMBus not present')
+        logger = com_logger.Logger('LCD')
+        logger.log.debug('SMBus not present')
 
     if not SMBus:
         return not_present

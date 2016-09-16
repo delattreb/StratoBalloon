@@ -16,7 +16,8 @@ from lib import com_logger
 
 def is_gpio_plugged(fonction, *param, **param2):
     def not_plugged(self, *param, **param2):
-        print('GPIO not plugged')
+        logger = com_logger.Logger('GPIO')
+        logger.log.debug('GPIO not plugged')
 
     if not GPIOlib:
         return not_plugged
