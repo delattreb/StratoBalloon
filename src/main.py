@@ -1,4 +1,4 @@
-from lib import com_camera, com_config, com_gpio, com_lcd
+from lib import com_camera, com_config, com_gpio, com_lcd, com_logger
 
 #config = com_config.setConfig()
 
@@ -10,3 +10,12 @@ g.setmodeBOARD()
 
 lcd = com_lcd.LCD()
 lcd.rectangle(0, 0, lcd.width_max, 63)
+
+log = com_logger.Logger('toto')
+
+
+
+log2 = com_logger.Logger('toto2')
+
+
+
