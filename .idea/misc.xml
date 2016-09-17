@@ -12,6 +12,17 @@
   </component>
   <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.5.2 (C:\Python35\python.exe)" project-jdk-type="Python SDK" />
   <component name="SvnBranchConfigurationManager">
+    <option name="myConfigurationMap">
+      <map>
+        <entry key="$PROJECT_DIR$/../Backup/WebScraper Podcast">
+          <value>
+            <SvnBranchConfiguration>
+              <option name="trunkUrl" value="svn://mycube.dscloud.me/repository/developpement/python/WebScraper%20Podcast" />
+            </SvnBranchConfiguration>
+          </value>
+        </entry>
+      </map>
+    </option>
     <option name="mySupportsUserInfoFilter" value="true" />
   </component>
 </project>
