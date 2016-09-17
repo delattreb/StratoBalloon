@@ -20,7 +20,7 @@ def is_plugged(function):
 
     if not GPIOlib:
         logger = com_logger.Logger('GPIO')
-        logger.log.debug('GPIO not present')
+        logger.log.warning('GPIO not present')
 
     return plugged
 
