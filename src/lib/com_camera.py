@@ -23,7 +23,7 @@ def is_plugged(function):
 
     if not PiCamera:
         logger = com_logger.Logger('CAMERA')
-        logger.log.debug('Camera not plugged')
+        logger.log.warning('Camera not plugged')
 
     return plugged
 
