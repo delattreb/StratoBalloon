@@ -23,7 +23,7 @@ def is_plugged(function):
 
     if not PiCamera:
         logger = com_logger.Logger('CAMERA')
-        logger.log.debug('Camera not plugged')
+        logger.log.warning('Camera not plugged')
 
     return plugged
 
@@ -67,9 +67,9 @@ class Camera:
 
     def __set_last_video_id(self, value):
         d = dal_camera.DAL_Camera()
-        d.set_last_picture_id(value)
+        d.set_last_video_id(value)
 
-    def getPicture(self, path):
+    def getPicture(self, path: str):
         if PiCamera != None:
             id = self.__get_last_picture_id()
             name = path + self.imgName + str(id) + '.jpg'
@@ -78,7 +78,7 @@ class Camera:
             logger = com_logger.Logger('CAMERA')
             logger.log.debug('Picture taken:' + name)
 
-    def getVideo(self, duration, path):
+    def getVideo(self, duration: int, path: str):
         if PiCamera != None:
             id = self.__get_last_video_id()
             name = path + self.vidName + str(id) + '.h264'
