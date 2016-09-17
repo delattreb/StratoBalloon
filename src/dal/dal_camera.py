@@ -31,7 +31,7 @@ class DAL_Camera(com_sqlite.SQLite):
 
     def set_last_picture_id(self, value):
         try:
-            self.cursor.execute('UPDATE camera SET id_picture = ' + value)
+            self.cursor.execute('UPDATE camera SET id_picture = "' + str(value) + '"')
             self.connection.commit()
         except:
             self.connection.rollback()

@@ -18,22 +18,17 @@ def setConfig():
     config['LOGGER']['level'] = '10'
     # Info: DEBUG=10 INFO= 20 WARNING=30 ERROR=40 #CRITICAL=50
 
-    # EMAIL
-    config['EMAIL'] = {}
-    config['EMAIL']['from'] = 'delattreb@gmail.com'
-    config['EMAIL']['to'] = 'delattreb@gmail.com'
-    config['EMAIL']['password'] = '!KillBill100!'
-    config['EMAIL']['username'] = 'delattreb'
-
     # SQLite
     config['SQLITE'] = {}
     config['SQLITE']['database'] = 'database.db'
 
     # Camera
     config['CAMERA'] = {}
-    config['CAMERA']['resolution_x'] = '2592'
-    config['CAMERA']['resolution_y'] = '1944'
-    config['CAMERA']['framerate'] = '30'
+    config['CAMERA']['pic_resolution_x'] = '3280'
+    config['CAMERA']['pic_resolution_y'] = '2464'
+    config['CAMERA']['vid_resolution_x'] = '1920'
+    config['CAMERA']['vid_resolution_y'] = '1080'
+    config['CAMERA']['framerate'] = '10'
     config['CAMERA']['rotation'] = '0'
     config['CAMERA']['brightness'] = '0'
     config['CAMERA']['contrast'] = '0'
@@ -42,7 +37,7 @@ def setConfig():
 
     # Directory
     config['DIRECTORY'] = {}
-    config['DIRECTORY']['picture_path'] = 'c:\\'
+    config['DIRECTORY']['picture_path'] = 'home/pi'
 
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     db_path = os.path.join(BASE_DIR, config_file)

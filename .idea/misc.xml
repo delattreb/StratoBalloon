@@ -11,7 +11,7 @@
     <ConfirmationsSetting value="0" id="Remove" />
   </component>
   <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.5.2 (C:\Python35\python.exe)" project-jdk-type="Python SDK" />
-  <component name="SvnConfiguration">
-    <configuration>C:\Users\Bruno\AppData\Roaming\Subversion</configuration>
+  <component name="SvnBranchConfigurationManager">
+    <option name="mySupportsUserInfoFilter" value="true" />
   </component>
 </project>

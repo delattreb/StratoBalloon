@@ -1,21 +1,9 @@
-from lib import com_camera, com_config, com_gpio, com_lcd, com_logger
+from lib import com_camera
 
-#config = com_config.setConfig()
+# config = com_config.setConfig()
 
-c = com_camera.Camera()
-c.getPicture('', 10, 'text')
+# p = com_camera.Camera('PICTURE')
+# p.getPicture('/home/pi/StratoBalloon/src/')
 
-g = com_gpio.GPIO()
-g.setmodeBOARD()
-
-lcd = com_lcd.LCD()
-lcd.rectangle(0, 0, lcd.width_max, 63)
-
-log = com_logger.Logger('toto')
-
-
-
-log2 = com_logger.Logger('toto2')
-
-
-
+v = com_camera.Camera('VIDEO')
+v.getVideo(10, '/home/pi/')
