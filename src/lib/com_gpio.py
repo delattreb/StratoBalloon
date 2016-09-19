@@ -4,8 +4,6 @@ Auteur: Bruno DELATTRE
 Date : 07/08/2016
 """
 
-# TODO ATTENTION : l'import de la lib GPIO et l'exploitation doivent se faire en mode ROOT (sudo du script)
-
 try:
     from RPi import GPIO as GPIOlib
 except:
@@ -28,7 +26,16 @@ def is_plugged(function):
 class GPIO:
     @is_plugged
     def __init__(self, name='', file=''):
-        self.logger = com_logger.Logger(name, file)
+        if GPIOlib != None:
+            self.IN = GPIOlib.IN
+            self.OUT = GPIOlib.OUT
+            self.LOW = GPIOlib.LOW
+            self.HIGH = GPIOlib.HIGH
+            self.PUD_UP = GPIOlib.PUD_UP
+            self.PUD_DOWN = GPIOlib.PUD_DOWN
+            self.RISING = GPIOlib.RISING
+
+            self.logger = com_logger.Logger(name, file)
 
     def setmodeBOARD(self):
         if GPIOlib != None:
@@ -48,6 +55,7 @@ class GPIO:
     def setupIO(self, IO_number, mode):
         if GPIOlib != None:
             GPIOlib.setup(IO_number, mode)
+
             self.logger.log.debug('setupIO')
             # GPIOlib.setup(12, GPIOlib.IN)                    # broche 12 est une entree numerique
             # GPIOlib.setup(12, GPIOlib.OUT)                   # broche 12 est une sortie numerique
@@ -61,11 +69,7 @@ class GPIO:
     def setIO(self, IO_number, state):
         if GPIOlib != None:
             self.logger.log.debug('setIO')
-            # TODO vérifier la valeur de la constante LOW et HIGH peut etre 0 ou 1
-            if state == 0:
-                GPIOlib.output(IO_number, GPIOlib.LOW)
-            if state == 1:
-                GPIOlib.output(IO_number, GPIOlib.HIGH)
+            GPIOlib.output(IO_number, state)
 
     def switchIO(self, IO_number):
         if GPIOlib != None:
@@ -100,6 +104,11 @@ class GPIO:
             # Pour information, une résistance de pull-up ou de pull-down a pour but d'éviter de laisser une entrée ou une sortie dans un état incertain, en forçant une connexion à la masse ou à un potentiel donné.
             GPIOlib.setup(IO_number, GPIOlib.IN, pull_up_down=GPIOlib.PUD_UP)
             GPIOlib.setup(IO_number, GPIOlib.IN, pull_up_down=GPIOlib.PUD_DOWN)
+
+    def setup(self, IO_number, mode, pud=5):
+        if GPIOlib != None:
+            self.logger.log.debug('pull')
+            GPIOlib.setup(IO_number, mode, pud)
 
     def wait_edge(self, IO_number):
         if GPIOlib != None:

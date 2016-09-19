@@ -1,6 +1,7 @@
 from dal import dal_dht11
 from lib import com_config, com_logger
-from threading import thread_acquisition_camera
+
+from lib import com_gpio
 
 # config = com_config.setConfig()
 config = com_config.getConfig()
@@ -13,4 +14,8 @@ logger.log.info('Application start')
 
 logger.log.info('Application stop')
 
+gpio = com_gpio.GPIO()
+gpio.setmodeBCM()
+gpio.setupIO(25,gpio.IN)
+print(gpio.getIO(25))
 
