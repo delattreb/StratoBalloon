@@ -11,16 +11,17 @@ from lib import com_camera, com_logger
 
 
 class ThreadAcquisitionCamera(threading.Thread):
-    def __init__(self, name, counter):
+    def __init__(self, name, delay, counter):
         threading.Thread.__init__(self)
         self.name = name
         self.counter = counter
+        self.delay = delay
         self.exitFlag = 0
 
     def run(self):
         logger = com_logger.Logger('Camera Thread')
         logger.log.info('Start')
-        self.getPicture(self.name, self.counter, 10)
+        self.getPicture(self.name, self.delay, self.counter)
         logger.log.info('Stop')
 
     def getPicture(self, threadName, delay, counter):
