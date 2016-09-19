@@ -13,6 +13,7 @@ config_file = "config/config.ini"
 def setConfig():
     config = configparser.ConfigParser()
 
+    # region Config
     # LOGGER
     config['LOGGER'] = {}
     config['LOGGER']['level'] = '10'
@@ -28,16 +29,26 @@ def setConfig():
     config['CAMERA']['pic_resolution_y'] = '2464'
     config['CAMERA']['vid_resolution_x'] = '1920'
     config['CAMERA']['vid_resolution_y'] = '1080'
-    config['CAMERA']['framerate'] = '10'
+    config['CAMERA']['framerate'] = '30'
     config['CAMERA']['rotation'] = '0'
     config['CAMERA']['brightness'] = '0'
     config['CAMERA']['contrast'] = '0'
     config['CAMERA']['image_effect'] = ''
     config['CAMERA']['exposure_mode'] = ''
 
+    # GPIO
+    config['GPIO'] = {}
+    config['GPIO']['DHT11_INTERIOR'] = '14'
+    config['GPIO']['DHT11_INTERIOR_delay'] = '10'
+    config['GPIO']['DHT11_INTERIOR_nb'] = '5'
+    config['GPIO']['DHT11_EXTERIOR'] = '15'
+    config['GPIO']['DHT11_EXTERIOR_delay'] = '10'
+    config['GPIO']['DHT11_EXTERIOR_nb'] = '5'
+
     # Directory
     config['DIRECTORY'] = {}
     config['DIRECTORY']['picture_path'] = 'home/pi'
+    # endregion
 
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     db_path = os.path.join(BASE_DIR, config_file)
