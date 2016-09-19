@@ -72,9 +72,9 @@ class GPIO:
             self.logger.log.debug('switchIO')
             GPIOlib.output(IO_number, not self.getIO(IO_number))
 
-    def getsetupIO(self, IO_number):
+    def getSetupIO(self, IO_number):
         if GPIOlib != None:
-            self.logger.log.debug('getsetupIO')
+            self.logger.log.debug('getSetupIO')
             # On peut interroger l'E/S afin de connaître son état de configuration.
             # Les valeurs renvoyées sont alors GPIOlib.INPUT, GPIOlib.OUTPUT, GPIOlib.SPI, GPIOlib.I2C, GPIOlib.HARD_PWM, GPIOlib.SERIAL ou GPIOlib.UNKNOWN.
             return GPIOlib.gpio_function(IO_number)

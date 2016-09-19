@@ -13,3 +13,8 @@ camera_thread = thread_acquisition_camera.ThreadAcquisitionCamera("Camera Thread
 camera_thread.start()
 
 logger.log.info('Application stop')
+
+
+#TODO test GPIO sans thread au début
+# TODO log temperature humidité dans une base
+
