@@ -14,11 +14,7 @@ try:
 except:
     SMBus = None
 
-# Constant
-GAUGE_INTERIOR = 2
-SMALL_FONT = 0
-DEFAULT_FONT = 1
-STRONG_FONT = 2
+
 
 
 def is_plugged(function):
@@ -38,6 +34,11 @@ class LCD:
 
     @is_plugged
     def __init__(self):
+        # Constant
+        self.SMALL_FONT = 0
+        self.DEFAULT_FONT = 1
+        self.STRONG_FONT = 2
+        self.GAUGE_INTERIOR = 2
         if SMBus != None:
             self.oled = ssd1306(SMBus(1))
 
@@ -45,21 +46,21 @@ class LCD:
             self.height_max = self.oled.height
 
             # Font
-            self.bigFont = ImageFont.truetype('lib/font/FreeSans.ttf', 18)
-            self.defaultFont = ImageFont.truetype('lib/font/FreeSans.ttf', 13)
-            self.smallFont = ImageFont.truetype('lib/font/FreeSans.ttf', 12)
+            self.__bigFont = ImageFont.truetype('lib/font/FreeSans.ttf', 18)
+            self.__defaultFont = ImageFont.truetype('lib/font/FreeSans.ttf', 13)
+            self.__smallFont = ImageFont.truetype('lib/font/FreeSans.ttf', 12)
 
     def text(self, x, y, text, fontHeight):
         if SMBus != None:
             draw = self.oled.canvas
-            if fontHeight == SMALL_FONT:
-                draw.text((x, y), text, font=self.smallFont, fill=1)
+            if fontHeight == self.SMALL_FONT:
+                draw.text((x, y), text, font=self.__smallFont, fill=1)
 
-            if fontHeight == DEFAULT_FONT:
-                draw.text((x, y), text, font=self.defaultFont, fill=1)
+            if fontHeight == self.DEFAULT_FONT:
+                draw.text((x, y), text, font=self.__defaultFont, fill=1)
 
-            if fontHeight == STRONG_FONT:
-                draw.text((x, y), text, font=self.bigFont, fill=1)
+            if fontHeight == self.STRONG_FONT:
+                draw.text((x, y), text, font=self.__bigFont, fill=1)
 
     def rectangle(self, x, y, width, height):
         if SMBus != None:
@@ -69,8 +70,8 @@ class LCD:
         if SMBus != None:
             # exterior gauge
             self.oled.canvas.rectangle((x, y, x + width, y + height), outline=1, fill=0)
-            cal = round((((width - GAUGE_INTERIOR) * value) / max_value), 0)
+            cal = round((((width - self.GAUGE_INTERIOR) * value) / max_value), 0)
             # interior
             self.oled.canvas.rectangle(
-                (x + (GAUGE_INTERIOR / 2), y + (GAUGE_INTERIOR / 2), (x + (GAUGE_INTERIOR / 2) + cal), (y + height) - (GAUGE_INTERIOR / 2)),
+                (x + (self.GAUGE_INTERIOR / 2), y + (self.GAUGE_INTERIOR / 2), (x + (self.GAUGE_INTERIOR / 2) + cal), (y + height) - (self.GAUGE_INTERIOR / 2)),
                 outline=0, fill=1)

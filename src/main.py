@@ -1,11 +1,20 @@
 from acquisition import thread_acquisition_camera, thread_acquisition_dht11
-from lib import com_config, com_logger
+from lib import com_config, com_lcd, com_logger
 
 com_config.setConfig()
 config = com_config.getConfig()
 
 logger = com_logger.Logger()
 logger.log.info('Application start')
+
+lcd = com_lcd.LCD()
+
+# Init version etc...
+lcd.rectangle(0, 0, lcd.width_max - 1, lcd.height_max - 1)
+lcd.text(3, 1, 'Strato Balloon', lcd.SMALL_FONT)
+lcd.text(3, 14, 'v1.0.0', lcd.SMALL_FONT)
+
+lcd.oled.display()
 
 # Create new threads
 camera_thread = thread_acquisition_camera.ThreadAcquisitionCamera("Camera Thread", int(config['CAMERA']['delay']), int(config['CAMERA']['nb']))
