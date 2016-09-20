@@ -72,7 +72,7 @@ class DHT11:
             # calculate checksum and check
             checksum = self.__calculate_checksum(the_bytes)
             if the_bytes[4] != checksum:
-                logger.log.debug('DHT11 Checksum ERROR')
+                logger.log.debug('Checksum ERROR')
                 return DHT11Result(DHT11Result.ERR_CRC, 0, 0)
 
             dht11 = dal_dht11.DAL_DHT11()

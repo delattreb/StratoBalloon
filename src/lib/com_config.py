@@ -42,9 +42,9 @@ def setConfig():
     config['GPIO'] = {}
     config['GPIO']['DHT11_INTERIOR_PORT'] = '25'
     config['GPIO']['DHT11_EXTERIOR_PORT'] = '24'
-    config['GPIO']['DHT11_INTERIOR_delay'] = '2'
+    config['GPIO']['DHT11_INTERIOR_delay'] = '15'
     config['GPIO']['DHT11_INTERIOR_nb'] = '30'
-    config['GPIO']['DHT11_EXTERIOR_delay'] = '2'
+    config['GPIO']['DHT11_EXTERIOR_delay'] = '15'
     config['GPIO']['DHT11_EXTERIOR_nb'] = '30'
 
     # Directory
