@@ -27,7 +27,7 @@ def is_plugged(function):
 
     if not SMBus:
         logger = com_logger.Logger('LCD')
-        logger.log.debug('LCD not present')
+        logger.log.warning('LCD not present')
 
     return plugged
 
