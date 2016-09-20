@@ -4,13 +4,14 @@ Auteur: Bruno DELATTRE
 Date : 17/09/2016
 """
 
-import threading
+import datetime
 import time
 
-from lib import com_camera, com_logger
+import threading
+from lib import com_dht11, com_logger, com_config
 
 
-class ThreadAcquisitionCamera(threading.Thread):
+class ThreadAcquisitionDHT11(threading.Thread):
     def __init__(self, name, delay, counter):
         threading.Thread.__init__(self)
         self.name = name
@@ -19,16 +20,17 @@ class ThreadAcquisitionCamera(threading.Thread):
         self.exitFlag = 0
 
     def run(self):
-        logger = com_logger.Logger('Camera Thread')
+        logger = com_logger.Logger('DHT11 Thread')
         logger.log.info('Start')
-        self.getPicture(self.name, self.delay, self.counter)
+        self.getdht11(self.name, self.delay, self.counter)
         logger.log.info('Stop')
 
-    def getPicture(self, threadName, delay, counter):
-        camera = com_camera.Camera('PICTURE')
+    def getdht11(self, threadName, delay, counter):
+        config = com_config.getConfig()
+        instance = com_dht11.DHT11(int(config['GPIO']['DHT11_INTERIOR_PORT']))
         while counter:
             if self.exitFlag:
                 threadName.exit()
             time.sleep(delay)
-            camera.getPicture('/home/pi/')
+            result = instance.read(self.name)
             counter -= 1

@@ -105,7 +105,7 @@ class GPIO:
             GPIOlib.setup(IO_number, GPIOlib.IN, pull_up_down=GPIOlib.PUD_UP)
             GPIOlib.setup(IO_number, GPIOlib.IN, pull_up_down=GPIOlib.PUD_DOWN)
 
-    def setup(self, IO_number, mode, pud=5):
+    def setup(self, IO_number, mode, pud=GPIOlib.PUD_UP):
         if GPIOlib != None:
             self.logger.log.debug('pull')
             GPIOlib.setup(IO_number, mode, pud)

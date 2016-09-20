@@ -18,10 +18,11 @@ class DAL_DHT11(com_sqlite.SQLite):
 
     """ Insert """
 
-    def set_dht11(self, date, temperature, humidity):
+    def set_dht11(self, date, name, temperature, humidity):
         try:
             self.cursor.execute(
-                'INSERT INTO  DHT11 (date, temperature, humidity) VALUES ("' + str(date) + '","' + str(temperature) + '","' + str(humidity) + '")')
+                'INSERT INTO  DHT11 (date, name, temperature, humidity) VALUES ("' + str(date) + '","' + str(name) + '","' + str(temperature) + '","' + str(
+                    humidity) + '")')
             self.connection.commit()
         except:
             self.connection.rollback()

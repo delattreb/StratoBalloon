@@ -35,19 +35,21 @@ def setConfig():
     config['CAMERA']['contrast'] = '0'
     config['CAMERA']['image_effect'] = ''
     config['CAMERA']['exposure_mode'] = ''
+    config['CAMERA']['delay'] = '5'
+    config['CAMERA']['nb'] = '3'
 
     # GPIO
     config['GPIO'] = {}
-    config['GPIO']['DHT11_INTERIOR'] = '14'
-    config['GPIO']['DHT11_INTERIOR_delay'] = '10'
-    config['GPIO']['DHT11_INTERIOR_nb'] = '5'
-    config['GPIO']['DHT11_EXTERIOR'] = '15'
-    config['GPIO']['DHT11_EXTERIOR_delay'] = '10'
-    config['GPIO']['DHT11_EXTERIOR_nb'] = '5'
+    config['GPIO']['DHT11_INTERIOR_PORT'] = '25'
+    config['GPIO']['DHT11_EXTERIOR_PORT'] = '24'
+    config['GPIO']['DHT11_INTERIOR_delay'] = '2'
+    config['GPIO']['DHT11_INTERIOR_nb'] = '30'
+    config['GPIO']['DHT11_EXTERIOR_delay'] = '2'
+    config['GPIO']['DHT11_EXTERIOR_nb'] = '30'
 
     # Directory
     config['DIRECTORY'] = {}
-    config['DIRECTORY']['picture_path'] = 'home/pi'
+    config['DIRECTORY']['picture_path'] = '/home/pi/'
     # endregion
 
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))

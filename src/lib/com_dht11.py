@@ -1,9 +1,12 @@
+import datetime
 import time
 
 try:
     from RPi import GPIO as GPIOlib
 except:
     GPIOlib = None
+from lib import com_logger
+from dal import dal_dht11
 
 
 class DHT11Result:
@@ -35,7 +38,7 @@ class DHT11:
             self.__pin = pin
             GPIOlib.setmode(GPIOlib.BCM)
 
-    def read(self):
+    def read(self, name):
         if GPIOlib != None:
             GPIOlib.setup(self.__pin, GPIOlib.OUT)
 
@@ -64,10 +67,18 @@ class DHT11:
             # we have the bits, calculate bytes
             the_bytes = self.__bits_to_bytes(bits)
 
+            logger = com_logger.Logger(name)
+
             # calculate checksum and check
             checksum = self.__calculate_checksum(the_bytes)
             if the_bytes[4] != checksum:
+                logger.log.debug('DHT11 Checksum ERROR')
                 return DHT11Result(DHT11Result.ERR_CRC, 0, 0)
+
+            dht11 = dal_dht11.DAL_DHT11()
+            dht11.set_dht11(str(datetime.datetime.now()), name, str(the_bytes[2]), str(the_bytes[0]))
+
+            logger.log.debug('Temperature:' + str(the_bytes[2]) + ' Humidity:' + str(the_bytes[0]))
 
             # ok, we have valid data, return it
             return DHT11Result(DHT11Result.ERR_NO_ERROR, the_bytes[2], the_bytes[0])
