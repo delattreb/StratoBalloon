@@ -67,7 +67,7 @@ class DHT11:
             # we have the bits, calculate bytes
             the_bytes = self.__bits_to_bytes(bits)
 
-            logger = com_logger.Logger(name)
+            logger = com_logger.Logger('DHT11 ' + name)
 
             # calculate checksum and check
             checksum = self.__calculate_checksum(the_bytes)
