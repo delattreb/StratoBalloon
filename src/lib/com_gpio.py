@@ -40,7 +40,7 @@ class GPIO:
     def setmodeBOARD(self):
         if GPIOlib != None:
             GPIOlib.setmode(GPIOlib.BOARD)
-            self.logger.log.debug('setMode')
+            # self.logger.log.debug('setMode')
 
     def setmodeBCM(self):
         if GPIOlib != None:
@@ -55,42 +55,38 @@ class GPIO:
     def setupIO(self, IO_number, mode):
         if GPIOlib != None:
             GPIOlib.setup(IO_number, mode)
-
-            self.logger.log.debug('setupIO')
-            # GPIOlib.setup(12, GPIOlib.IN)                    # broche 12 est une entree numerique
-            # GPIOlib.setup(12, GPIOlib.OUT)                   # broche 12 est une sortie numerique
-            # GPIOlib.setup(12, GPIOlib.OUT, initial=GPIOlib.HIGH)# broche 12 est une sortie initialement a l'etat haut*
+            # self.logger.log.debug('setupIO')
 
     def getIO(self, IO_number):
         if GPIOlib != None:
-            self.logger.log.debug('getIO')
+            # self.logger.log.debug('getIO')
             return GPIOlib.input(IO_number)
 
     def setIO(self, IO_number, state):
         if GPIOlib != None:
-            self.logger.log.debug('setIO')
+            # self.logger.log.debug('setIO')
             GPIOlib.output(IO_number, state)
 
     def switchIO(self, IO_number):
         if GPIOlib != None:
-            self.logger.log.debug('switchIO')
+            # self.logger.log.debug('switchIO')
             GPIOlib.output(IO_number, not self.getIO(IO_number))
 
     def getSetupIO(self, IO_number):
         if GPIOlib != None:
-            self.logger.log.debug('getSetupIO')
+            # self.logger.log.debug('getSetupIO')
             # On peut interroger l'E/S afin de connaître son état de configuration.
             # Les valeurs renvoyées sont alors GPIOlib.INPUT, GPIOlib.OUTPUT, GPIOlib.SPI, GPIOlib.I2C, GPIOlib.HARD_PWM, GPIOlib.SERIAL ou GPIOlib.UNKNOWN.
             return GPIOlib.gpio_function(IO_number)
 
     def cleanup(self):
         if GPIOlib != None:
-            self.logger.log.debug('cleanup')
+            # self.logger.log.debug('cleanup')
             GPIOlib.cleanup()
 
     def PWM(self, IO_number, frequence, rapport_cyclique, nouveau_rapport_cyclique, nouvelle_frequence):
         if GPIOlib != None:
-            self.logger.log.debug('PWM')
+            # self.logger.log.debug('PWM')
             p = GPIOlib.PWM(IO_number, frequence)
             p.start(rapport_cyclique)  # ici, rapport_cyclique vaut entre 0.0 et 100.0
             p.ChangeFrequency(nouvelle_frequence)
@@ -99,20 +95,25 @@ class GPIO:
 
     def pull(self, IO_number):
         if GPIOlib != None:
-            self.logger.log.debug('pull')
+            # self.logger.log.debug('pull')
             # Afin d'éviter de laisser flottante toute entrée, il est possible de connecter des résistances de pull-up ou de pull-down, au choix, en interne.
             # Pour information, une résistance de pull-up ou de pull-down a pour but d'éviter de laisser une entrée ou une sortie dans un état incertain, en forçant une connexion à la masse ou à un potentiel donné.
             GPIOlib.setup(IO_number, GPIOlib.IN, pull_up_down=GPIOlib.PUD_UP)
             GPIOlib.setup(IO_number, GPIOlib.IN, pull_up_down=GPIOlib.PUD_DOWN)
 
-    def setup(self, IO_number, mode, pud=GPIOlib.PUD_UP):
+    def setup(self, IO_number, mode):
         if GPIOlib != None:
-            self.logger.log.debug('pull')
+            self.logger.log.debug('setup:' + 'IO:' + str(IO_number) + ' Mode:' + str(mode))
+            GPIOlib.setup(IO_number, mode)
+
+    def setuppud(self, IO_number, mode, pud):
+        if GPIOlib != None:
+            self.logger.log.debug('setup')
             GPIOlib.setup(IO_number, mode, pud)
 
     def wait_edge(self, IO_number):
         if GPIOlib != None:
-            self.logger.log.debug('wait_edge')
+            # self.logger.log.debug('wait_edge')
             # La première consiste à bloquer l'exécution du programme jusqu'à ce que l'événement se produise.
             return GPIOlib.wait_for_edge(IO_number, GPIOlib.RISING)
 
@@ -138,21 +139,3 @@ class GPIO:
     def remove_callBack(self, IO_number):
         if GPIOlib != None:
             GPIOlib.remove_event_detect(IO_number)
-
-    # TODO a supprimer
-    """
-    setmodeBOARD()
-    print("GPIOlib MODE: " + str(getmode()))
-    print("mode in:" + str(GPIOlib.IN))
-    setupIO(12, GPIOlib.IN)
-    print("get: " + str(getIO(12)))
-    print("get mode: " + str(getsetupIO(12)))
-
-    print("")
-    print("mode out:" + str(GPIOlib.OUT))
-    setupIO(12, GPIOlib.OUT)
-    print("get: " + str(getIO(12)))
-    print("get mode: " + str(getsetupIO(12)))
-
-    cleanup()
-    """

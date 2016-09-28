@@ -40,13 +40,21 @@ def setConfig():
 
     # GPIO
     config['GPIO'] = {}
+    #DHT11 interior
     config['GPIO']['DHT11_INTERIOR_PORT'] = '24'
     config['GPIO']['DHT11_INTERIOR_delay'] = '15'
     config['GPIO']['DHT11_INTERIOR_nb'] = '30'
-
+    #DHT11 exterior
     config['GPIO']['DHT11_EXTERIOR_PORT'] = '25'
     config['GPIO']['DHT11_EXTERIOR_delay'] = '15'
     config['GPIO']['DHT11_EXTERIOR_nb'] = '30'
+
+    #SR04
+    config['GPIO']['SR04_triger_port'] = '17'
+    config['GPIO']['SR04_echo_port'] = '27'
+    config['GPIO']['SR04_delay'] = '1'
+    config['GPIO']['SR04_nb'] = '60'
+
 
     # Directory
     config['DIRECTORY'] = {}

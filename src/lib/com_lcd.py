@@ -15,8 +15,6 @@ except:
     SMBus = None
 
 
-
-
 def is_plugged(function):
     def plugged(*original_args, **original_kwargs):
         return function(*original_args, **original_kwargs)
@@ -49,6 +47,10 @@ class LCD:
             self.__bigFont = ImageFont.truetype('lib/font/FreeSans.ttf', 18)
             self.__defaultFont = ImageFont.truetype('lib/font/FreeSans.ttf', 13)
             self.__smallFont = ImageFont.truetype('lib/font/FreeSans.ttf', 12)
+
+    def display(self):
+        if SMBus != None:
+            self.oled.display()
 
     def text(self, x, y, text, fontHeight):
         if SMBus != None:

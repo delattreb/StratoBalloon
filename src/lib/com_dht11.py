@@ -1,12 +1,8 @@
 import datetime
 import time
 
-try:
-    from RPi import GPIO as GPIOlib
-except:
-    GPIOlib = None
-from lib import com_logger
 from dal import dal_dht11
+from lib import com_gpio, com_logger
 
 
 class DHT11Result:
@@ -23,68 +19,64 @@ class DHT11Result:
         self.temperature = temperature
         self.humidity = humidity
 
-    def is_valid(self):
-        if GPIOlib != None:
-            return self.error_code == DHT11Result.ERR_NO_ERROR
-        else:
-            return 0
-
 
 class DHT11:
     __pin = 0
 
     def __init__(self, pin):
-        if GPIOlib != None:
-            self.__pin = pin
-            GPIOlib.setmode(GPIOlib.BCM)
+        self.__pin = pin
+        self.gpio = com_gpio.GPIO('DTH11')
+        self.gpio.setmodeBCM()
+
+    def __delete__(self, instance):
+        self.gpio.cleanup()
 
     def read(self, name):
-        if GPIOlib != None:
-            GPIOlib.setup(self.__pin, GPIOlib.OUT)
+        self.gpio.setup(self.__pin, self.gpio.OUT)
 
-            # send initial high
-            self.__send_and_sleep(GPIOlib.HIGH, 0.05)
+        # send initial high
+        self.__send_and_sleep(self.gpio.HIGH, 0.05)
 
-            # pull down to low
-            self.__send_and_sleep(GPIOlib.LOW, 0.02)
+        # pull down to low
+        self.__send_and_sleep(self.gpio.LOW, 0.02)
 
-            # change to input using pull up
-            GPIOlib.setup(self.__pin, GPIOlib.IN, GPIOlib.PUD_UP)
+        # change to input using pull up
+        self.gpio.setuppud(self.__pin, self.gpio.IN, self.gpio.PUD_UP)
 
-            # collect data into an array
-            data = self.__collect_input()
+        # collect data into an array
+        data = self.__collect_input()
 
-            # parse lengths of all data pull up periods
-            pull_up_lengths = self.__parse_data_pull_up_lengths(data)
+        # parse lengths of all data pull up periods
+        pull_up_lengths = self.__parse_data_pull_up_lengths(data)
 
-            # if bit count mismatch, return error (4 byte data + 1 byte checksum)
-            if len(pull_up_lengths) != 40:
-                return DHT11Result(DHT11Result.ERR_MISSING_DATA, 0, 0)
+        # if bit count mismatch, return error (4 byte data + 1 byte checksum)
+        if len(pull_up_lengths) != 40:
+            return DHT11Result(DHT11Result.ERR_MISSING_DATA, 0, 0)
 
-            # calculate bits from lengths of the pull up periods
-            bits = self.__calculate_bits(pull_up_lengths)
+        # calculate bits from lengths of the pull up periods
+        bits = self.__calculate_bits(pull_up_lengths)
 
-            # we have the bits, calculate bytes
-            the_bytes = self.__bits_to_bytes(bits)
+        # we have the bits, calculate bytes
+        the_bytes = self.__bits_to_bytes(bits)
 
-            logger = com_logger.Logger('DHT11 ' + name)
+        logger = com_logger.Logger('DHT11 ' + name)
 
-            # calculate checksum and check
-            checksum = self.__calculate_checksum(the_bytes)
-            if the_bytes[4] != checksum:
-                logger.log.debug('Checksum ERROR')
-                return DHT11Result(DHT11Result.ERR_CRC, 0, 0)
+        # calculate checksum and check
+        checksum = self.__calculate_checksum(the_bytes)
+        if the_bytes[4] != checksum:
+            logger.log.debug('Checksum ERROR')
+            return DHT11Result(DHT11Result.ERR_CRC, 0, 0)
 
-            dht11 = dal_dht11.DAL_DHT11()
-            dht11.set_dht11(str(datetime.datetime.now()), name, str(the_bytes[2]), str(the_bytes[0]))
+        dht11 = dal_dht11.DAL_DHT11()
+        dht11.set_dht11(str(datetime.datetime.now()), name, str(the_bytes[2]), str(the_bytes[0]))
 
-            logger.log.debug('Temperature:' + str(the_bytes[2]) + ' Humidity:' + str(the_bytes[0]))
+        logger.log.debug('Temperature:' + str(the_bytes[2]) + ' Humidity:' + str(the_bytes[0]))
 
-            # ok, we have valid data, return it
-            return DHT11Result(DHT11Result.ERR_NO_ERROR, the_bytes[2], the_bytes[0])
+        # ok, we have valid data, return it
+        return DHT11Result(DHT11Result.ERR_NO_ERROR, the_bytes[2], the_bytes[0])
 
     def __send_and_sleep(self, output, sleep):
-        GPIOlib.output(self.__pin, output)
+        self.gpio.setIO(self.__pin, output)
         time.sleep(sleep)
 
     def __collect_input(self):
@@ -97,7 +89,7 @@ class DHT11:
         last = -1
         data = []
         while True:
-            current = GPIOlib.input(self.__pin)
+            current = self.gpio.getIO(self.__pin)
             data.append(current)
             if last != current:
                 unchanged_count = 0
@@ -127,28 +119,28 @@ class DHT11:
             current_length += 1
 
             if state == STATE_INIT_PULL_DOWN:
-                if current == GPIOlib.LOW:
+                if current == self.gpio.LOW:
                     # ok, we got the initial pull down
                     state = STATE_INIT_PULL_UP
                     continue
                 else:
                     continue
             if state == STATE_INIT_PULL_UP:
-                if current == GPIOlib.HIGH:
+                if current == self.gpio.HIGH:
                     # ok, we got the initial pull up
                     state = STATE_DATA_FIRST_PULL_DOWN
                     continue
                 else:
                     continue
             if state == STATE_DATA_FIRST_PULL_DOWN:
-                if current == GPIOlib.LOW:
+                if current == self.gpio.LOW:
                     # we have the initial pull down, the next will be the data pull up
                     state = STATE_DATA_PULL_UP
                     continue
                 else:
                     continue
             if state == STATE_DATA_PULL_UP:
-                if current == GPIOlib.HIGH:
+                if current == self.gpio.HIGH:
                     # data pulled up, the length of this pull up will determine whether it is 0 or 1
                     current_length = 0
                     state = STATE_DATA_PULL_DOWN
@@ -156,7 +148,7 @@ class DHT11:
                 else:
                     continue
             if state == STATE_DATA_PULL_DOWN:
-                if current == GPIOlib.LOW:
+                if current == self.gpio.LOW:
                     # pulled down, we store the length of the previous pull up period
                     lengths.append(current_length)
                     state = STATE_DATA_PULL_UP

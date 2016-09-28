@@ -1,5 +1,5 @@
 """
-thread_acquisition_camera.py v1.0.0
+thread_acquisition_dht11.py v1.0.0
 Auteur: Bruno DELATTRE
 Date : 17/09/2016
 """
@@ -22,11 +22,10 @@ class ThreadAcquisitionDHT11(threading.Thread):
     def run(self):
         logger = com_logger.Logger('DHT11:' + self.name)
         logger.log.info('Start')
-        self.getdht11(self.name, self.delay, self.counter)
+        self.getTempHum(self.name, self.delay, self.counter)
         logger.log.info('Stop')
 
-    def getdht11(self, threadName, delay, counter):
-        config = com_config.getConfig()
+    def getTempHum(self, threadName, delay, counter):
         instance = com_dht11.DHT11(self.port)
         while counter:
             if self.exitFlag:
