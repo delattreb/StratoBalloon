@@ -32,48 +32,49 @@ class DHT11:
         self.gpio.cleanup()
 
     def read(self, name):
-        self.gpio.setup(self.__pin, self.gpio.OUT)
+        if self.gpio.importlib != None:
+            self.gpio.setup(self.__pin, self.gpio.OUT)
 
-        # send initial high
-        self.__send_and_sleep(self.gpio.HIGH, 0.05)
+            # send initial high
+            self.__send_and_sleep(self.gpio.HIGH, 0.05)
 
-        # pull down to low
-        self.__send_and_sleep(self.gpio.LOW, 0.02)
+            # pull down to low
+            self.__send_and_sleep(self.gpio.LOW, 0.02)
 
-        # change to input using pull up
-        self.gpio.setuppud(self.__pin, self.gpio.IN, self.gpio.PUD_UP)
+            # change to input using pull up
+            self.gpio.setuppud(self.__pin, self.gpio.IN, self.gpio.PUD_UP)
 
-        # collect data into an array
-        data = self.__collect_input()
+            # collect data into an array
+            data = self.__collect_input()
 
-        # parse lengths of all data pull up periods
-        pull_up_lengths = self.__parse_data_pull_up_lengths(data)
+            # parse lengths of all data pull up periods
+            pull_up_lengths = self.__parse_data_pull_up_lengths(data)
 
-        # if bit count mismatch, return error (4 byte data + 1 byte checksum)
-        if len(pull_up_lengths) != 40:
-            return DHT11Result(DHT11Result.ERR_MISSING_DATA, 0, 0)
+            # if bit count mismatch, return error (4 byte data + 1 byte checksum)
+            if len(pull_up_lengths) != 40:
+                return DHT11Result(DHT11Result.ERR_MISSING_DATA, 0, 0)
 
-        # calculate bits from lengths of the pull up periods
-        bits = self.__calculate_bits(pull_up_lengths)
+            # calculate bits from lengths of the pull up periods
+            bits = self.__calculate_bits(pull_up_lengths)
 
-        # we have the bits, calculate bytes
-        the_bytes = self.__bits_to_bytes(bits)
+            # we have the bits, calculate bytes
+            the_bytes = self.__bits_to_bytes(bits)
 
-        logger = com_logger.Logger('DHT11 ' + name)
+            logger = com_logger.Logger('DHT11 ' + name)
 
-        # calculate checksum and check
-        checksum = self.__calculate_checksum(the_bytes)
-        if the_bytes[4] != checksum:
-            logger.log.debug('Checksum ERROR')
-            return DHT11Result(DHT11Result.ERR_CRC, 0, 0)
+            # calculate checksum and check
+            checksum = self.__calculate_checksum(the_bytes)
+            if the_bytes[4] != checksum:
+                logger.log.debug('Checksum ERROR')
+                return DHT11Result(DHT11Result.ERR_CRC, 0, 0)
 
-        dht11 = dal_dht11.DAL_DHT11()
-        dht11.set_dht11(str(datetime.datetime.now()), name, str(the_bytes[2]), str(the_bytes[0]))
+            dht11 = dal_dht11.DAL_DHT11()
+            dht11.set_dht11(str(datetime.datetime.now()), name, str(the_bytes[2]), str(the_bytes[0]))
 
-        logger.log.debug('Temperature:' + str(the_bytes[2]) + ' Humidity:' + str(the_bytes[0]))
+            logger.log.debug('Temperature:' + str(the_bytes[2]) + ' Humidity:' + str(the_bytes[0]))
 
-        # ok, we have valid data, return it
-        return DHT11Result(DHT11Result.ERR_NO_ERROR, the_bytes[2], the_bytes[0])
+            # ok, we have valid data, return it
+            return DHT11Result(DHT11Result.ERR_NO_ERROR, the_bytes[2], the_bytes[0])
 
     def __send_and_sleep(self, output, sleep):
         self.gpio.setIO(self.__pin, output)

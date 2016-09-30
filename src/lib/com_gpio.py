@@ -26,6 +26,7 @@ def is_plugged(function):
 class GPIO:
     @is_plugged
     def __init__(self, name='', file=''):
+        self.importlib = GPIOlib
         if GPIOlib != None:
             self.IN = GPIOlib.IN
             self.OUT = GPIOlib.OUT
@@ -45,11 +46,11 @@ class GPIO:
     def setmodeBCM(self):
         if GPIOlib != None:
             GPIOlib.setmode(GPIOlib.BCM)
-            self.logger.log.debug('setmodeBCM')
+            #self.logger.log.debug('setmodeBCM')
 
     def getmode(self):
         if GPIOlib != None:
-            self.logger.log.debug('getmode')
+            #self.logger.log.debug('getmode')
             return GPIOlib.getmode()
 
     def setupIO(self, IO_number, mode):
@@ -103,12 +104,12 @@ class GPIO:
 
     def setup(self, IO_number, mode):
         if GPIOlib != None:
-            self.logger.log.debug('setup:' + 'IO:' + str(IO_number) + ' Mode:' + str(mode))
+            #self.logger.log.debug('setup:' + 'IO:' + str(IO_number) + ' Mode:' + str(mode))
             GPIOlib.setup(IO_number, mode)
 
     def setuppud(self, IO_number, mode, pud):
         if GPIOlib != None:
-            self.logger.log.debug('setup')
+            #self.logger.log.debug('setup')
             GPIOlib.setup(IO_number, mode, pud)
 
     def wait_edge(self, IO_number):
