@@ -11,7 +11,7 @@ import RPi.GPIO as GPIO
 import time
 import subprocess
 
-# the button is connected on GPI4 (pin 7)
+# the button is connected on GPIO4 (pin 7)
 BTN_IO = 4
 TIME = 4
 
