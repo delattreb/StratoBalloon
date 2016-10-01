@@ -1,5 +1,7 @@
 #!/usr/bin/python
 #  -*- coding: utf-8 -*-
+
+#check good shebang
 import os
 import sys
 
