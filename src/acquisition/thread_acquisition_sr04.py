@@ -1,5 +1,5 @@
 """
-thread_acquisition_camera.py v1.0.0
+thread_acquisition_sr04.py v1.0.0
 Auteur: Bruno DELATTRE
 Date : 17/09/2016
 """

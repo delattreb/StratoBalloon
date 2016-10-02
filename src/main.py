@@ -14,7 +14,7 @@ lcd = com_lcd.LCD()
 # Init version etc...
 lcd.rectangle(0, 0, lcd.width_max - 1, lcd.height_max - 1)
 lcd.text(3, 1, 'Strato Balloon', lcd.SMALL_FONT)
-lcd.text(3, 14, 'v1.0.0', lcd.SMALL_FONT)
+lcd.text(3, 14, config['VERSION']['last'], lcd.SMALL_FONT)
 lcd.display()
 
 # Create new threads

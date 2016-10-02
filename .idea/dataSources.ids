@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="dataSourceStorage">
+  <data-source name="Sqlite (Xerial) - database.db" uuid="9d9b727d-7e49-4c7a-a300-cdc81be11526">
+    <database-info product="SQLite" version="3.8.11" jdbc-version="2.1" driver-name="SQLiteJDBC" driver-version="native"/>
+    <case-sensitivity plain-identifiers="mixed" quoted-identifiers="mixed"/>
+    <database-model serializer="dbm" rdbms="SQLITE" format-version="2.6">
+      <schema id="1">
+        <visible>1</visible>
+      </schema>
+      <table id="2" parent="1" name="camera"/>
+      <table id="3" parent="1" name="DHT11"/>
+      <table id="4" parent="1" name="sqlite_sequence"/>
+      <column id="5" parent="2" name="id_picture">
+        <data-type>BIGINT(0,-1)|4</data-type>
+      </column>
+      <column id="6" parent="2" name="id_video">
+        <data-type>BIGINT(0,-1)|4</data-type>
+      </column>
+      <column id="7" parent="3" name="id">
+        <data-type>INTEGER(0,-1)|4</data-type>
+      </column>
+      <column id="8" parent="3" name="date">
+        <data-type>DATETIME(0,-1)|12</data-type>
+      </column>
+      <column id="9" parent="3" name="temperature">
+        <data-type>DECIMAL(0,-1)|6</data-type>
+      </column>
+      <column id="10" parent="3" name="humidity">
+        <data-type>DECIMAL(0,-1)|6</data-type>
+      </column>
+      <column id="11" parent="3" name="name">
+        <data-type>VARCHAR (10)(0,-1)|12</data-type>
+      </column>
+      <key id="12" parent="3">
+        <columns>id</columns>
+        <primary>1</primary>
+      </key>
+      <column id="13" parent="4" name="name">
+        <data-type>(0,-1)|12</data-type>
+      </column>
+      <column id="14" parent="4" name="seq">
+        <data-type>(0,-1)|12</data-type>
+      </column>
+    </database-model>
+  </data-source>
+</component>
