@@ -1,20 +1,13 @@
+import gpsd
 
+# Connect to the local gpsd
+gpsd.connect()
 
+# Connect somewhere else
+gpsd.connect(host="127.0.0.1", port=2947)
 
-def secu():
-    get eau
-    get tasse
+# Get gps position
+packet = gpsd.get_current()
 
-
-if secu()
-    iftt
-
-if iftt
-    while (secu())
-        chauffer eau
-        if eau chaude
-            lancer café
-
-    eteindre eau
-fin
-
+# See the inline docs for GpsResponse for the available data
+print(packet.position())
