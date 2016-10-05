@@ -34,6 +34,7 @@ logger.log.info('Application start')
 # sr04_thread.start()
 
 gps = com_gps.GPS()
+
 gps.getLocalisation()
 
 try:
