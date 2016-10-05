@@ -10,14 +10,12 @@ import gpsd
 class GPS:
     def __init__(self):
         pass
-        
-
     
     def getLocalisation(self):
         try:
             # Connect to the local gpsd
             gpsd.connect()
-
+            
             # Get gps position
             packet = gpsd.get_current()
             
