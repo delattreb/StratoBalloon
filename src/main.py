@@ -49,12 +49,5 @@ try:
         print("alt:" + str(gps.response.altitude()))
 except:
     pass
-"""
-print("lat:"+str(gps.latitude))
-print("lon:"+str(gps.longiture))
-print("satelites:"+str(gps.satellites))
-print("speed:"+str(gps.speed))
-print("speed vert:"+str(gps.speed_vertical))
-print("time:"+str(gps.timeutc))
-"""
+
 logger.log.info('Application stop')
