@@ -1,4 +1,5 @@
-from lib import com_config, com_gps, com_logger
+from acquisition import thread_acquisition_gps
+from lib import com_config, com_logger
 
 # TODO set config à supprimer
 com_config.setConfig()
@@ -28,26 +29,27 @@ logger.log.info('Application start')
 # sr04_thread = thread_acquisition_sr04.ThreadAcquisitionSR04("Présence", int(config['GPIO']['SR04_triger_port']), int(config['GPIO']['SR04_echo_port']),
 #                                                            int(config['GPIO']['SR04_delay']), int(config['GPIO']['SR04_nb']))
 
+gps_thread = thread_acquisition_gps.ThreadAcquisitionGPS("GPS", 5, 100)
 # camera_thread.start()
 # dht11_thread_int.start()
 # dht11_thread_ext.start()
 # sr04_thread.start()
+gps_thread.start()
 
+"""
 gps = com_gps.GPS()
-
 gps.getLocalisation()
 
-try:
-    print("Mode:" + str(gps.response.mode))
+if gps.response != None:
+    print("Mode:" + str(gps.mode))
     if gps.response.mode >= 2:
-        print("ERROR:" + str(gps.response.error))
-        print("lat:" + str(gps.response.lat))
-        print("lon:" + str(gps.response.lon))
-        print("time:" + gps.response.time)
+        print("ERROR:" + str(gps.error))
+        print("lat:" + str(gps.latitude))
+        print("lon:" + str(gps.longitude))
+        print("time:" + gps.timeutc)
     if gps.response.mode >= 3:
         # climb
-        print("alt:" + str(gps.response.altitude()))
-except:
-    pass
+        print("alt:" + str(gps.altitude))
+"""
 
 logger.log.info('Application stop')

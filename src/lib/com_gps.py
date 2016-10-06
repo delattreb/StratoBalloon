@@ -6,10 +6,23 @@ Date : 04/10/2016
 
 import gpsd
 
+from dal import dal_gps
+
+
+# source
+# https://www.raspberrypi.org/forums/viewtopic.php?f=44&t=51788
 
 class GPS:
     def __init__(self):
-        pass
+        self.mode = 0
+        self.longitude = 0.0
+        self.latitude = 0.0
+        self.altitude = 0.0
+        self.timeutc = ''
+        self.longiture_precision = 0
+        self.latitude_precision = 0
+        self.altitude_precision = 0
+        self.error = ''
     
     def getLocalisation(self):
         try:
@@ -20,6 +33,20 @@ class GPS:
             packet = gpsd.get_current()
             
             # See the inline docs for GpsResponse for the available data
-            self.response = packet
+            self.mode = packet.mode
+            if self.mode >= 2:
+                self.longitude = packet.lon
+                self.latitude = packet.lat
+                self.timeutc = packet.time
+                self.error = packet.error
+
+            self.altitude = 0
+            if self.mode >= 3:
+                self.altitude = packet.altitude()
+            
+            # Record on database
+            if self.mode >= 2:
+                dalgps = dal_gps.DAL_GPS()
+                dalgps.set_gps(self.mode, str(self.timeutc.replace('T', ' ').replace('Z', '')), self.longitude, self.latitude, self.altitude, 0, 0, 0)
         except:
             pass
