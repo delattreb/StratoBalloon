@@ -9,6 +9,7 @@ config = com_config.getConfig()
 logger = com_logger.Logger()
 logger.log.info('Application start')
 
+
 # lcd = com_lcd.LCD()
 
 # Init version etc...
