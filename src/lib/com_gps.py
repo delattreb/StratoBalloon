@@ -9,9 +9,6 @@ import gpsd
 from dal import dal_gps
 
 
-# source
-# https://www.raspberrypi.org/forums/viewtopic.php?f=44&t=51788
-
 class GPS:
     def __init__(self):
         self.mode = 0
