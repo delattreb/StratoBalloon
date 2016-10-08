@@ -30,7 +30,7 @@ logger.log.info('Application start')
 #                                                            int(config['GPIO']['SR04_delay']), int(config['GPIO']['SR04_nb']))
 
 # TODO add config for gps thread
-gps_thread = thread_acquisition_gps.ThreadAcquisitionGPS("GPS", int(config['GPS']['GPS_delay']), int(config['GPS']['GPS_nb']))
+gps_thread = thread_acquisition_gps.ThreadAcquisitionGPS("GPS", int(config['GPS']['delay']), int(config['GPS']['nb']))
 # camera_thread.start()
 # dht11_thread_int.start()
 # dht11_thread_ext.start()
