@@ -12,21 +12,21 @@ config_file = "config/config.ini"
 
 def setConfig():
     config = configparser.ConfigParser()
-
+    
     # region Config
     # Version
     config['VERSION'] = {}
     config['VERSION']['last'] = '1.0.1'
-
+    
     # LOGGER
     config['LOGGER'] = {}
     config['LOGGER']['level'] = '10'
     # Info: DEBUG=10 INFO= 20 WARNING=30 ERROR=40 #CRITICAL=50
-
+    
     # SQLite
     config['SQLITE'] = {}
     config['SQLITE']['database'] = 'database.db'
-
+    
     # Camera
     config['CAMERA'] = {}
     config['CAMERA']['pic_resolution_x'] = '3280'
@@ -41,7 +41,7 @@ def setConfig():
     config['CAMERA']['exposure_mode'] = ''
     config['CAMERA']['delay'] = '5'
     config['CAMERA']['nb'] = '3'
-
+    
     # GPIO
     config['GPIO'] = {}
     # DHT11 interior
@@ -52,20 +52,25 @@ def setConfig():
     config['GPIO']['DHT11_EXTERIOR_PORT'] = '25'
     config['GPIO']['DHT11_EXTERIOR_delay'] = '15'
     config['GPIO']['DHT11_EXTERIOR_nb'] = '30'
-
+    
     # SR04
     config['GPIO']['SR04_triger_port'] = '17'
     config['GPIO']['SR04_echo_port'] = '27'
     config['GPIO']['SR04_delay'] = '1'
     config['GPIO']['SR04_nb'] = '60'
+    
+    # GPS
+    config['GPS'] = {}
+    config['GPS']['GPS_delay'] = '15'
+    config['GPS']['GPS_nb'] = '20'
 
     # DS18B20
-
+    
     # Directory
     config['DIRECTORY'] = {}
     config['DIRECTORY']['picture_path'] = '/home/pi/'
     # endregion
-
+    
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     db_path = os.path.join(BASE_DIR, config_file)
     with open(db_path, 'w') as configfile:

@@ -9,7 +9,6 @@ config = com_config.getConfig()
 logger = com_logger.Logger()
 logger.log.info('Application start')
 
-
 # lcd = com_lcd.LCD()
 
 # Init version etc...
@@ -30,8 +29,8 @@ logger.log.info('Application start')
 # sr04_thread = thread_acquisition_sr04.ThreadAcquisitionSR04("Présence", int(config['GPIO']['SR04_triger_port']), int(config['GPIO']['SR04_echo_port']),
 #                                                            int(config['GPIO']['SR04_delay']), int(config['GPIO']['SR04_nb']))
 
-#TODO add config for gps thread
-gps_thread = thread_acquisition_gps.ThreadAcquisitionGPS("GPS", 5, 100)
+# TODO add config for gps thread
+gps_thread = thread_acquisition_gps.ThreadAcquisitionGPS("GPS", int(config['GPS']['GPS_delay']), int(config['GPS']['GPS_nb']))
 # camera_thread.start()
 # dht11_thread_int.start()
 # dht11_thread_ext.start()
