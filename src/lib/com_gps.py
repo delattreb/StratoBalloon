@@ -24,6 +24,23 @@ class GPS:
         self.altitude_precision = 0
         self.error = ''
     
+    def getTime(self):
+        ret = ''
+        try:
+            # Connect to the local gpsd
+            gpsd.connect()
+            
+            # Get gps position
+            packet = gpsd.get_current()
+            
+            self.mode = packet.mode
+            if self.mode >= 1:  # Check if mode 1 give time UTC
+                self.timeutc = packet.time
+                ret = str(self.timeutc[:-5].replace('T', ' ').replace('Z', ''))
+        except:
+            pass
+        return ret
+    
     def getLocalisation(self):
         try:
             # Connect to the local gpsd
@@ -39,7 +56,7 @@ class GPS:
                 self.latitude = packet.lat
                 self.timeutc = packet.time
                 self.error = packet.error
-
+            
             self.altitude = 0
             if self.mode >= 3:
                 self.altitude = packet.altitude()
