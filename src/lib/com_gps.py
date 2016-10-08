@@ -22,6 +22,7 @@ class GPS:
         self.error = ''
     
     def getTime(self):
+        ret = ''
         try:
             # Connect to the local gpsd
             gpsd.connect()
@@ -32,9 +33,10 @@ class GPS:
             self.mode = packet.mode
             if self.mode >= 1:  # Check if mode 1 give time UTC
                 self.timeutc = packet.time
-                return str(self.timeutc[:-4].replace('T', ' ').replace('Z', ''))
+                ret = str(self.timeutc[:-5].replace('T', ' ').replace('Z', ''))
         except:
-            return ''
+            pass
+        return ret
     
     def getLocalisation(self):
         try:

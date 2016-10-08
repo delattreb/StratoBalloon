@@ -1,31 +1,27 @@
-#!/usr/bin/python
+#!/usr/bin/python3.4
 #  -*- coding: utf-8 -*-
 
-"""
-chmod +x for Python script
-copy to: /usr/local/bin
-"""
-
 import os
+import subprocess
 import sys
+
+from lib import com_gps
 
 if not os.getuid() == 0:
     sys.exit('Needs to be root for running this script.')
 
 import time
-import subprocess
-
-
 
 print('monitoring started')
+utc = ''
 while True:
-    pressedone = (GPIO.input(BTN_IO))
-    if pressedone:
-        print('pressed')
-        time.sleep(TIME)
-        if pressedone and (GPIO.input(BTN_IO)):
-            break
+    gps = com_gps.GPS()
+    utc = gps.getTime()
+    
+    if utc != '':
+        print('Time GPS Fix: ' + str(utc))
+        break
     else:
         time.sleep(0.1)
-print('System is going to halt now')
-subprocess.call('poweroff')
+
+subprocess.call("timedatectl set-time '" + str(utc) + "'", shell=True)
