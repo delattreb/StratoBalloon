@@ -10,8 +10,8 @@ import RPi.GPIO as GPIO
 import time
 import subprocess
 
-# the button is connected on GPIO4 (pin 7)
-BTN_IO = 4
+# the button is connected on GPIO17
+BTN_IO = 17
 TIME = 4
 
 GPIO.setmode(GPIO.BCM)
