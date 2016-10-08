@@ -1,7 +1,6 @@
-#!/usr/bin/python
+#!/usr/bin/python3.4
 #  -*- coding: utf-8 -*-
 
-#check good shebang
 import os
 import sys
 
