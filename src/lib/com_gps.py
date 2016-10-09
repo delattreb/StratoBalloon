@@ -6,6 +6,7 @@ Date : 04/10/2016
 
 import gpsd
 import gpxpy.gpx
+import requests
 
 from dal import dal_gps
 
@@ -20,9 +21,25 @@ class GPS:
         self.longiture_precision = 0
         self.latitude_precision = 0
         self.altitude_precision = 0
+        self.speed = 0
         self.error = ''
     
-    def exportToGpx(self, filename, trackName):
+    def getGoogleMapsImages(self, directory, filename, zoomlevel=15, width=320, height=385, levelprecision=2):
+        counter = 0
+        url = 'https://maps.googleapis.com/maps/api/staticmap?center='
+        
+        dal = dal_gps.DAL_GPS()
+        rows = dal.getCoordinate(levelprecision)
+        
+        for row in rows:
+            counter += 1
+            file = directory + filename + str(counter) + '.png'
+            f = open(file, 'wb')
+            f.write(requests.get(url + str(row[3]) + ',' + str(row[2]) + '&zoom=' + str(zoomlevel) + '&size=' + str(width) + 'x' + str(
+                height) + '&sensor=false').content)
+            f.close()
+    
+    def exportToGpx(self, filename, trackname=''):
         # Load GPS data from database
         dal = dal_gps.DAL_GPS()
         rows = dal.getCoordinate(3)
@@ -31,7 +48,7 @@ class GPS:
         
         # Create first track in our GPX:
         gpx_track = gpxpy.gpx.GPXTrack()
-        gpx_track.name = trackName
+        gpx_track.name = trackname
         gpx.tracks.append(gpx_track)
         
         # Create first segment in our GPX track:
@@ -40,9 +57,8 @@ class GPS:
         
         # Create points:
         for row in rows:
-            gpx_segment.points.append(gpxpy.gpx.GPXTrackPoint(row[3], row[2], row[4]))
-        
-        # You can add routes and waypoints, too...
+            gpx_segment.points.append(gpxpy.gpx.GPXTrackPoint(row[3], row[2], row[4], row[1], None, None, None, None, None, row[8], None))
+            # You can add routes and waypoints, too...
         
         stream = gpx.to_xml()
         gpx_file = open(filename, 'w')
@@ -80,6 +96,7 @@ class GPS:
                 self.longitude = packet.lon
                 self.latitude = packet.lat
                 self.timeutc = packet.time
+                self.speed = packet.speed()
                 self.error = packet.error
             
             self.altitude = 0
@@ -89,6 +106,7 @@ class GPS:
             # Record on database
             if self.mode >= 2:
                 dalgps = dal_gps.DAL_GPS()
-                dalgps.setCoordinate(self.mode, str(self.timeutc[:-5].replace('T', ' ').replace('Z', '')), self.longitude, self.latitude, self.altitude, 0, 0, 0)
+                dalgps.setCoordinate(self.mode, str(self.timeutc[:-5].replace('T', ' ').replace('Z', '')), self.longitude, self.latitude, self.altitude, 0, 0, 0,
+                                     self.speed)
         except:
             pass
