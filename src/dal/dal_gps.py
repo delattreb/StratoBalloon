@@ -13,9 +13,10 @@ class DAL_GPS(com_sqlite.SQLite):
     
     """ Select"""
     
-    def getCoordinate(self):
+    def getCoordinate(self, mode):
         return self.cursor.execute(
-            'SELECT mode, date, longitude, latitude, altitude, longitude_precision, latitude_precision, altitude_precision FROM coordinate ORDER by date').fetchall()
+            'SELECT mode, date, longitude, latitude, altitude, longitude_precision, latitude_precision, altitude_precision FROM coordinate WHERE mode >= ' + str(mode) +
+            ' ORDER by date').fetchall()
     
     """ Insert """
     

@@ -9,6 +9,11 @@ config = com_config.getConfig()
 logger = com_logger.Logger()
 logger.log.info('Application start')
 
+
+gps = com_gps.GPS()
+gps.exportToGpx('d:\\file.gpx', 'Strato Ballon Trace')
+
+
 # lcd = com_lcd.LCD()
 
 # Init version etc...
@@ -38,8 +43,6 @@ gps_thread = thread_acquisition_gps.ThreadAcquisitionGPS("GPS", int(config['GPS'
 gps_thread.start()
 
 
-#gps = com_gps.GPS()
-#gps.exportToGpx('d:\\file.gpx')
 
 """
 gps = com_gps.GPS()

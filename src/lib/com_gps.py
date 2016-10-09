@@ -22,15 +22,16 @@ class GPS:
         self.altitude_precision = 0
         self.error = ''
     
-    def exportToGpx(self, filename):
+    def exportToGpx(self, filename, trackName):
         # Load GPS data from database
         dal = dal_gps.DAL_GPS()
-        rows = dal.getCoordinate()
+        rows = dal.getCoordinate(3)
         
         gpx = gpxpy.gpx.GPX()
         
         # Create first track in our GPX:
         gpx_track = gpxpy.gpx.GPXTrack()
+        gpx_track.name = trackName
         gpx.tracks.append(gpx_track)
         
         # Create first segment in our GPX track:
@@ -38,8 +39,10 @@ class GPS:
         gpx_track.segments.append(gpx_segment)
         
         # Create points:
+        ele = 0
         for row in rows:
-            gpx_segment.points.append(gpxpy.gpx.GPXTrackPoint(row[3], row[2], row[4]))
+            ele += 50
+            gpx_segment.points.append(gpxpy.gpx.GPXTrackPoint(row[3], row[2], row[4] + ele))
         
         # You can add routes and waypoints, too...
         
