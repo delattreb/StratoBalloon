@@ -5,12 +5,10 @@ Date : 04/10/2016
 """
 
 import gpsd
+import gpxpy.gpx
 
 from dal import dal_gps
 
-
-# source
-# https://www.raspberrypi.org/forums/viewtopic.php?f=44&t=51788
 
 class GPS:
     def __init__(self):
@@ -23,6 +21,32 @@ class GPS:
         self.latitude_precision = 0
         self.altitude_precision = 0
         self.error = ''
+    
+    def exportToGpx(self, filename):
+        # Load GPS data from database
+        dal = dal_gps.DAL_GPS()
+        rows = dal.getCoordinate()
+        
+        gpx = gpxpy.gpx.GPX()
+        
+        # Create first track in our GPX:
+        gpx_track = gpxpy.gpx.GPXTrack()
+        gpx.tracks.append(gpx_track)
+        
+        # Create first segment in our GPX track:
+        gpx_segment = gpxpy.gpx.GPXTrackSegment()
+        gpx_track.segments.append(gpx_segment)
+        
+        # Create points:
+        for row in rows:
+            gpx_segment.points.append(gpxpy.gpx.GPXTrackPoint(row[3], row[2], row[4]))
+        
+        # You can add routes and waypoints, too...
+        
+        stream = gpx.to_xml()
+        gpx_file = open(filename, 'w')
+        gpx_file.write(stream)
+        gpx_file.close()
     
     def getTime(self):
         ret = ''
@@ -64,6 +88,6 @@ class GPS:
             # Record on database
             if self.mode >= 2:
                 dalgps = dal_gps.DAL_GPS()
-                dalgps.set_gps(self.mode, str(self.timeutc.replace('T', ' ').replace('Z', '')), self.longitude, self.latitude, self.altitude, 0, 0, 0)
+                dalgps.setCoordinate(self.mode, str(self.timeutc[:-5].replace('T', ' ').replace('Z', '')), self.longitude, self.latitude, self.altitude, 0, 0, 0)
         except:
             pass

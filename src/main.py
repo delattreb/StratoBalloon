@@ -1,5 +1,5 @@
 from acquisition import thread_acquisition_gps
-from lib import com_config, com_logger
+from lib import com_config, com_gps, com_logger
 
 # TODO set config à supprimer
 com_config.setConfig()
@@ -36,6 +36,10 @@ gps_thread = thread_acquisition_gps.ThreadAcquisitionGPS("GPS", int(config['GPS'
 # dht11_thread_ext.start()
 # sr04_thread.start()
 gps_thread.start()
+
+
+#gps = com_gps.GPS()
+#gps.exportToGpx('d:\\file.gpx')
 
 """
 gps = com_gps.GPS()
