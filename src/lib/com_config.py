@@ -61,8 +61,8 @@ def setConfig():
     
     # GPS
     config['GPS'] = {}
-    config['GPS']['delay'] = '15'
-    config['GPS']['nb'] = '20'
+    config['GPS']['delay'] = '5'
+    config['GPS']['nb'] = '2000'
 
     # DS18B20
     

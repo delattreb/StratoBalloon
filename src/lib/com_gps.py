@@ -39,10 +39,8 @@ class GPS:
         gpx_track.segments.append(gpx_segment)
         
         # Create points:
-        ele = 0
         for row in rows:
-            ele += 50
-            gpx_segment.points.append(gpxpy.gpx.GPXTrackPoint(row[3], row[2], row[4] + ele))
+            gpx_segment.points.append(gpxpy.gpx.GPXTrackPoint(row[3], row[2], row[4]))
         
         # You can add routes and waypoints, too...
         
