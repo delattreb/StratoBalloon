@@ -25,6 +25,8 @@ class GPS:
         self.error = ''
     
     def getGoogleMapsImages(self, directory, filename, zoomlevel=15, width=320, height=385, levelprecision=2, traceroute=False, weight=5, nbpoint=4, color='0xff0000'):
+        #Documentation :https://developers.google.com/maps/documentation/static-maps/intro
+        
         google_apikey = 'AIzaSyCdP2hiLc0SNX6eB1w_lb7-JQdF6YO3cr4'
         counter = 0
         mapurl = 'https://maps.googleapis.com/maps/api/staticmap?center='
