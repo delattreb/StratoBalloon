@@ -24,10 +24,10 @@ class GPS:
         self.speed = 0
         self.error = ''
     
-    def getGoogleMapsImages(self, directory, filename, zoomlevel=15, width=320, height=385, levelprecision=2):
+    def getGoogleMapsImages(self, directory, filename, zoomlevel=15, width=320, height=385, levelprecision=2, traceroute=False, weight=5, nbpoint=4, color='0xff0000'):
+        google_apikey = 'AIzaSyCdP2hiLc0SNX6eB1w_lb7-JQdF6YO3cr4'
         counter = 0
-        url = 'https://maps.googleapis.com/maps/api/staticmap?center='
-        
+        mapurl = 'https://maps.googleapis.com/maps/api/staticmap?center='
         dal = dal_gps.DAL_GPS()
         rows = dal.getCoordinate(levelprecision)
         
@@ -35,11 +35,24 @@ class GPS:
             counter += 1
             file = directory + filename + str(counter) + '.png'
             f = open(file, 'wb')
-            f.write(requests.get(url + str(row[3]) + ',' + str(row[2]) + '&zoom=' + str(zoomlevel) + '&size=' + str(width) + 'x' + str(
-                height) + '&sensor=false').content)
+            url = mapurl + str(row[3]) + ',' + str(row[2]) + '&zoom=' + str(zoomlevel) + '&size=' + str(width) + 'x' + str(
+                height) + '&visual_refresh=true&maptype=roadmap&format=png'
+            
+            if traceroute:
+                path = '&path=color:' + color + '|weight:' + str(weight)
+                
+                index = counter - nbpoint
+                if index < 0:
+                    index = 0
+                for i in range(index, counter):
+                    path += '|' + str(rows[i][3]) + ',' + str(rows[i][2])
+                url += path
+            url += '&key=' + google_apikey
+            f.write(requests.get(url).content)
             f.close()
     
     def exportToGpx(self, filename, trackname=''):
+        
         # Load GPS data from database
         dal = dal_gps.DAL_GPS()
         rows = dal.getCoordinate(3)

@@ -1,3 +1,4 @@
+from acquisition import thread_acquisition_gps
 from lib import com_config, com_gps, com_logger
 
 # TODO set config à supprimer
@@ -8,8 +9,10 @@ config = com_config.getConfig()
 logger = com_logger.Logger()
 logger.log.info('Application start')
 
+#dal_gps.DAL_GPS().delCoordinate()
+
 gps = com_gps.GPS()
-gps.getGoogleMapsImages('d:\\image\\', 'img', 18, 640, 300)
+gps.getGoogleMapsImages('d:\\image\\', 'img', 18, 640, 300, 3, True, 4, 20)
 # gps.exportToGpx('d:\\file.gpx', 'Strato Ballon Trace')
 
 
@@ -33,11 +36,11 @@ gps.getGoogleMapsImages('d:\\image\\', 'img', 18, 640, 300)
 # sr04_thread = thread_acquisition_sr04.ThreadAcquisitionSR04("Présence", int(config['GPIO']['SR04_triger_port']), int(config['GPIO']['SR04_echo_port']),
 #                                                            int(config['GPIO']['SR04_delay']), int(config['GPIO']['SR04_nb']))
 
-# gps_thread = thread_acquisition_gps.ThreadAcquisitionGPS("GPS", int(config['GPS']['delay']), int(config['GPS']['nb']))
+gps_thread = thread_acquisition_gps.ThreadAcquisitionGPS("GPS", float(config['GPS']['delay']), int(config['GPS']['nb']))
 # camera_thread.start()
 # dht11_thread_int.start()
 # dht11_thread_ext.start()
 # sr04_thread.start()
-# gps_thread.start()
+gps_thread.start()
 
 logger.log.info('Application stop')
