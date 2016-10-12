@@ -11,8 +11,8 @@ logger.log.info('Application start')
 
 #dal_gps.DAL_GPS().delCoordinate()
 
-gps = com_gps.GPS()
-gps.getGoogleMapsImages('d:\\image\\', 'img', 18, 640, 300, 3, True, 4, 20,'0x00ff00ff')
+#gps = com_gps.GPS()
+#gps.getGoogleMapsImages('d:\\image\\', 'img', 18, 640, 300, 3, True, 4, 20,'0x00ff00ff')
 # gps.exportToGpx('d:\\file.gpx', 'Strato Ballon Trace')
 
 
