@@ -24,8 +24,9 @@ class GPS:
         self.speed = 0
         self.error = ''
     
-    def getGoogleMapsImages(self, directory, filename, zoomlevel=15, width=320, height=385, levelprecision=2, traceroute=False, weight=5, nbpoint=4, color='0xff0000'):
-        #Documentation :https://developers.google.com/maps/documentation/static-maps/intro
+    def getGoogleMapsImages(self, directory, filename, zoomlevel=15, width=320, height=385, levelprecision=2, traceroute=False, weight=5, nbpoint=4, color='0xff0000',
+                            imageformat='png', maptype='roadmap'):
+        # Documentation :https://developers.google.com/maps/documentation/static-maps/intro
         
         google_apikey = 'AIzaSyCdP2hiLc0SNX6eB1w_lb7-JQdF6YO3cr4'
         counter = 0
@@ -38,7 +39,7 @@ class GPS:
             file = directory + filename + str(counter) + '.png'
             f = open(file, 'wb')
             url = mapurl + str(row[3]) + ',' + str(row[2]) + '&zoom=' + str(zoomlevel) + '&size=' + str(width) + 'x' + str(
-                height) + '&visual_refresh=true&maptype=roadmap&format=png'
+                height) + '&visual_refresh=true&maptype=' + maptype + '&format=' + imageformat
             
             if traceroute:
                 path = '&path=color:' + color + '|weight:' + str(weight)
