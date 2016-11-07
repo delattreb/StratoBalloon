@@ -13,19 +13,29 @@ class DAL_GPS(com_sqlite.SQLite):
     
     """ Select"""
     
-    def get_gps(self):
+    def getCoordinate(self, mode):
         return self.cursor.execute(
-            'SELECT mode, date, longitude, latitude, altitude, longitude_precision, latitude_precision, altitude_precision FROM coordinate ORDER by date').fetchall()
+            'SELECT mode, date, longitude, latitude, altitude, longitude_precision, latitude_precision, altitude_precision, speed FROM coordinate WHERE mode >= ' + str(
+                mode) +
+            ' ORDER by date').fetchall()
     
     """ Insert """
     
-    def set_gps(self, mode, date, lon, lat, alt, lon_pres, lat_pres, alt_pres):
+    def setCoordinate(self, mode, date, lon, lat, alt, lon_pres, lat_pres, alt_pres, speed):
         try:
             self.cursor.execute(
-                'INSERT INTO  coordinate (mode, date, longitude, latitude, altitude, longitude_precision, latitude_precision, altitude_precision) VALUES("' + str(
+                'INSERT INTO  coordinate (mode, date, longitude, latitude, altitude, longitude_precision, latitude_precision, altitude_precision, speed) VALUES("' + str(
                     mode) + '", "' + str(date) + '", "' + str(lon) + '", "' + str(lat) + '", "' + str(alt) + '", "' + str(lon_pres) + '", "' + str(lat_pres) +
-                '","' + str(alt_pres) + '")')
-            
+                '","' + str(alt_pres) + '","' + str(speed) + '")')
+            self.connection.commit()
+        except:
+            self.connection.rollback()
+    
+    """ Delete """
+    
+    def delCoordinate(self):
+        try:
+            self.cursor.execute('DELETE FROM coordinate')
             self.connection.commit()
         except:
             self.connection.rollback()

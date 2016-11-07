@@ -1,5 +1,5 @@
 from acquisition import thread_acquisition_gps
-from lib import com_config, com_logger
+from lib import com_config, com_gps, com_logger
 
 # TODO set config à supprimer
 com_config.setConfig()
@@ -8,6 +8,13 @@ config = com_config.getConfig()
 
 logger = com_logger.Logger()
 logger.log.info('Application start')
+
+#dal_gps.DAL_GPS().delCoordinate()
+
+#gps = com_gps.GPS()
+#gps.getGoogleMapsImages('d:\\image\\', 'img', 18, 640, 300, 3, True, 4, 20,'0x00ff00ff')
+# gps.exportToGpx('d:\\file.gpx', 'Strato Ballon Trace')
+
 
 # lcd = com_lcd.LCD()
 
@@ -29,28 +36,11 @@ logger.log.info('Application start')
 # sr04_thread = thread_acquisition_sr04.ThreadAcquisitionSR04("Présence", int(config['GPIO']['SR04_triger_port']), int(config['GPIO']['SR04_echo_port']),
 #                                                            int(config['GPIO']['SR04_delay']), int(config['GPIO']['SR04_nb']))
 
-# TODO add config for gps thread
-gps_thread = thread_acquisition_gps.ThreadAcquisitionGPS("GPS", int(config['GPS']['delay']), int(config['GPS']['nb']))
+gps_thread = thread_acquisition_gps.ThreadAcquisitionGPS("GPS", float(config['GPS']['delay']), int(config['GPS']['nb']))
 # camera_thread.start()
 # dht11_thread_int.start()
 # dht11_thread_ext.start()
 # sr04_thread.start()
 gps_thread.start()
-
-"""
-gps = com_gps.GPS()
-gps.getLocalisation()
-
-if gps.response != None:
-    print("Mode:" + str(gps.mode))
-    if gps.response.mode >= 2:
-        print("ERROR:" + str(gps.error))
-        print("lat:" + str(gps.latitude))
-        print("lon:" + str(gps.longitude))
-        print("time:" + gps.timeutc)
-    if gps.response.mode >= 3:
-        # climb
-        print("alt:" + str(gps.altitude))
-"""
 
 logger.log.info('Application stop')
