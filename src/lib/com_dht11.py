@@ -1,3 +1,9 @@
+"""
+com_dht11.py v1.0.0
+Auteur: Bruno DELATTRE
+Date : 02/10/2016
+"""
+
 import datetime
 import time
 

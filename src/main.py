@@ -1,5 +1,5 @@
-from acquisition import thread_acquisition_gps
-from lib import com_config, com_gps, com_logger
+from acquisition import thread_acquisition_dht22
+from lib import com_config, com_dht22, com_logger
 
 # TODO set config à supprimer
 com_config.setConfig()
@@ -9,10 +9,16 @@ config = com_config.getConfig()
 logger = com_logger.Logger()
 logger.log.info('Application start')
 
-#dal_gps.DAL_GPS().delCoordinate()
+# dht22.trigger()
+# time.sleep(0.2)
+# print("{} {}".format(dht22.humidity(), dht22.temperature()))
+# dht22.cancel()
 
-#gps = com_gps.GPS()
-#gps.getGoogleMapsImages('d:\\image\\', 'img', 18, 640, 300, 3, True, 4, 20,'0x00ff00ff')
+
+# dal_gps.DAL_GPS().delCoordinate()
+
+# gps = com_gps.GPS()
+# gps.getGoogleMapsImages('d:\\image\\', 'img_cascade', 18, 640, 300, 3, True, 4, 20,'0x00ff00ff')
 # gps.exportToGpx('d:\\file.gpx', 'Strato Ballon Trace')
 
 
@@ -29,6 +35,12 @@ logger.log.info('Application start')
 # dht11_thread_ext = thread_acquisition_dht11.ThreadAcquisitionDHT11('Exterior',
 #                                                                   int(config['GPIO']['DHT11_EXTERIOR_PORT']), int(config['GPIO']['DHT11_EXTERIOR_delay']),
 #                                                                  int(config['GPIO']['DHT11_EXTERIOR_nb']))
+
+#START Deamon pigiopd
+dht11_thread_ext = thread_acquisition_dht22.ThreadAcquisitionDHT22('Interior',
+                                                                   int(config['GPIO']['DHT22_INTERIOR_PORT']), int(config['GPIO']['DHT22_INTERIOR_delay']),
+                                                                   int(config['GPIO']['DHT22_INTERIOR_nb']))
+
 # dht11_thread_int = thread_acquisition_dht11.ThreadAcquisitionDHT11('Interior',
 #                                                                   int(config['GPIO']['DHT11_INTERIOR_PORT']), int(config['GPIO']['DHT11_INTERIOR_delay']),
 #                                                                   int(config['GPIO']['DHT11_INTERIOR_nb']))
@@ -36,11 +48,12 @@ logger.log.info('Application start')
 # sr04_thread = thread_acquisition_sr04.ThreadAcquisitionSR04("Présence", int(config['GPIO']['SR04_triger_port']), int(config['GPIO']['SR04_echo_port']),
 #                                                            int(config['GPIO']['SR04_delay']), int(config['GPIO']['SR04_nb']))
 
-gps_thread = thread_acquisition_gps.ThreadAcquisitionGPS("GPS", float(config['GPS']['delay']), int(config['GPS']['nb']))
+# gps_thread = thread_acquisition_gps.ThreadAcquisitionGPS("GPS", float(config['GPS']['delay']), int(config['GPS']['nb']))
 # camera_thread.start()
 # dht11_thread_int.start()
 # dht11_thread_ext.start()
+dht11_thread_ext.start()
 # sr04_thread.start()
-gps_thread.start()
+# gps_thread.start()
 
 logger.log.info('Application stop')
