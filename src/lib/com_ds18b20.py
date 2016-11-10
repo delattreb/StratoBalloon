@@ -18,7 +18,7 @@ from os import system
 from time import sleep
 
 ## module GPIO 1-wire et capteur de temperature #####
-system('modprobe w1-gpio')
+system('modprobe w1-port')
 system('modprobe w1-therm')
 base_dir = '/sys/bus/w1/devices/'
 
