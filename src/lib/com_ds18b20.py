@@ -6,7 +6,6 @@ Date : 02/10/2016
 
 import datetime
 from os import system
-from time import sleep
 
 from dal import dal_ds18b20
 from lib import com_logger
@@ -28,10 +27,18 @@ class DS18B20:
         return lignes
     
     def read(self, name, sensor):
+        logger = com_logger.Logger('DS18B20 ' + name)
+        
         lines = self.read_file(sensor)
+        
+        """ Suppression en cas de dead lock
         while lines[0].strip()[-3:] != 'YES':  # lit les 3 derniers char de la ligne 0 et recommence si pas YES
             sleep(0.2)
             lines = self.read_file(sensor)
+        """
+        if lines[0].strip()[-3:] != 'YES':
+            logger.log.debug('Connexion ERROR')
+            return -999
         
         temp_raw = lines[1].split("=")[1]  # quand on a eu YES, on lit la temp apres le signe = sur la ligne 1
         temp = round(int(temp_raw) / 1000.0, 2)  # le 2 arrondi a 2 chiffres apres la virgule
@@ -39,7 +46,6 @@ class DS18B20:
         ds18b20 = dal_ds18b20.DAL_DS18B20()
         ds18b20.set_ds18b20(str(datetime.datetime.now()), name, str(temp))
         
-        logger = com_logger.Logger('DS18B20 ' + name)
         logger.log.debug('Temperature:' + str(temp))
         
         return temp

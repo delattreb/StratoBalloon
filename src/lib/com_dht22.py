@@ -13,6 +13,7 @@ import pigpio
 from dal import dal_dht22
 from lib import com_logger
 
+
 class DHT22:
     """
     A class to read relative humidity and temperature from the
@@ -199,11 +200,11 @@ class DHT22:
     
     def temperature(self):
         """Return current temperature."""
-        return self.temp
+        return round(self.temp, 2)
     
     def humidity(self):
         """Return current relative humidity."""
-        return self.rhum
+        return round(self.rhum, 2)
     
     def staleness(self):
         """Return time since measurement made."""
@@ -258,5 +259,3 @@ class DHT22:
         logger.log.debug('Temperature:' + str(self.temperature()) + ' Humidity:' + str(self.humidity()))
         
         self.cancel()
-        
-
