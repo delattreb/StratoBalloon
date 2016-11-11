@@ -12,7 +12,9 @@ config = com_config.getConfig()
 logger = com_logger.Logger()
 logger.log.info('Application start')
 
-ip_adr = os.system("ifconfig wlan0 | grep 'inet adr'| cut -c 20-33")
+# Get Ip Adress
+retvalue = os.popen("ifconfig wlan0 | grep 'inet adr' | cut -c 20-33").readlines()
+print("IP adress:" + str(retvalue[0]))
 
 # Waiting for acquisition
 gpioinout = com_gpio_inout.GPIOINOT()
