@@ -76,8 +76,6 @@ def setConfig():
     config['GPS']['delay'] = '0.5'
     config['GPS']['nb'] = '3000'
 
-    # DS18B20
-    
     # Directory
     config['DIRECTORY'] = {}
     config['DIRECTORY']['picture_path'] = '/home/pi/'
