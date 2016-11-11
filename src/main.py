@@ -1,6 +1,5 @@
-import time
+import os
 
-from acquisition import thread_acquisition_dht22, thread_acquisition_ds18b20
 from lib import com_config, com_gpio_inout, com_logger
 
 # TODO set config à supprimer
@@ -13,6 +12,8 @@ config = com_config.getConfig()
 logger = com_logger.Logger()
 logger.log.info('Application start')
 
+ip_adr = os.system("ifconfig wlan0 | grep 'inet adr'| cut -c 20-33")
+
 # Waiting for acquisition
 gpioinout = com_gpio_inout.GPIOINOT()
 gpioinout.setacquisition(False)
@@ -20,7 +21,7 @@ while True:
     if gpioinout.getacquisition():
         gpioinout.blink(5)
 # Create new threads
-#ds18b20_thread_int = thread_acquisition_ds18b20.ThreadAcquisitionDS18B20('Exterior', config['GPIO']['DS18B20_1'], int(config['GPIO']['DS18B20_1_delay']),
+# ds18b20_thread_int = thread_acquisition_ds18b20.ThreadAcquisitionDS18B20('Exterior', config['GPIO']['DS18B20_1'], int(config['GPIO']['DS18B20_1_delay']),
 #                                                                         int(config['GPIO']['DS18B20_1_nb']))
 
 # camera_thread = thread_acquisition_camera.ThreadAcquisitionCamera("Camera Thread", int(config['CAMERA']['delay']), int(config['CAMERA']['nb']))
@@ -33,7 +34,7 @@ while True:
 #                                                                   int(config['GPIO']['DHT11_INTERIOR_PORT']), int(config['GPIO']['DHT11_INTERIOR_delay']),
 #                                                                   int(config['GPIO']['DHT11_INTERIOR_nb']))
 
-#dht22_thread_int = thread_acquisition_dht22.ThreadAcquisitionDHT22('Interior',
+# dht22_thread_int = thread_acquisition_dht22.ThreadAcquisitionDHT22('Interior',
 #                                                                   int(config['GPIO']['DHT22_INTERIOR_PORT']), int(config['GPIO']['DHT22_INTERIOR_delay']),
 #                                                                   int(config['GPIO']['DHT22_INTERIOR_nb']))
 
@@ -44,10 +45,10 @@ while True:
 # camera_thread.start()
 # dht11_thread_int.start()
 # dht11_thread_ext.start()
-#dht22_thread_int.start()
+# dht22_thread_int.start()
 # sr04_thread.start()
 # gps_thread.start()
-#ds18b20_thread_int.start()
+# ds18b20_thread_int.start()
 
 """
 gps = com_gps.GPS()
