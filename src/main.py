@@ -14,7 +14,8 @@ logger.log.info('Application start')
 
 # Get Ip Adress
 retvalue = os.popen("ifconfig wlan0 | grep 'inet adr' | cut -c 20-33").readlines()
-print("IP adress:" + str(retvalue[0]))
+if retvalue:
+    print("IP adress: " + str(retvalue[0]))
 
 # Waiting for acquisition
 gpioinout = com_gpio_inout.GPIOINOT()
