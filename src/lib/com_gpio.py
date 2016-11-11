@@ -5,9 +5,9 @@ Date : 07/08/2016
 """
 
 try:
-    from RPi import GPIO as GPIOlib
+    from RPi import GPIO
 except:
-    GPIOlib = None
+    GPIO = None
 
 from lib import com_logger
 
@@ -16,127 +16,136 @@ def is_plugged(function):
     def plugged(*original_args, **original_kwargs):
         return function(*original_args, **original_kwargs)
 
-    if not GPIOlib:
+    if not GPIO:
         logger = com_logger.Logger('GPIO')
         logger.log.warning('GPIO not present')
 
     return plugged
 
 
-class GPIO:
+class GPIODialog:
     @is_plugged
     def __init__(self, name='', file=''):
-        self.importlib = GPIOlib
-        if GPIOlib != None:
-            self.IN = GPIOlib.IN
-            self.OUT = GPIOlib.OUT
-            self.LOW = GPIOlib.LOW
-            self.HIGH = GPIOlib.HIGH
-            self.PUD_UP = GPIOlib.PUD_UP
-            self.PUD_DOWN = GPIOlib.PUD_DOWN
-            self.RISING = GPIOlib.RISING
+        self.importlib = GPIO
+        if GPIO != None:
+            #self.setwarnings(False)
+            
+            self.IN = GPIO.IN
+            self.OUT = GPIO.OUT
+            self.LOW = GPIO.LOW
+            self.HIGH = GPIO.HIGH
+            self.PUD_UP = GPIO.PUD_UP
+            self.PUD_DOWN = GPIO.PUD_DOWN
+            self.RISING = GPIO.RISING
 
             self.logger = com_logger.Logger(name, file)
 
+    def __delete__(self, instance):
+        self.cleanup()
+
+    def setwarnings(self, state):
+        if GPIO != None:
+            GPIO.setwarnings(state)
+
     def setmodeBOARD(self):
-        if GPIOlib != None:
-            GPIOlib.setmode(GPIOlib.BOARD)
+        if GPIO != None:
+            GPIO.setmode(GPIO.BOARD)
             # self.logger.log.debug('setMode')
 
     def setmodeBCM(self):
-        if GPIOlib != None:
-            GPIOlib.setmode(GPIOlib.BCM)
+        if GPIO != None:
+            GPIO.setmode(GPIO.BCM)
             #self.logger.log.debug('setmodeBCM')
 
     def getmode(self):
-        if GPIOlib != None:
+        if GPIO != None:
             #self.logger.log.debug('getmode')
-            return GPIOlib.getmode()
+            return GPIO.getmode()
 
     def setupIO(self, IO_number, mode):
-        if GPIOlib != None:
-            GPIOlib.setup(IO_number, mode)
+        if GPIO != None:
+            GPIO.setup(IO_number, mode)
             # self.logger.log.debug('setupIO')
 
     def getIO(self, IO_number):
-        if GPIOlib != None:
+        if GPIO != None:
             # self.logger.log.debug('getIO')
-            return GPIOlib.input(IO_number)
+            return GPIO.input(IO_number)
 
     def setIO(self, IO_number, state):
-        if GPIOlib != None:
+        if GPIO != None:
             # self.logger.log.debug('setIO')
-            GPIOlib.output(IO_number, state)
+            GPIO.output(IO_number, state)
 
     def switchIO(self, IO_number):
-        if GPIOlib != None:
+        if GPIO != None:
             # self.logger.log.debug('switchIO')
-            GPIOlib.output(IO_number, not self.getIO(IO_number))
+            GPIO.output(IO_number, not self.getIO(IO_number))
 
     def getSetupIO(self, IO_number):
-        if GPIOlib != None:
+        if GPIO != None:
             # self.logger.log.debug('getSetupIO')
             # On peut interroger l'E/S afin de connaître son état de configuration.
-            # Les valeurs renvoyées sont alors GPIOlib.INPUT, GPIOlib.OUTPUT, GPIOlib.SPI, GPIOlib.I2C, GPIOlib.HARD_PWM, GPIOlib.SERIAL ou GPIOlib.UNKNOWN.
-            return GPIOlib.gpio_function(IO_number)
+            # Les valeurs renvoyées sont alors GPIO.INPUT, GPIO.OUTPUT, GPIO.SPI, GPIO.I2C, GPIO.HARD_PWM, GPIO.SERIAL ou GPIO.UNKNOWN.
+            return GPIO.gpio_function(IO_number)
 
     def cleanup(self):
-        if GPIOlib != None:
+        if GPIO != None:
             # self.logger.log.debug('cleanup')
-            GPIOlib.cleanup()
+            GPIO.cleanup()
 
     def PWM(self, IO_number, frequence, rapport_cyclique, nouveau_rapport_cyclique, nouvelle_frequence):
-        if GPIOlib != None:
+        if GPIO != None:
             # self.logger.log.debug('PWM')
-            p = GPIOlib.PWM(IO_number, frequence)
+            p = GPIO.PWM(IO_number, frequence)
             p.start(rapport_cyclique)  # ici, rapport_cyclique vaut entre 0.0 et 100.0
             p.ChangeFrequency(nouvelle_frequence)
             p.ChangeDutyCycle(nouveau_rapport_cyclique)
             p.stop()
 
     def pull(self, IO_number):
-        if GPIOlib != None:
+        if GPIO != None:
             # self.logger.log.debug('pull')
             # Afin d'éviter de laisser flottante toute entrée, il est possible de connecter des résistances de pull-up ou de pull-down, au choix, en interne.
             # Pour information, une résistance de pull-up ou de pull-down a pour but d'éviter de laisser une entrée ou une sortie dans un état incertain, en forçant une connexion à la masse ou à un potentiel donné.
-            GPIOlib.setup(IO_number, GPIOlib.IN, pull_up_down=GPIOlib.PUD_UP)
-            GPIOlib.setup(IO_number, GPIOlib.IN, pull_up_down=GPIOlib.PUD_DOWN)
+            GPIO.setup(IO_number, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+            GPIO.setup(IO_number, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
     def setup(self, IO_number, mode):
-        if GPIOlib != None:
+        if GPIO != None:
             #self.logger.log.debug('setup:' + 'IO:' + str(IO_number) + ' Mode:' + str(mode))
-            GPIOlib.setup(IO_number, mode)
+            GPIO.setup(IO_number, mode)
 
     def setuppud(self, IO_number, mode, pud):
-        if GPIOlib != None:
+        if GPIO != None:
             #self.logger.log.debug('setup')
-            GPIOlib.setup(IO_number, mode, pud)
+            GPIO.setup(IO_number, mode, pud)
 
     def wait_edge(self, IO_number):
-        if GPIOlib != None:
+        if GPIO != None:
             # self.logger.log.debug('wait_edge')
             # La première consiste à bloquer l'exécution du programme jusqu'à ce que l'événement se produise.
-            return GPIOlib.wait_for_edge(IO_number, GPIOlib.RISING)
+            return GPIO.wait_for_edge(IO_number, GPIO.RISING)
 
     def event_detect(self, IO_number):
-        if GPIOlib != None:
+        if GPIO != None:
             self.logger.log.debug('event_detect')
-            GPIOlib.add_event_detect(IO_number, GPIOlib.RISING)
+            GPIO.add_event_detect(IO_number, GPIO.RISING)
             while True:
-                if GPIOlib.event_detected(IO_number):
+                if GPIO.event_detected(IO_number):
                     print("Bouton appuye")
 
     def callBack(self, IO_number):
-        if GPIOlib != None:
+        if GPIO != None:
             self.logger.log.debug('callBack')
 
             def my_callback(IO_number):
                 print("un evenement s'est produit")
 
             # ici on ajoute une tempo de 75 ms pour eviter l'effet rebond
-            GPIOlib.add_event_detect(IO_number, GPIOlib.BOTH, callback=my_callback, bouncetime=75)
+            GPIO.add_event_detect(IO_number, GPIO.BOTH, callback=my_callback, bouncetime=75)
             # votre programme ici
 
     def remove_callBack(self, IO_number):
-        if GPIOlib != None:
-            GPIOlib.remove_event_detect(IO_number)
+        if GPIO != None:
+            GPIO.remove_event_detect(IO_number)

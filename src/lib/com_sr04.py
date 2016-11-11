@@ -14,7 +14,7 @@ class SR04:
         self.port_triger = port_triger
         self.port_echo = port_echo
 
-        self.gpio = com_gpio.GPIO('SR04')
+        self.gpio = com_gpio.GPIODialog('SR04')
         if self.gpio.importlib != None:
             self.gpio.setmodeBCM()
 

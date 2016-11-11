@@ -31,7 +31,7 @@ class DHT11:
 
     def __init__(self, pin):
         self.__pin = pin
-        self.gpio = com_gpio.GPIO('DTH11')
+        self.gpio = com_gpio.GPIODialog('DTH11')
         self.gpio.setmodeBCM()
 
     def __delete__(self, instance):

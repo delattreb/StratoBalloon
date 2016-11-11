@@ -66,11 +66,17 @@ def setConfig():
     config['GPIO']['DS18B20_1_nb'] = '60'
 
     # SR04
-    config['GPIO']['SR04_triger_port'] = '17'
+    config['GPIO']['SR04_triger_port'] = '22'
     config['GPIO']['SR04_echo_port'] = '27'
     config['GPIO']['SR04_delay'] = '1'
     config['GPIO']['SR04_nb'] = '60'
+
+    # LED
+    config['GPIO']['LED_ACQUISITION'] = '23'
     
+    # INPUT
+    config['GPIO']['INPUT_ACQUISITION'] = '27'
+
     # GPS
     config['GPS'] = {}
     config['GPS']['delay'] = '0.5'
