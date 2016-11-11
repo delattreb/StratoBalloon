@@ -60,6 +60,11 @@ def setConfig():
     config['GPIO']['DHT22_INTERIOR_delay'] = '3'
     config['GPIO']['DHT22_INTERIOR_nb'] = '30'
 
+    # DS18B20
+    config['GPIO']['DS18B20_1'] = '/sys/bus/w1/devices/w1_bus_master1/28-0416618c01ff/w1_slave'
+    config['GPIO']['DS18B20_1_delay'] = '5'
+    config['GPIO']['DS18B20_1_nb'] = '60'
+
     # SR04
     config['GPIO']['SR04_triger_port'] = '17'
     config['GPIO']['SR04_echo_port'] = '27'
