@@ -60,7 +60,9 @@ def setConfig():
     config['GPIO']['SR04_nb'] = '60'
 
     # DS18B20
-
+    config['GPIO']['DS18B20_1'] = '/sys/bus/w1/devices/w1_bus_master1/28-0416618c01ff/w1_slave'
+    config['GPIO']['DS18B20_1_delay'] = '5'
+    config['GPIO']['DS18B20_1_nb'] = '60'
     # Directory
     config['DIRECTORY'] = {}
     config['DIRECTORY']['picture_path'] = '/home/pi/'

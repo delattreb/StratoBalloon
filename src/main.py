@@ -1,5 +1,5 @@
-from acquisition import thread_acquisition_gps
-from lib import com_config, com_logger
+from acquisition import thread_acquisition_ds18b20, thread_acquisition_gps
+from lib import com_config, com_ds18b20, com_logger
 
 # TODO set config à supprimer
 com_config.setConfig()
@@ -9,13 +9,8 @@ config = com_config.getConfig()
 logger = com_logger.Logger()
 logger.log.info('Application start')
 
-# lcd = com_lcd.LCD()
-
-# Init version etc...
-# lcd.rectangle(0, 0, lcd.width_max - 1, lcd.height_max - 1)
-# lcd.text(3, 1, 'Strato Balloon', lcd.SMALL_FONT)
-# lcd.text(3, 14, config['VERSION']['last'], lcd.SMALL_FONT)
-# lcd.display()
+ds18b20_thread_int = thread_acquisition_ds18b20.ThreadAcquisitionDS18B20('Exterior', config['GPIO']['DS18B20_1'], int(config['GPIO']['DS18B20_1_delay']),
+                                                                         int(config['GPIO']['DS18B20_1_nb']))
 
 # Create new threads
 # camera_thread = thread_acquisition_camera.ThreadAcquisitionCamera("Camera Thread", int(config['CAMERA']['delay']), int(config['CAMERA']['nb']))
@@ -29,12 +24,13 @@ logger.log.info('Application start')
 # sr04_thread = thread_acquisition_sr04.ThreadAcquisitionSR04("Présence", int(config['GPIO']['SR04_triger_port']), int(config['GPIO']['SR04_echo_port']),
 #                                                            int(config['GPIO']['SR04_delay']), int(config['GPIO']['SR04_nb']))
 
-gps_thread = thread_acquisition_gps.ThreadAcquisitionGPS("GPS", 5, 100)
+#gps_thread = thread_acquisition_gps.ThreadAcquisitionGPS("GPS", 5, 100)
 # camera_thread.start()
 # dht11_thread_int.start()
 # dht11_thread_ext.start()
 # sr04_thread.start()
-gps_thread.start()
+# gps_thread.start()
+ds18b20_thread_int.start()
 
 """
 gps = com_gps.GPS()
