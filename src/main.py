@@ -12,12 +12,14 @@ logger = com_logger.Logger()
 logger.log.info('Application start')
 
 # LCD Splash
-lcd.splash()
+#lcd.splash()
 
 # Waiting for acquisition
+logger.log.debug('Wait for acquisition Input')
 gpioinout = com_gpio_inout.GPIOINOT()
 while not gpioinout.getacquisition():
-    pass
+    lcd.displayInformation()
+
 gpioinout.blink(5)
 
 # Create new threads

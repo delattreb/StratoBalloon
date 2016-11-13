@@ -36,9 +36,9 @@ class LCD:
         self.GAUGE_INTERIOR = 2
         
         # Font
-        self.__bigFont = ImageFont.truetype('font/FreeSerif.ttf', 18)
-        self.__defaultFont = ImageFont.truetype('font/FreeSerif.ttf', 13)
-        self.__smallFont = ImageFont.truetype('font/FreeSerif.ttf', 12)
+        self.__bigFont = ImageFont.truetype('font/FreeSans.ttf', 18)
+        self.__defaultFont = ImageFont.truetype('font/FreeSans.ttf', 13)
+        self.__smallFont = ImageFont.truetype('font/FreeSans.ttf', 11)
         
         self.oled = ssd1306(SMBus(1)) if SMBus != None else None
         self.width_max = self.oled.width if SMBus != None else 0
@@ -68,12 +68,17 @@ class LCD:
         if SMBus != None:
             self.oled.canvas.rectangle((x, y, x + width, y + height), outline=1, fill=0)
     
-    def gauge(self, x, y, width, height, value, max_value):
+    def line(self, x, y, width):
         if SMBus != None:
-            # exterior gauge
-            self.oled.canvas.rectangle((x, y, x + width, y + height), outline=1, fill=0)
-            cal = round((((width - self.GAUGE_INTERIOR) * value) / max_value), 0)
-            # interior
-            self.oled.canvas.rectangle(
-                (x + (self.GAUGE_INTERIOR / 2), y + (self.GAUGE_INTERIOR / 2), (x + (self.GAUGE_INTERIOR / 2) + cal), (y + height) - (self.GAUGE_INTERIOR / 2)),
-                outline=0, fill=1)
+            self.oled.canvas.line((x, y), 1, width)
+        
+        def gauge(self, x, y, width, height, value, max_value):
+            
+            if SMBus != None:
+                # exterior gauge
+                self.oled.canvas.rectangle((x, y, x + width, y + height), outline=1, fill=0)
+                cal = round((((width - self.GAUGE_INTERIOR) * value) / max_value), 0)
+                # interior
+                self.oled.canvas.rectangle(
+                    (x + (self.GAUGE_INTERIOR / 2), y + (self.GAUGE_INTERIOR / 2), (x + (self.GAUGE_INTERIOR / 2) + cal), (y + height) - (self.GAUGE_INTERIOR / 2)),
+                    outline=0, fill=1)
