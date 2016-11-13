@@ -4,9 +4,6 @@ from lib import com_config, com_gpio_inout, com_logger
 
 # TODO set config à supprimer
 com_config.setConfig()
-
-# TODO Lance pigiopd pour livre le capteur DHT22
-
 config = com_config.getConfig()
 
 logger = com_logger.Logger()
@@ -37,6 +34,7 @@ while True:
 #                                                                   int(config['GPIO']['DHT11_INTERIOR_PORT']), int(config['GPIO']['DHT11_INTERIOR_delay']),
 #                                                                   int(config['GPIO']['DHT11_INTERIOR_nb']))
 
+# TODO Lance pigiopd pour livre le capteur DHT22
 # dht22_thread_int = thread_acquisition_dht22.ThreadAcquisitionDHT22('Interior',
 #                                                                   int(config['GPIO']['DHT22_INTERIOR_PORT']), int(config['GPIO']['DHT22_INTERIOR_delay']),
 #                                                                   int(config['GPIO']['DHT22_INTERIOR_nb']))
@@ -44,7 +42,8 @@ while True:
 # sr04_thread = thread_acquisition_sr04.ThreadAcquisitionSR04("Présence", int(config['GPIO']['SR04_triger_port']), int(config['GPIO']['SR04_echo_port']),
 #                                                            int(config['GPIO']['SR04_delay']), int(config['GPIO']['SR04_nb']))
 
-# gps_thread = thread_acquisition_gps.ThreadAcquisitionGPS("GPS", 5, 100)
+# TODO reprendre les paramètres de config
+# gps_thread = thread_acquisition_gps.ThreadAcquisitionGPS("GPS", config['GPS']['delay'], config['GPS']['nb'])
 # camera_thread.start()
 # dht11_thread_int.start()
 # dht11_thread_ext.start()
