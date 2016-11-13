@@ -16,9 +16,11 @@ def setConfig():
     
     # region Config
     # Version
-    config['VERSION'] = {}
-    config['VERSION']['last'] = '1.0.1'
-    
+    config['APPLICATION'] = {}
+    config['APPLICATION']['name'] = 'Strato Balloon'
+    config['APPLICATION']['version'] = '1.1.0'
+    config['APPLICATION']['author'] = '© Bruno DELATTRE'
+
     # LOGGER
     config['LOGGER'] = {}
     config['LOGGER']['level'] = '10'

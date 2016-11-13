@@ -1,7 +1,7 @@
 """
-com_ds18b20.py v1.0.2
+com_dht22.py v1.0.0
 Auteur: Bruno DELATTRE
-Date : 02/10/2016
+Date : 11/11/2016
 """
 
 import atexit

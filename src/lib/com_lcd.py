@@ -18,18 +18,15 @@ except:
 def is_plugged(function):
     def plugged(*original_args, **original_kwargs):
         return function(*original_args, **original_kwargs)
-
+    
     if not SMBus:
         logger = com_logger.Logger('LCD')
         logger.log.warning('LCD not present')
-
+    
     return plugged
 
 
 class LCD:
-    width_max = 0
-    height_max = 0
-
     @is_plugged
     def __init__(self):
         # Constant
@@ -37,37 +34,40 @@ class LCD:
         self.DEFAULT_FONT = 1
         self.STRONG_FONT = 2
         self.GAUGE_INTERIOR = 2
-        if SMBus != None:
-            self.oled = ssd1306(SMBus(1))
-
-            self.width_max = self.oled.width
-            self.height_max = self.oled.height
-
-            # Font
-            self.__bigFont = ImageFont.truetype('lib/font/FreeSans.ttf', 18)
-            self.__defaultFont = ImageFont.truetype('lib/font/FreeSans.ttf', 13)
-            self.__smallFont = ImageFont.truetype('lib/font/FreeSans.ttf', 12)
-
+        
+        # Font
+        self.__bigFont = ImageFont.truetype('font/FreeSerif.ttf', 18)
+        self.__defaultFont = ImageFont.truetype('font/FreeSerif.ttf', 13)
+        self.__smallFont = ImageFont.truetype('font/FreeSerif.ttf', 12)
+        
+        self.oled = ssd1306(SMBus(1)) if SMBus != None else None
+        self.width_max = self.oled.width if SMBus != None else 0
+        self.height_max = self.oled.height if SMBus != None else 0
+    
     def display(self):
         if SMBus != None:
             self.oled.display()
-
+    
+    def clear(self):
+        if SMBus != None:
+            self.oled.cls()
+    
     def text(self, x, y, text, fontHeight):
         if SMBus != None:
             draw = self.oled.canvas
             if fontHeight == self.SMALL_FONT:
                 draw.text((x, y), text, font=self.__smallFont, fill=1)
-
+            
             if fontHeight == self.DEFAULT_FONT:
                 draw.text((x, y), text, font=self.__defaultFont, fill=1)
-
+            
             if fontHeight == self.STRONG_FONT:
                 draw.text((x, y), text, font=self.__bigFont, fill=1)
-
+    
     def rectangle(self, x, y, width, height):
         if SMBus != None:
             self.oled.canvas.rectangle((x, y, x + width, y + height), outline=1, fill=0)
-
+    
     def gauge(self, x, y, width, height, value, max_value):
         if SMBus != None:
             # exterior gauge

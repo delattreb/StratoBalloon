@@ -1,18 +1,18 @@
-import os
+import lcd
 
 from lib import com_config, com_gpio_inout, com_logger
 
+# Config
 # TODO set config à supprimer
 com_config.setConfig()
 config = com_config.getConfig()
 
+# Log
 logger = com_logger.Logger()
 logger.log.info('Application start')
 
-# Get Ip Adress
-retvalue = os.popen("ifconfig wlan0 | grep 'inet adr' | cut -c 20-33").readlines()
-if retvalue:
-    print("IP adress: " + str(retvalue[0]))
+# LCD Splash
+lcd.splash()
 
 # Waiting for acquisition
 gpioinout = com_gpio_inout.GPIOINOT()
