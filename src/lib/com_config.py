@@ -11,6 +11,7 @@ config_file = "config/config.ini"
 
 
 def setConfig():
+    AcquisitionDuration = 6  # In hours
     config = configparser.ConfigParser()
     
     # region Config
@@ -39,8 +40,8 @@ def setConfig():
     config['CAMERA']['contrast'] = '0'
     config['CAMERA']['image_effect'] = ''
     config['CAMERA']['exposure_mode'] = ''
-    config['CAMERA']['delay'] = '5'
-    config['CAMERA']['nb'] = '3'
+    config['CAMERA']['delay'] = '3'
+    config['CAMERA']['nb'] = str(int(((AcquisitionDuration * 3600) / float(config['CAMERA']['delay']))))
     
     # GPIO
     config['GPIO'] = {}
@@ -48,40 +49,40 @@ def setConfig():
     # DHT11 interior
     config['GPIO']['DHT11_INTERIOR_PORT'] = '24'
     config['GPIO']['DHT11_INTERIOR_delay'] = '15'
-    config['GPIO']['DHT11_INTERIOR_nb'] = '30'
+    config['GPIO']['DHT11_INTERIOR_nb'] = str(int(((AcquisitionDuration * 3600) / float(config['GPIO']['DHT11_INTERIOR_delay']))))
     
     # DHT11 exterior
     config['GPIO']['DHT11_EXTERIOR_PORT'] = '25'
     config['GPIO']['DHT11_EXTERIOR_delay'] = '15'
-    config['GPIO']['DHT11_EXTERIOR_nb'] = '30'
+    config['GPIO']['DHT11_EXTERIOR_nb'] = str(int(((AcquisitionDuration * 3600) / float(config['GPIO']['DHT11_EXTERIOR_delay']))))
     
     # DHT22
     config['GPIO']['DHT22_INTERIOR_PORT'] = '5'
-    config['GPIO']['DHT22_INTERIOR_delay'] = '3'
-    config['GPIO']['DHT22_INTERIOR_nb'] = '30'
-
+    config['GPIO']['DHT22_INTERIOR_delay'] = '15'
+    config['GPIO']['DHT22_INTERIOR_nb'] = str(int(((AcquisitionDuration * 3600) / float(config['GPIO']['DHT22_INTERIOR_delay']))))
+    
     # DS18B20
     config['GPIO']['DS18B20_1'] = '/sys/bus/w1/devices/w1_bus_master1/28-0416618c01ff/w1_slave'
     config['GPIO']['DS18B20_1_delay'] = '5'
-    config['GPIO']['DS18B20_1_nb'] = '60'
-
+    config['GPIO']['DS18B20_1_nb'] = str(int(((AcquisitionDuration * 3600) / float(config['GPIO']['DS18B20_1_delay']))))
+    
     # SR04
     config['GPIO']['SR04_triger_port'] = '22'
     config['GPIO']['SR04_echo_port'] = '27'
     config['GPIO']['SR04_delay'] = '1'
-    config['GPIO']['SR04_nb'] = '60'
-
+    config['GPIO']['SR04_nb'] = str(int(((AcquisitionDuration * 3600) / float(config['GPIO']['SR04_delay']))))
+        
     # LED
     config['GPIO']['LED_ACQUISITION'] = '23'
     
     # INPUT
     config['GPIO']['INPUT_ACQUISITION'] = '27'
-
+    
     # GPS
     config['GPS'] = {}
     config['GPS']['delay'] = '0.5'
-    config['GPS']['nb'] = '3000'
-
+    config['GPS']['nb'] = str(int(((AcquisitionDuration * 3600) / float(config['GPS']['delay']))))
+    
     # Directory
     config['DIRECTORY'] = {}
     config['DIRECTORY']['picture_path'] = '/home/pi/'
