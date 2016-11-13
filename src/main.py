@@ -16,10 +16,10 @@ if retvalue:
 
 # Waiting for acquisition
 gpioinout = com_gpio_inout.GPIOINOT()
-gpioinout.setacquisition(False)
-while True:
-    if gpioinout.getacquisition():
-        gpioinout.blink(5)
+while not gpioinout.getacquisition():
+    pass
+gpioinout.blink(5)
+
 # Create new threads
 # ds18b20_thread_int = thread_acquisition_ds18b20.ThreadAcquisitionDS18B20('Exterior', config['GPIO']['DS18B20_1'], int(config['GPIO']['DS18B20_1_delay']),
 #                                                                         int(config['GPIO']['DS18B20_1_nb']))
