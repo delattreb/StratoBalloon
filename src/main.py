@@ -12,7 +12,7 @@ logger = com_logger.Logger()
 logger.log.info('Application start')
 
 # LCD Splash
-#lcd.splash()
+lcd.splash()
 
 # Waiting for acquisition
 logger.log.debug('Wait for acquisition Input')
