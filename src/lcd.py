@@ -6,6 +6,7 @@ Date : 13/11/2016
 
 import datetime
 import os
+import subprocess
 import time
 
 from lib import com_config, com_gps, com_lcd
@@ -37,8 +38,10 @@ def splash():
 def displayInformation():
     gps = com_gps.GPS()
     gps.getLocalisation()
-    lcd = com_lcd.LCD()
+    utc = gps.getTime()
+    subprocess.call("timedatectl set-time '" + str(utc) + "'", shell=True)
     
+    lcd = com_lcd.LCD()
     lcd.text(1, 1, 'T: ' + datetime.datetime.strftime(datetime.datetime.now(), '%d %m %Y %H:%M:%S'), 0)
     
     if gps.mode > 1:

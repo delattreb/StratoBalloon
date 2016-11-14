@@ -12,7 +12,7 @@ logger = com_logger.Logger()
 logger.log.info('Application start')
 
 # LCD Splash
-#lcd.splash()
+lcd.splash()
 
 # Waiting for acquisition
 logger.log.debug('Wait for acquisition Input')
@@ -40,9 +40,6 @@ gpioinout.blink(5)
 # dht22_thread_int = thread_acquisition_dht22.ThreadAcquisitionDHT22('Interior',
 #                                                                   int(config['GPIO']['DHT22_INTERIOR_PORT']), int(config['GPIO']['DHT22_INTERIOR_delay']),
 #                                                                   int(config['GPIO']['DHT22_INTERIOR_nb']))
-
-# sr04_thread = thread_acquisition_sr04.ThreadAcquisitionSR04("Présence", int(config['GPIO']['SR04_triger_port']), int(config['GPIO']['SR04_echo_port']),
-#                                                            int(config['GPIO']['SR04_delay']), int(config['GPIO']['SR04_nb']))
 
 # TODO reprendre les paramètres de config
 # gps_thread = thread_acquisition_gps.ThreadAcquisitionGPS("GPS", config['GPS']['delay'], config['GPS']['nb'])
