@@ -4,13 +4,12 @@
 import os
 import subprocess
 import sys
+import time
 
 from lib import com_gps
 
 if not os.getuid() == 0:
     sys.exit('Needs to be root for running this script.')
-
-import time
 
 print('monitoring started')
 utc = ''

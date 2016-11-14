@@ -26,5 +26,6 @@ while True:
             break
     else:
         time.sleep(0.1)
+GPIO.cleanup()
 print('System is going to halt now')
 subprocess.call('poweroff')

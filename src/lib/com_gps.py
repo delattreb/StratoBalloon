@@ -18,6 +18,7 @@ class GPS:
         self.latitude = 0.0
         self.altitude = 0.0
         self.timeutc = ''
+        self.utc = ''
         self.longiture_precision = 0
         self.latitude_precision = 0
         self.altitude_precision = 0
@@ -112,6 +113,7 @@ class GPS:
                 self.longitude = packet.lon
                 self.latitude = packet.lat
                 self.timeutc = packet.time
+                self.utc = packet.time
                 self.speed = packet.speed()
                 self.error = packet.error
             
