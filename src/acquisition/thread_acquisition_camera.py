@@ -31,5 +31,5 @@ class ThreadAcquisitionCamera(threading.Thread):
                 threadName.exit()
             time.sleep(delay)
             config = com_config.getConfig()
-            camera.getPicture(config['DIRECTORY']['picture_path'])
+            camera.getPicture()
             counter -= 1

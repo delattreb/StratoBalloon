@@ -51,21 +51,5 @@ gpioinout.blink(5)
 # gps_thread.start()
 # ds18b20_thread_int.start()
 
-"""
-gps = com_gps.GPS()
-gps.getLocalisation()
-
-if gps.response != None:
-    print("Mode:" + str(gps.mode))
-    if gps.response.mode >= 2:
-        print("ERROR:" + str(gps.error))
-        print("lat:" + str(gps.latitude))
-        print("lon:" + str(gps.longitude))
-        print("time:" + gps.timeutc)
-    if gps.response.mode >= 3:
-        # climb
-        print("alt:" + str(gps.altitude))
-"""
-
 logger.log.info('Application stop')
 gpioinout.cleanup()

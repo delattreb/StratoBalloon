@@ -42,6 +42,7 @@ def setConfig():
     config['CAMERA']['contrast'] = '0'
     config['CAMERA']['image_effect'] = ''
     config['CAMERA']['exposure_mode'] = ''
+    config['CAMERA']['picture_path'] = '/home/pi/'
     config['CAMERA']['delay'] = '3'
     config['CAMERA']['nb'] = str(int(((AcquisitionDuration * 3600) / float(config['CAMERA']['delay']))))
     
@@ -86,8 +87,7 @@ def setConfig():
     config['GPS']['nb'] = str(int(((AcquisitionDuration * 3600) / float(config['GPS']['delay']))))
     
     # Directory
-    config['DIRECTORY'] = {}
-    config['DIRECTORY']['picture_path'] = '/home/pi/'
+    #config['DIRECTORY'] = {}
     # endregion
     
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
