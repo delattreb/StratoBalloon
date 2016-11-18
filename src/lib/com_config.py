@@ -25,7 +25,7 @@ def setConfig():
     # LOGGER
     config['LOGGER'] = {}
     config['LOGGER']['level'] = '10'
-    # Info: DEBUG=10 INFO= 20 WARNING=30 ERROR=40 #CRITICAL=50
+    # Info: DEBUG=10 INFO=20 WARNING=30 ERROR=40 #CRITICAL=50
     
     # SQLite
     config['SQLITE'] = {}
