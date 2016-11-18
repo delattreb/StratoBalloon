@@ -1,9 +1,15 @@
-import lcd, time
+"""
+main.py v 1.1.5
+Auteur: Bruno DELATTRE
+Date : 07/08/2016
+"""
 
+import time
+
+import lcd
 from lib import com_config, com_gpio_inout, com_logger
 
 # Config
-# TODO set config à supprimer
 com_config.setConfig()
 config = com_config.getConfig()
 
@@ -30,7 +36,7 @@ gpioinout = com_gpio_inout.GPIOINOT()
 while not gpioinout.getacquisition():
     lcd.displatSensor()
 lcd.displayStartAcquisition()
-gpioinout.blink(0.1,10)
+gpioinout.blink(0.1, 10)
 lcd.displayOff()
 time.sleep(int(config['APPLICATION']['trigger']))
 

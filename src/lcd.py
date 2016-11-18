@@ -67,5 +67,5 @@ class LCD():
     
     def displayStartAcquisition(self):
         self.lcd.text(1, 15, '- START -', 1)
-        self.lcd.text(1, 35, 'LAUNCH !!!', 1)
+        self.lcd.text(1, 35, 'LAUNCH in: ' + self.config['APPLICATION']['trigger'] + 's', 1)
         self.lcd.display()
