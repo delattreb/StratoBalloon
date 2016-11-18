@@ -32,7 +32,7 @@ while not gpioinout.getacquisition():
 lcd.displayStartAcquisition()
 gpioinout.blink(0.1,10)
 lcd.displayOff()
-time.sleep(int(config['APPLICATION']['triger']))
+time.sleep(int(config['APPLICATION']['trigger']))
 
 # Create new threads
 # ds18b20_thread_int = thread_acquisition_ds18b20.ThreadAcquisitionDS18B20('Exterior', config['GPIO']['DS18B20_1'], int(config['GPIO']['DS18B20_1_delay']),

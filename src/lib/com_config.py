@@ -20,7 +20,7 @@ def setConfig():
     config['APPLICATION']['name'] = 'Strato Balloon'
     config['APPLICATION']['version'] = '1.2.0'
     config['APPLICATION']['author'] = '© Bruno DELATTRE'
-    config['APPLICATION']['triger'] = '120'
+    config['APPLICATION']['trigger'] = '120'
 
     # LOGGER
     config['LOGGER'] = {}
