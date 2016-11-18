@@ -38,8 +38,8 @@ class GPIOINOT:
         
         return state
     
-    def blink(self, repetition):
-        blink_duration = 0.2
+    def blink(self, duration, repetition):
+        blink_duration = duration
         cpt = 0
         while cpt < repetition:
             self.setacquisition(True)

@@ -1,4 +1,4 @@
-import lcd
+import lcd, time
 
 from lib import com_config, com_gpio_inout, com_logger
 
@@ -22,15 +22,17 @@ logger.log.debug('Wait for GPS Fix')
 gpioinout = com_gpio_inout.GPIOINOT()
 while not gpioinout.getacquisition():
     lcd.displayGPSInformation()
-gpioinout.blink(2)
+gpioinout.blink(0.1, 2)
 
 # Waiting for Init acquisition
 logger.log.debug('Wait for input acquisition')
 gpioinout = com_gpio_inout.GPIOINOT()
 while not gpioinout.getacquisition():
     lcd.displatSensor()
+lcd.displayStartAcquisition()
+gpioinout.blink(0.1,10)
 lcd.displayOff()
-gpioinout.blink(5)
+time.sleep(int(config['APPLICATION']['triger']))
 
 # Create new threads
 # ds18b20_thread_int = thread_acquisition_ds18b20.ThreadAcquisitionDS18B20('Exterior', config['GPIO']['DS18B20_1'], int(config['GPIO']['DS18B20_1_delay']),
