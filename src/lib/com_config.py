@@ -11,16 +11,16 @@ config_file = "config/config.ini"
 
 
 def setConfig():
-    AcquisitionDuration = 6  # In hours
+    acquisitionDuration = 6  # In hours
     config = configparser.ConfigParser()
     
     # region Config
     # Version
     config['APPLICATION'] = {}
     config['APPLICATION']['name'] = 'Strato Balloon'
-    config['APPLICATION']['version'] = '1.1.0'
+    config['APPLICATION']['version'] = '1.2.0'
     config['APPLICATION']['author'] = '© Bruno DELATTRE'
-
+    
     # LOGGER
     config['LOGGER'] = {}
     config['LOGGER']['level'] = '10'
@@ -44,7 +44,7 @@ def setConfig():
     config['CAMERA']['exposure_mode'] = ''
     config['CAMERA']['picture_path'] = '/home/pi/'
     config['CAMERA']['delay'] = '3'
-    config['CAMERA']['nb'] = str(int(((AcquisitionDuration * 3600) / float(config['CAMERA']['delay']))))
+    config['CAMERA']['nb'] = str(int(((acquisitionDuration * 3600) / float(config['CAMERA']['delay']))))
     
     # GPIO
     config['GPIO'] = {}
@@ -52,29 +52,33 @@ def setConfig():
     # DHT11 interior
     config['GPIO']['DHT11_INTERIOR_PORT'] = '24'
     config['GPIO']['DHT11_INTERIOR_delay'] = '15'
-    config['GPIO']['DHT11_INTERIOR_nb'] = str(int(((AcquisitionDuration * 3600) / float(config['GPIO']['DHT11_INTERIOR_delay']))))
+    config['GPIO']['DHT11_INTERIOR_nb'] = str(int(((acquisitionDuration * 3600) / float(config['GPIO']['DHT11_INTERIOR_delay']))))
     
     # DHT11 exterior
     config['GPIO']['DHT11_EXTERIOR_PORT'] = '25'
     config['GPIO']['DHT11_EXTERIOR_delay'] = '15'
-    config['GPIO']['DHT11_EXTERIOR_nb'] = str(int(((AcquisitionDuration * 3600) / float(config['GPIO']['DHT11_EXTERIOR_delay']))))
+    config['GPIO']['DHT11_EXTERIOR_nb'] = str(int(((acquisitionDuration * 3600) / float(config['GPIO']['DHT11_EXTERIOR_delay']))))
     
     # DHT22
     config['GPIO']['DHT22_INTERIOR_PORT'] = '5'
     config['GPIO']['DHT22_INTERIOR_delay'] = '15'
-    config['GPIO']['DHT22_INTERIOR_nb'] = str(int(((AcquisitionDuration * 3600) / float(config['GPIO']['DHT22_INTERIOR_delay']))))
+    config['GPIO']['DHT22_INTERIOR_nb'] = str(int(((acquisitionDuration * 3600) / float(config['GPIO']['DHT22_INTERIOR_delay']))))
     
     # DS18B20
     config['GPIO']['DS18B20_1'] = '/sys/bus/w1/devices/w1_bus_master1/28-0416618c01ff/w1_slave'
     config['GPIO']['DS18B20_1_delay'] = '5'
-    config['GPIO']['DS18B20_1_nb'] = str(int(((AcquisitionDuration * 3600) / float(config['GPIO']['DS18B20_1_delay']))))
+    config['GPIO']['DS18B20_1_nb'] = str(int(((acquisitionDuration * 3600) / float(config['GPIO']['DS18B20_1_delay']))))
+    
+    config['GPIO']['DS18B20_2'] = ''
+    config['GPIO']['DS18B20_2_delay'] = '5'
+    config['GPIO']['DS18B20_2_nb'] = str(int(((acquisitionDuration * 3600) / float(config['GPIO']['DS18B20_2_delay']))))
     
     # SR04
     config['GPIO']['SR04_triger_port'] = '22'
     config['GPIO']['SR04_echo_port'] = '27'
     config['GPIO']['SR04_delay'] = '1'
-    config['GPIO']['SR04_nb'] = str(int(((AcquisitionDuration * 3600) / float(config['GPIO']['SR04_delay']))))
-        
+    config['GPIO']['SR04_nb'] = str(int(((acquisitionDuration * 3600) / float(config['GPIO']['SR04_delay']))))
+    
     # LED
     config['GPIO']['LED_ACQUISITION'] = '23'
     
@@ -83,11 +87,11 @@ def setConfig():
     
     # GPS
     config['GPS'] = {}
-    config['GPS']['delay'] = '0.5'
-    config['GPS']['nb'] = str(int(((AcquisitionDuration * 3600) / float(config['GPS']['delay']))))
+    config['GPS']['delay'] = '1'
+    config['GPS']['nb'] = str(int(((acquisitionDuration * 3600) / float(config['GPS']['delay']))))
     
     # Directory
-    #config['DIRECTORY'] = {}
+    # config['DIRECTORY'] = {}
     # endregion
     
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))

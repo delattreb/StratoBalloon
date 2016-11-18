@@ -5,52 +5,63 @@ Date : 13/11/2016
 """
 
 import datetime
-import os
 import subprocess
 import time
 
-from lib import com_config, com_gps, com_lcd
+from lib import com_config, com_dht22, com_ds18b20, com_gps, com_network, com_ssd1306
 
 splashDuration = 5
 
 
-def getIP():
-    # Get Ip Adress wlan0 or eth0
-    retvalue = os.popen("ifconfig wlan0 | grep 'inet adr' | cut -c 20-33").readlines()
-    if retvalue:
-        return str(retvalue[0])
+class LCD():
+    def __init__(self):
+        self.config = com_config.getConfig()
+        self.lcd = com_ssd1306.SSD1306()
+    
+    def displayOff(self):
+        lcd = com_ssd1306.SSD1306()
+        lcd.clear()
+    
+    def splash(self):
+        self.lcd.rectangle(0, 0, self.lcd.width_max - 1, self.lcd.height_max - 1)
+        self.lcd.text(4, 1, self.config['APPLICATION']['name'], 2)
+        self.lcd.text(4, 17, self.config['APPLICATION']['version'], 1)
+        self.lcd.text(4, 49, self.config['APPLICATION']['author'], 0)
 
+        self.lcd.display()
+        time.sleep(splashDuration)
+        self.lcd.clear()
+    
+    def displatSensor(self):
+        # DHT22
+        dht22 = com_dht22.DHT22(int(self.config['GPIO']['DHT22_INTERIOR_PORT']), 'DHT22')
+        self.lcd.text(1, 1, 'DHT22: ' + str(dht22.temperature()) + '°C', 0)
+        self.lcd.text(20, 1, 'DHT22: ' + str(dht22.humidity()) + '%', 0)
+        
+        # DS18B20
+        ds18b20 = com_ds18b20.DS18B20()
+        self.lcd.text(1, 11, 'DS18B20 Int: ' + str(ds18b20.read('DS18B20 Interior', self.config['GPIO']['DS18B20_1'])) + '°C', 0)
+        self.lcd.text(1, 21, 'DS18B20 Ext: ' + str(ds18b20.read('DS18B20 Exterior', self.config['GPIO']['DS18B20_2'])) + '°C', 0)
 
-def splash():
-    config = com_config.getConfig()
-    lcd = com_lcd.LCD()
+        self.lcd.display()
+        time.sleep(5)
     
-    lcd.rectangle(0, 0, lcd.width_max - 1, lcd.height_max - 1)
-    lcd.text(4, 1, config['APPLICATION']['name'], 2)
-    lcd.text(4, 17, config['APPLICATION']['version'], 1)
-    lcd.text(4, 49, config['APPLICATION']['author'], 0)
-    
-    lcd.display()
-    time.sleep(splashDuration)
-    lcd.clear()
+    def displayGPSInformation(self):
+        gps = com_gps.GPS()
+        gps.getLocalisation()
+        utc = gps.getTime()
+        subprocess.call("timedatectl set-time '" + str(utc) + "'", shell=True)
 
+        self.lcd.text(1, 1, 'T: ' + datetime.datetime.strftime(datetime.datetime.now(), '%Y %m %d %H:%M:%S'), 0)
+        
+        if gps.mode > 1:
+            self.lcd.text(1, 11, 'G: ' + gps.utc.replace(' ', '').replace('-', ' ').replace('T', ' ').replace('Z', ''), 0)
+            self.lcd.text(1, 21, 'Lat: ' + str(gps.latitude), 0)
+            self.lcd.text(1, 31, 'Lon: ' + str(gps.longitude), 0)
+            self.lcd.text(1, 41, 'Alt: ' + str(gps.altitude), 0)
+        
+        ip = com_network.NETWORK()
+        self.lcd.text(1, 51, 'Ip: ' + ip.getIP(), 0)
 
-def displayInformation():
-    gps = com_gps.GPS()
-    gps.getLocalisation()
-    utc = gps.getTime()
-    subprocess.call("timedatectl set-time '" + str(utc) + "'", shell=True)
-    
-    lcd = com_lcd.LCD()
-    lcd.text(1, 1, 'T: ' + datetime.datetime.strftime(datetime.datetime.now(), '%d %m %Y %H:%M:%S'), 0)
-    
-    if gps.mode > 1:
-        lcd.text(1, 11, 'G: ' + gps.utc.replace(' ', '').replace('-', ' ').replace('T', ' ').replace('Z', ''), 0)
-        lcd.text(1, 21, 'Lat: ' + str(gps.latitude), 0)
-        lcd.text(1, 31, 'Lon: ' + str(gps.longitude), 0)
-        lcd.text(1, 41, 'Alt: ' + str(gps.altitude), 0)
-    
-    lcd.text(1, 51, 'Ip: ' + getIP(), 0)
-    
-    lcd.display()
-    time.sleep(5)
+        self.lcd.display()
+        time.sleep(5)

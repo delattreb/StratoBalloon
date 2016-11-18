@@ -11,15 +11,25 @@ config = com_config.getConfig()
 logger = com_logger.Logger()
 logger.log.info('Application start')
 
+# LCD
+lcd = lcd.LCD()
+
 # LCD Splash
 lcd.splash()
 
-# Waiting for acquisition
-logger.log.debug('Wait for acquisition Input')
+# Waiting for GPS acquisition
+logger.log.debug('Wait for GPS Fix')
 gpioinout = com_gpio_inout.GPIOINOT()
 while not gpioinout.getacquisition():
-    lcd.displayInformation()
+    lcd.displayGPSInformation()
+gpioinout.blink(2)
 
+# Waiting for Init acquisition
+logger.log.debug('Wait for input acquisition')
+gpioinout = com_gpio_inout.GPIOINOT()
+while not gpioinout.getacquisition():
+    lcd.displatSensor()
+lcd.displayOff()
 gpioinout.blink(5)
 
 # Create new threads
