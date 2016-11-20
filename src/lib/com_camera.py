@@ -63,7 +63,7 @@ class Camera:
             #self.camera.capture(name) #TODO comment
 
             dalcamera.set_last_picture_id(id + 1)
-            #dalpicture.setpicture(name, str(datetime.datetime.now()))
+            dalpicture.setpicture(name, str(datetime.datetime.now()))
             
             logger = com_logger.Logger('CAMERA')
             logger.log.debug('Picture taken:' + name)

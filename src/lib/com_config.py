@@ -21,7 +21,7 @@ def setConfig():
     config['APPLICATION']['version'] = '1.2.0'
     config['APPLICATION']['author'] = '© Bruno DELATTRE'
     config['APPLICATION']['trigger'] = '120'
-
+    
     # LOGGER
     config['LOGGER'] = {}
     config['LOGGER']['level'] = '10'
@@ -32,7 +32,7 @@ def setConfig():
     config['SQLITE'] = {}
     config['SQLITE']['database'] = 'database.db'
     
-    # Camera
+    # Camera v8M 3280x2464 -- v5M 2592x1944
     config['CAMERA'] = {}
     config['CAMERA']['pic_resolution_x'] = '3280'
     config['CAMERA']['pic_resolution_y'] = '2464'
