@@ -14,7 +14,7 @@ except:
 import datetime
 from time import sleep
 
-from dal import dal_camera, dal_picture, dal_video
+from dal import dal_video
 from lib import com_config, com_logger
 
 
@@ -55,52 +55,29 @@ class Camera:
             # self.camera.exposure_mode = config['CAMERA']['exposure_mode']
             self.path = config['CAMERA']['picture_path']
     
-    def setpicture(self, name, date):
-        picture = dal_picture.DAL_Picture()
-        picture.setpicture(name, date)
     
-    def setvideo(self, name, date):
-        video = dal_video.DAL_Video()
-        video.setvideo(name, date)
-    
-    def __get_last_picture_id(self):
-        d = dal_camera.DAL_Camera()
-        return d.get_last_picture_id()
-    
-    def __set_last_picture_id(self, value):
-        d = dal_camera.DAL_Camera()
-        d.set_last_picture_id(value)
-    
-    def __get_last_video_id(self):
-        d = dal_camera.DAL_Camera()
-        return d.get_last_video_id()
-    
-    def __set_last_video_id(self, value):
-        d = dal_camera.DAL_Camera()
-        d.set_last_video_id(value)
-    
-    def getPicture(self):
+    def getPicture(self, dalcamera, dalpicture):
         if PiCamera != None:
-            id = self.__get_last_picture_id()
+            id = dalcamera.get_last_picture_id()
             name = self.path + self.imgName + str(id) + '.jpg'
-            self.camera.capture(name)
-            self.__set_last_picture_id(id + 1)
-            
-            self.setpicture(name, str(datetime.datetime.now()))
+            #self.camera.capture(name) #TODO comment
+
+            dalcamera.set_last_picture_id(id + 1)
+            #dalpicture.setpicture(name, str(datetime.datetime.now()))
             
             logger = com_logger.Logger('CAMERA')
             logger.log.debug('Picture taken:' + name)
     
-    def getVideo(self, duration: int):
+    def getVideo(self, duration: int, dal):
         if PiCamera != None:
-            id = self.__get_last_video_id()
+            id = dal.get_last_video_id()
             name = self.path + self.vidName + str(id) + '.h264'
             self.camera.start_recording(name)
             sleep(duration)
             self.camera.stop_recording()
-            self.__set_last_video_id(id + 1)
+            dal.set_last_video_id(id + 1)
             
-            self.setpicture(name, str(datetime.datetime.now()))
+            dal.setvideo(name, str(datetime.datetime.now()))
             
             logger = com_logger.Logger('CAMERA')
             logger.log.debug('Video taken: ' + name)

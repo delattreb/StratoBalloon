@@ -5,20 +5,18 @@ Date : 07/08/2016
 """
 
 import sqlite3
+import threading
 
 from lib import com_config
 
 
 class SQLite:
     def __init__(self):
-        self.connection, self.cursor = self.connect()
-
+        config = com_config.getConfig()
+        self.connection = sqlite3.Connection(config['SQLITE']['database'])
+        self.cursor = self.connection.cursor()
+        self.lock = threading.Lock()
+    
     def __del__(self):
         self.connection.close()
-
-    def connect(self):
-        config = com_config.getConfig()
-        con = sqlite3.connect(config['SQLITE']['database'])
-        cursor = con.cursor()
-        return con, cursor
-
+        self.cursor.close()

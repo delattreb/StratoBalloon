@@ -7,29 +7,35 @@ Date : 17/09/2016
 import threading
 import time
 
-from lib import com_camera, com_logger, com_config
+from dal import dal_camera, dal_picture
+from lib import com_camera, com_logger
 
 
 class ThreadAcquisitionCamera(threading.Thread):
     def __init__(self, name, delay, counter):
-        threading.Thread.__init__(self)
+        super().__init__()
+        
         self.name = name
         self.counter = counter
         self.delay = delay
-        self.exitFlag = 0
-
+        
     def run(self):
+        threadlock.acquire()
+        
+        dalcamera = dal_camera.DAL_Camera()
+        dalpicture = dal_picture.DAL_Picture()
         logger = com_logger.Logger('Camera Thread')
-        logger.log.info('Start')
-        self.getPicture(self.name, self.delay, self.counter)
-        logger.log.info('Stop')
+        logger.info('Start')
+        self.getPicture(self.name, self.delay, self.counter, dalcamera, dalpicture)
+        logger.info('Stop')
 
-    def getPicture(self, threadName, delay, counter):
-        camera = com_camera.Camera('PICTURE')
+        threadlock.acquire()
+    
+    def getPicture(self, threadName, delay, counter, dalcamera, dalpicture):
+        instance = com_camera.Camera('PICTURE')
         while counter:
-            if self.exitFlag:
-                threadName.exit()
             time.sleep(delay)
-            config = com_config.getConfig()
-            camera.getPicture()
+            instance.getPicture(dalcamera, dalpicture)
             counter -= 1
+
+threadlock = threading.Lock()

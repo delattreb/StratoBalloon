@@ -11,10 +11,21 @@ from lib import com_config
 
 class Logger:
     def __init__(self, name='', file=''):
-        config = com_config.getConfig()
-        self.level = int(config['LOGGER']['level'])
+        self.config = com_config.getConfig()
+        self.level = int(self.config['LOGGER']['level'])
         self.log = logging
-        self.log.basicConfig(filename=file, level=self.level)
-
         if name:
-            self.log = logging.getLogger(name)
+            self.log.getLogger(name)
+        self.log.basicConfig(filename=file, level=self.level)
+    
+    def info(self, strinfo):
+        self.log.info(strinfo)
+    
+    def debug(self, strdebug):
+        self.log.debug(strdebug)
+    
+    def warning(self, strwarning):
+        self.log.warning(strwarning)
+    
+    def error(self, strerror):
+        self.log.error(strerror)

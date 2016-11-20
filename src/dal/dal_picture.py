@@ -14,9 +14,11 @@ class DAL_Picture(com_sqlite.SQLite):
     """ Select"""
     
     """ Update """
-
-
+    
+    """ Insert """
+    
     def setpicture(self, name, date):
+        
         try:
             self.cursor.execute('INSERT INTO picture (name, date) VALUES ("' + str(name) + '","' + str(date) + '")')
             self.connection.commit()

@@ -7,29 +7,35 @@ Date : 17/09/2016
 import threading
 import time
 
-from lib import com_config, com_dht11, com_logger
+from dal import dal_dht11
+from lib import com_dht11, com_logger
 
 
 class ThreadAcquisitionDHT11(threading.Thread):
     def __init__(self, name, port, delay, counter):
-        threading.Thread.__init__(self)
+        super().__init__()
+        
         self.name = name
         self.port = port
         self.counter = counter
         self.delay = delay
-        self.exitFlag = 0
-
+    
     def run(self):
+        threadlock.acquire()
+        
+        dal = dal_dht11.DAL_DHT11()
         logger = com_logger.Logger('DHT11:' + self.name)
-        logger.log.info('Start')
-        self.getTempHum(self.name, self.delay, self.counter)
-        logger.log.info('Stop')
-
-    def getTempHum(self, threadName, delay, counter):
+        logger.info('Start')
+        self.getTempHum(self.name, self.delay, self.counter, dal)
+        logger.info('Stop')
+        
+        threadlock.release()
+    
+    def getTempHum(self, threadName, delay, counter, dal):
         instance = com_dht11.DHT11(self.port)
         while counter:
-            if self.exitFlag:
-                threadName.exit()
             time.sleep(delay)
-            result = instance.read(self.name)
+            result = instance.read(self.name, dal)
             counter -= 1
+
+threadlock = threading.Lock()

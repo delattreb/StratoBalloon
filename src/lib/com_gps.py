@@ -9,21 +9,26 @@ import gpxpy.gpx
 import requests
 
 from dal import dal_gps
+from lib import com_logger
 
 
 class GPS:
     def __init__(self):
         self.mode = 0
+        self.sats = 0
+        self.track = 0
         self.longitude = 0.0
         self.latitude = 0.0
         self.altitude = 0.0
         self.timeutc = ''
-        self.utc = ''
-        self.longiture_precision = 0
-        self.latitude_precision = 0
-        self.altitude_precision = 0
-        self.speed = 0
-        self.error = ''
+        self.latprecision = 0.0
+        self.lonprecision = 0.0
+        self.altprecision = 0.0
+        self.hspeed = 0.0
+        self.vspeed = 0.0
+        
+        # Connect to the local gpsd
+        gpsd.connect()
     
     def getGoogleMapsImages(self, directory, filename, zoomlevel=15, width=320, height=385, levelprecision=2, traceroute=False, weight=5, nbpoint=4, color='0xff0000',
                             imageformat='png', maptype='roadmap'):
@@ -85,10 +90,6 @@ class GPS:
     def getTime(self):
         ret = ''
         try:
-            # Connect to the local gpsd
-            gpsd.connect()
-            
-            # Get gps position
             packet = gpsd.get_current()
             
             self.mode = packet.mode
@@ -99,32 +100,51 @@ class GPS:
             pass
         return ret
     
-    def getLocalisation(self):
+    def getLocalisation(self, dal):
+        logger = com_logger.Logger('GPS')
         try:
-            # Connect to the local gpsd
-            gpsd.connect()
-            
+            # TODO Comment
+            """
             # Get gps position
             packet = gpsd.get_current()
             
+            # Debug info GPS
+            logger.debug('lon:' + str(packet.lon))
+            logger.debug('lat:' + str(packet.lat))
+            logger.debug('alt:' + str(packet.alt))
+            logger.debug('hspeed:' + str(packet.hspeed))
+            logger.debug('vspeed:' + str(packet.speed_vertical()))
+            logger.debug('lon +/-:' + str(packet.error['x']))
+            logger.debug('lat +/-:' + str(packet.error['y']))
+            logger.debug('alt +/-:' + str(packet.error['v']))
+            logger.debug('sats:' + str(packet.sats))
+            logger.debug('track:' + str(packet.track))
+            
             # See the inline docs for GpsResponse for the available data
+            self.altitude = 0.0
             self.mode = packet.mode
             if self.mode >= 2:
+                self.sats = packet.sats
+                self.track = packet.track
                 self.longitude = packet.lon
                 self.latitude = packet.lat
                 self.timeutc = packet.time
-                self.utc = packet.time
-                self.speed = packet.speed()
-                self.error = packet.error
+                self.hspeed = packet.hspeed
+                self.lonprecision = packet.error['x']
+                self.latprecision = packet.error['y']
             
-            self.altitude = 0
             if self.mode >= 3:
                 self.altitude = packet.altitude()
+                self.altprecision = packet.error['v']
+                self.vspeed = packet.speed_vertical()
             
-            # Record on database
             if self.mode >= 2:
-                dalgps = dal_gps.DAL_GPS()
-                dalgps.setCoordinate(self.mode, str(self.timeutc[:-5].replace('T', ' ').replace('Z', '')), self.longitude, self.latitude, self.altitude, 0, 0, 0,
-                                     self.speed)
+                #dalgps = dal_gps.DAL_GPS()
+                dal.setCoordinate(self.mode, str(self.timeutc[:-5].replace('T', ' ').replace('Z', '')), self.longitude, self.latitude, self.altitude,
+                                     self.lonprecision, self.latprecision, self.altprecision, self.hspeed)
+            logger.debug('GPS info -> database')
+            """
+            dal.setCoordinate(0, 't', 0, 0, 0, 0, 0, 0, 0)
+            logger.debug('GPS info -> database')
         except:
-            pass
+            logger.error('GPS exception')

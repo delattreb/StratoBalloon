@@ -249,13 +249,12 @@ class DHT22:
             self.cb.cancel()
             self.cb = None
     
-    def set(self):
+    def set(self, dal):
         self.trigger()
         time.sleep(0.2)
         
-        dht22 = dal_dht22.DAL_DHT22()
-        dht22.set_dht22(str(datetime.datetime.now()), self.name, str(self.temperature()), str(self.humidity()))
+        dal.set_dht22(str(datetime.datetime.now()), self.name, str(self.temperature()), str(self.humidity()))
         logger = com_logger.Logger('DHT22 ' + self.name)
-        logger.log.debug('Temperature:' + str(self.temperature()) + ' Humidity:' + str(self.humidity()))
+        logger.debug('Temperature:' + str(self.temperature()) + ' Humidity:' + str(self.humidity()))
         
         self.cancel()

@@ -58,8 +58,6 @@ im.save('/tmp/output.png')
 
 """
 
-
-
 import PIL.Image as Image
 import PIL.ImageDraw as ImageDraw
 
@@ -81,7 +79,7 @@ new_img = Image.new('RGBA', (4237, 2813))
 new_img = new_img.convert('RGBA')
 img_cascade = img_cascade.convert('RGBA')
 
-new_img.paste(img_incrust, (3497, 100),img_incrust)
+new_img.paste(img_incrust, (3497, 100), img_incrust)
 
 img3 = Image.alpha_composite(img_cascade, new_img)
 img3.save("newimage.jpg", 'jpeg')
@@ -94,3 +92,5 @@ watermask = watermark.convert("L").point(lambda x: min(x, 100))
 watermark.putalpha(watermask)
 main.paste(watermark, None, watermark)
 main.save("12volt-watermarked.jpg", "JPEG")
+
+"""

@@ -18,7 +18,7 @@ def is_plugged(function):
     
     if not GPIO:
         logger = com_logger.Logger('GPIO')
-        logger.log.warning('GPIO not present')
+        logger.warning('GPIO not present')
     
     return plugged
 
@@ -48,53 +48,53 @@ class GPIODialog:
     def setmodeBOARD(self):
         if GPIO != None:
             GPIO.setmode(GPIO.BOARD)
-            # self.logger.log.debug('setMode')
+            # self.logger.debug('setMode')
     
     def setmodeBCM(self):
         if GPIO != None:
             GPIO.setmode(GPIO.BCM)
-            # self.logger.log.debug('setmodeBCM')
+            # self.logger.debug('setmodeBCM')
     
     def getmode(self):
         if GPIO != None:
-            # self.logger.log.debug('getmode')
+            # self.logger.debug('getmode')
             return GPIO.getmode()
     
     def setupIO(self, IO_number, mode):
         if GPIO != None:
             GPIO.setup(IO_number, mode)
-            # self.logger.log.debug('setupIO')
+            # self.logger.debug('setupIO')
     
     def getIO(self, IO_number):
         if GPIO != None:
-            # self.logger.log.debug('getIO')
+            # self.logger.debug('getIO')
             return GPIO.input(IO_number)
     
     def setIO(self, IO_number, state):
         if GPIO != None:
-            # self.logger.log.debug('setIO')
+            # self.logger.debug('setIO')
             GPIO.output(IO_number, state)
     
     def switchIO(self, IO_number):
         if GPIO != None:
-            # self.logger.log.debug('switchIO')
+            # self.logger.debug('switchIO')
             GPIO.output(IO_number, not self.getIO(IO_number))
     
     def getSetupIO(self, IO_number):
         if GPIO != None:
-            # self.logger.log.debug('getSetupIO')
+            # self.logger.debug('getSetupIO')
             # On peut interroger l'E/S afin de connaître son état de configuration.
             # Les valeurs renvoyées sont alors GPIO.INPUT, GPIO.OUTPUT, GPIO.SPI, GPIO.I2C, GPIO.HARD_PWM, GPIO.SERIAL ou GPIO.UNKNOWN.
             return GPIO.gpio_function(IO_number)
     
     def cleanup(self):
         if GPIO != None:
-            # self.logger.log.debug('cleanup')
+            # self.logger.debug('cleanup')
             GPIO.cleanup()
     
     def PWM(self, IO_number, frequence, rapport_cyclique, nouveau_rapport_cyclique, nouvelle_frequence):
         if GPIO != None:
-            # self.logger.log.debug('PWM')
+            # self.logger.debug('PWM')
             p = GPIO.PWM(IO_number, frequence)
             p.start(rapport_cyclique)  # ici, rapport_cyclique vaut entre 0.0 et 100.0
             p.ChangeFrequency(nouvelle_frequence)
@@ -103,7 +103,7 @@ class GPIODialog:
     
     def pull(self, IO_number):
         if GPIO != None:
-            # self.logger.log.debug('pull')
+            # self.logger.debug('pull')
             # Afin d'éviter de laisser flottante toute entrée, il est possible de connecter des résistances de pull-up ou de pull-down, au choix, en interne.
             # Pour information, une résistance de pull-up ou de pull-down a pour but d'éviter de laisser une entrée ou une sortie dans un état incertain, en forçant une connexion à la masse ou à un potentiel donné.
             GPIO.setup(IO_number, GPIO.IN, pull_up_down=GPIO.PUD_UP)
@@ -111,23 +111,23 @@ class GPIODialog:
     
     def setup(self, IO_number, mode):
         if GPIO != None:
-            # self.logger.log.debug('setup:' + 'IO:' + str(IO_number) + ' Mode:' + str(mode))
+            # self.logger.debug('setup:' + 'IO:' + str(IO_number) + ' Mode:' + str(mode))
             GPIO.setup(IO_number, mode)
     
     def setuppud(self, IO_number, mode, pud):
         if GPIO != None:
-            # self.logger.log.debug('setup')
+            # self.logger.debug('setup')
             GPIO.setup(IO_number, mode, pud)
     
     def wait_edge(self, IO_number):
         if GPIO != None:
-            # self.logger.log.debug('wait_edge')
+            # self.logger.debug('wait_edge')
             # La première consiste à bloquer l'exécution du programme jusqu'à ce que l'événement se produise.
             return GPIO.wait_for_edge(IO_number, GPIO.RISING)
     
     def event_detect(self, IO_number):
         if GPIO != None:
-            self.logger.log.debug('event_detect')
+            self.logger.debug('event_detect')
             GPIO.add_event_detect(IO_number, GPIO.RISING)
             while True:
                 if GPIO.event_detected(IO_number):
@@ -135,7 +135,7 @@ class GPIODialog:
     
     def callBack(self, IO_number):
         if GPIO != None:
-            self.logger.log.debug('callBack')
+            self.logger.debug('callBack')
             
             def my_callback(IO_number):
                 print("un evenement s'est produit")

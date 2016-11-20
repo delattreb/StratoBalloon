@@ -26,7 +26,7 @@ class DS18B20:
         f.close()
         return lignes
     
-    def read(self, name, sensor):
+    def read(self, name, sensor, dal):
         logger = com_logger.Logger('DS18B20 ' + name)
         
         lines = self.read_file(sensor)
@@ -37,15 +37,14 @@ class DS18B20:
             lines = self.read_file(sensor)
         """
         if lines[0].strip()[-3:] != 'YES':
-            logger.log.debug('Connexion ERROR')
+            logger.debug('Connexion ERROR')
             return -999
         
         temp_raw = lines[1].split("=")[1]  # quand on a eu YES, on lit la temp apres le signe = sur la ligne 1
         temp = round(int(temp_raw) / 1000.0, 2)  # le 2 arrondi a 2 chiffres apres la virgule
         
-        ds18b20 = dal_ds18b20.DAL_DS18B20()
-        ds18b20.set_ds18b20(str(datetime.datetime.now()), name, str(temp))
+        dal.set_ds18b20(str(datetime.datetime.now()), name, str(temp))
         
-        logger.log.debug('Temperature:' + str(temp))
+        logger.debug('Temperature:' + str(temp))
         
         return temp

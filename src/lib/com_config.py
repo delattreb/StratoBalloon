@@ -25,6 +25,7 @@ def setConfig():
     # LOGGER
     config['LOGGER'] = {}
     config['LOGGER']['level'] = '10'
+    config['LOGGER']['filename'] = 'log.txt'
     # Info: DEBUG=10 INFO=20 WARNING=30 ERROR=40 #CRITICAL=50
     
     # SQLite
@@ -43,8 +44,8 @@ def setConfig():
     config['CAMERA']['contrast'] = '0'
     config['CAMERA']['image_effect'] = ''
     config['CAMERA']['exposure_mode'] = ''
-    config['CAMERA']['picture_path'] = '/home/pi/'
-    config['CAMERA']['delay'] = '3'
+    config['CAMERA']['picture_path'] = 'pictures/'
+    config['CAMERA']['delay'] = '0.1'
     config['CAMERA']['nb'] = str(int(((acquisitionDuration * 3600) / float(config['CAMERA']['delay']))))
     
     # GPIO
@@ -88,7 +89,7 @@ def setConfig():
     
     # GPS
     config['GPS'] = {}
-    config['GPS']['delay'] = '1'
+    config['GPS']['delay'] = '0.1'
     config['GPS']['nb'] = str(int(((acquisitionDuration * 3600) / float(config['GPS']['delay']))))
     
     # Directory

@@ -10,13 +10,18 @@ import subprocess
 
 class NETWORK:
     def __init__(self):
-        pass
+        self.initTime = False
     
     def getIP(self):
         # Get Ip Adress wlan0 or eth0
-        retvalue = os.popen("ifconfig wlan0 | grep 'inet adr' | cut -c 20-33").readlines()
-        if retvalue:
-            return str(retvalue[0])
+        try:
+            retvalue = os.popen("ifconfig wlan0 | grep 'inet adr' | cut -c 20-33").readlines()
+            if retvalue:
+                return str(retvalue[0][:-2])
+        except:
+            return ''
     
     def setTime(self, utc):
-        subprocess.call("timedatectl set-time '" + str(utc) + "'", shell=True)
+        if not self.initTime:
+            subprocess.call("timedatectl set-time '" + str(utc) + "'", shell=True)
+            self.initTime = True

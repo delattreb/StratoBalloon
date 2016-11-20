@@ -8,11 +8,13 @@ import threading
 import time
 
 from lib import com_dht22, com_logger
+from dal import dal_dht22
 
 
 class ThreadAcquisitionDHT22(threading.Thread):
     def __init__(self, name, port, delay, counter):
-        threading.Thread.__init__(self)
+        super().__init__()
+        
         self.name = name
         self.port = port
         self.counter = counter
@@ -20,16 +22,21 @@ class ThreadAcquisitionDHT22(threading.Thread):
         self.exitFlag = 0
     
     def run(self):
+        threadlock.acquire()
+        
+        dal = dal_dht22.DAL_DHT22()
         logger = com_logger.Logger('DHT22:' + self.name)
-        logger.log.info('Start')
-        self.getTempHum(self.name, self.delay, self.counter)
-        logger.log.info('Stop')
+        logger.info('Start')
+        self.getTempHum(self.name, self.delay, self.counter, dal)
+        logger.info('Stop')
+        
+        threadlock.release()
     
-    def getTempHum(self, threadName, delay, counter):
+    def getTempHum(self, threadName, delay, counter, dal):
         while counter:
-            if self.exitFlag:
-                threadName.exit()
             time.sleep(delay)
             instance = com_dht22.DHT22(self.port, self.name)
-            result = instance.set()
+            result = instance.set(dal)
             counter -= 1
+
+threadlock = threading.Lock()

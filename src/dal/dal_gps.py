@@ -15,27 +15,31 @@ class DAL_GPS(com_sqlite.SQLite):
     
     def getCoordinate(self, mode):
         return self.cursor.execute(
-            'SELECT mode, date, longitude, latitude, altitude, longitude_precision, latitude_precision, altitude_precision, speed FROM coordinate WHERE mode >= ' + str(
+            'SELECT mode, date, longitude, latitude, altitude, longitude_precision, latitude_precision, altitude_precision, hspeed FROM coordinate WHERE mode >= ' + str(
                 mode) +
             ' ORDER by date').fetchall()
     
     """ Insert """
     
+    # TODO Ajout de 'vrai' datetime en base
     def setCoordinate(self, mode, date, lon, lat, alt, lon_pres, lat_pres, alt_pres, speed):
+        self.lock.acquire()
         try:
             self.cursor.execute(
-                'INSERT INTO  coordinate (mode, date, longitude, latitude, altitude, longitude_precision, latitude_precision, altitude_precision, speed) VALUES("' + str(
+                'INSERT INTO coordinate (mode, date, longitude, latitude, altitude, longitude_precision, latitude_precision, altitude_precision, hspeed) VALUES("' + str(
                     mode) + '", "' + str(date) + '", "' + str(lon) + '", "' + str(lat) + '", "' + str(alt) + '", "' + str(lon_pres) + '", "' + str(lat_pres) +
                 '","' + str(alt_pres) + '","' + str(speed) + '")')
             self.connection.commit()
         except:
             self.connection.rollback()
-    
+        self.lock.release()
     """ Delete """
     
     def delCoordinate(self):
+        self.lock.acquire()
         try:
             self.cursor.execute('DELETE FROM coordinate')
             self.connection.commit()
         except:
             self.connection.rollback()
+        self.lock.release()

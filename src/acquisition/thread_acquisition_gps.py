@@ -7,28 +7,35 @@ Date : 06/10/2016
 import threading
 import time
 
-from lib import com_config, com_logger, com_gps
+from dal import dal_gps
+from lib import com_gps, com_logger
 
 
 class ThreadAcquisitionGPS(threading.Thread):
     def __init__(self, name, delay, counter):
-        threading.Thread.__init__(self)
+        super().__init__()
+        
         self.name = name
         self.counter = counter
         self.delay = delay
-        self.exitFlag = 0
-
+    
     def run(self):
+        threadlock.acquire()
+        
+        dal = dal_gps.DAL_GPS()
         logger = com_logger.Logger('GPS:' + self.name)
-        logger.log.info('Start')
-        self.getGPS(self.name, self.delay, self.counter)
-        logger.log.info('Stop')
+        logger.info('Start')
+        self.getGPS(self.name, self.delay, self.counter, dal)
+        logger.info('Stop')
 
-    def getGPS(self, threadName, delay, counter):
+        threadlock.release()
+    
+    def getGPS(self, threadName, delay, counter, dal):
         instance = com_gps.GPS()
         while counter:
-            if self.exitFlag:
-                threadName.exit()
             time.sleep(delay)
-            result = instance.getLocalisation()
+            result = instance.getLocalisation(dal)
             counter -= 1
+
+
+threadlock = threading.Lock()

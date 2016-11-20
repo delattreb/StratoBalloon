@@ -27,14 +27,14 @@ class GPIOINOT:
         self.gpio.setIO(self.led_acquisition, state)
         
         logger = com_logger.Logger('LED_ACQUISITION')
-        logger.log.debug('LED ' + str(state))
+        logger.debug('LED ' + str(state))
     
     def getacquisition(self):
         state = self.gpio.getIO(self.input_acquisition)
         
         if state:
             logger = com_logger.Logger('INPUT_ACQUISITION')
-            logger.log.debug('INPUT ' + str(state))
+            logger.debug('INPUT ' + str(state))
         
         return state
     

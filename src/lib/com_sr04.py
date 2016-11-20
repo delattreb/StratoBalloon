@@ -44,6 +44,6 @@ class SR04:
             distance = round((pulse_end - pulse_start) * 17150, 2)
 
             logger = com_logger.Logger()
-            logger.log.debug('Distance: ' + str(distance))
+            logger.debug('Distance: ' + str(distance))
 
             return distance
