@@ -4,7 +4,6 @@ Auteur: Bruno DELATTRE
 Date : 02/10/2016
 """
 
-import datetime
 import time
 
 from lib import com_gpio, com_logger
@@ -73,7 +72,7 @@ class DHT11:
                 logger.debug('Checksum ERROR')
                 return DHT11Result(DHT11Result.ERR_CRC, 0, 0)
             
-            dal.set_dht11(str(datetime.datetime.now()), name, str(the_bytes[2]), str(the_bytes[0]))
+            dal.set_dht11(name, str(the_bytes[2]), str(the_bytes[0]))
             
             logger.debug('Temperature:' + str(the_bytes[2]) + ' Humidity:' + str(the_bytes[0]))
             

@@ -4,10 +4,8 @@ Auteur: Bruno DELATTRE
 Date : 02/10/2016
 """
 
-import datetime
 from os import system
 
-from dal import dal_ds18b20
 from lib import com_logger
 
 # module GPIO 1-wire Port GPIO4
@@ -43,7 +41,7 @@ class DS18B20:
         temp_raw = lines[1].split("=")[1]  # quand on a eu YES, on lit la temp apres le signe = sur la ligne 1
         temp = round(int(temp_raw) / 1000.0, 2)  # le 2 arrondi a 2 chiffres apres la virgule
         
-        dal.set_ds18b20(str(datetime.datetime.now()), name, str(temp))
+        dal.set_ds18b20(name, str(temp))
         
         logger.debug('Temperature:' + str(temp))
         

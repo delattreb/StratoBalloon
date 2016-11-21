@@ -11,10 +11,8 @@ try:
 except:
     PiCamera = None
 
-import datetime
 from time import sleep
 
-from dal import dal_video
 from lib import com_config, com_logger
 
 
@@ -53,17 +51,19 @@ class Camera:
             # self.camera.contrast = config['CAMERA']['contrast']
             # self.camera.image_effect = config['CAMERA']['image_effect']
             # self.camera.exposure_mode = config['CAMERA']['exposure_mode']
+            self.camera.meter_mode = config['CAMERA']['meter_mode']
+            self.camera.awb_mode = config['CAMERA']['awb']
             self.path = config['CAMERA']['picture_path']
-    
+            self.camera.iso = 100
     
     def getPicture(self, dalcamera, dalpicture):
         if PiCamera != None:
             id = dalcamera.get_last_picture_id()
             name = self.path + self.imgName + str(id) + '.jpg'
-            #self.camera.capture(name) #TODO comment
-
+            # self.camera.capture(name) #TODO comment
+            
             dalcamera.set_last_picture_id(id + 1)
-            dalpicture.setpicture(name, str(datetime.datetime.now()))
+            dalpicture.setpicture(name)
             
             logger = com_logger.Logger('CAMERA')
             logger.log.debug('Picture taken:' + name)
@@ -75,9 +75,9 @@ class Camera:
             self.camera.start_recording(name)
             sleep(duration)
             self.camera.stop_recording()
-            dal.set_last_video_id(id + 1)
             
-            dal.setvideo(name, str(datetime.datetime.now()))
+            dal.set_last_video_id(id + 1)
+            dal.setvideo(name)
             
             logger = com_logger.Logger('CAMERA')
             logger.log.debug('Video taken: ' + name)

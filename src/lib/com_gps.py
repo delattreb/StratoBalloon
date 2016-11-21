@@ -140,11 +140,11 @@ class GPS:
             
             if self.mode >= 2:
                 #dalgps = dal_gps.DAL_GPS()
-                dal.setCoordinate(self.mode, str(self.timeutc[:-5].replace('T', ' ').replace('Z', '')), self.longitude, self.latitude, self.altitude,
+                dal.setCoordinate(self.mode, self.longitude, self.latitude, self.altitude,
                                      self.lonprecision, self.latprecision, self.altprecision, self.hspeed)
             logger.debug('GPS info -> database')
             """
-            dal.setCoordinate(0, 't', 0, 0, 0, 0, 0, 0, 0)
+            dal.setCoordinate(0, 0, 0, 0, 0, 0, 0, 0)
             logger.debug('GPS info -> database')
         except:
             logger.error('GPS exception')

@@ -4,6 +4,15 @@ Auteur: Bruno DELATTRE
 Date : 07/08/2016
 """
 
+
+"""
+Post traitement des dates
+SELECT datetime(date,'+1 hours','+5 minutes') from coordinate;
+select datetime("now", 'localtime')
+
+"""
+
+
 from acquisition import thread_acquisition_camera, thread_acquisition_gps
 from lib import com_config, com_gpio_inout, com_logger
 
@@ -54,7 +63,7 @@ camera_thread = thread_acquisition_camera.ThreadAcquisitionCamera("Camera Thread
 #                                                                   int(config['GPIO']['DHT11_INTERIOR_PORT']), float(config['GPIO']['DHT11_INTERIOR_delay']),
 #                                                                   int(config['GPIO']['DHT11_INTERIOR_nb']))
 
-# TODO Lance pigiopd pour livre le capteur DHT22
+# TODO Lance pigiopd pour lire le capteur DHT22
 # dht22_thread_int = thread_acquisition_dht22.ThreadAcquisitionDHT22('Interior',
 #                                                                   int(config['GPIO']['DHT22_INTERIOR_PORT']), int(config['GPIO']['DHT22_INTERIOR_delay']),
 #                                                                   int(config['GPIO']['DHT22_INTERIOR_nb']))

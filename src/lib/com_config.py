@@ -42,8 +42,14 @@ def setConfig():
     config['CAMERA']['rotation'] = '0'
     config['CAMERA']['brightness'] = '0'
     config['CAMERA']['contrast'] = '0'
+    # negative, solarise, posterize, whiteboard, blackboard, sketch, denoise, emboss, oilpaint, hatch, gpen, pastel, watercolour, film, blur, saturation
     config['CAMERA']['image_effect'] = ''
-    config['CAMERA']['exposure_mode'] = ''
+    # auto, night, nightpreview, backlight, spotlight, sports, snow, beach, verylong, fixedfps, antishake, fireworks
+    config['CAMERA']['exposure_mode'] = 'auto'
+    # average, spot, backlit, matrix
+    config['CAMERA']['meter_mode'] = 'average'
+    # off, auto, sun, cloud, shade, tungsten, fluorescent, incandescent, flash, horizon
+    config['CAMERA']['awb'] = 'auto'
     config['CAMERA']['picture_path'] = 'pictures/'
     config['CAMERA']['delay'] = '0.1'
     config['CAMERA']['nb'] = str(int(((acquisitionDuration * 3600) / float(config['CAMERA']['delay']))))

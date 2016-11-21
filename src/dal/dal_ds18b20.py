@@ -18,10 +18,10 @@ class DAL_DS18B20(com_sqlite.SQLite):
     
     """ Insert """
     
-    def set_ds18b20(self, date, name, temperature):
+    def set_ds18b20(self, name, temperature):
         try:
             self.cursor.execute(
-                'INSERT INTO  DS18B20 (date, name, temperature) VALUES ("' + str(date) + '","' + str(name) + '","' + str(temperature) + '")')
+                'INSERT INTO  DS18B20 (date, name, temperature) VALUES (datetime("now"),"' + str(name) + '","' + str(temperature) + '")')
             self.connection.commit()
         except:
             self.connection.rollback()

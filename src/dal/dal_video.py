@@ -14,11 +14,10 @@ class DAL_Video(com_sqlite.SQLite):
     """ Select"""
     
     """ Update """
-
-
-    def setvideo(self, name, date):
+    
+    def setvideo(self, name):
         try:
-            self.cursor.execute('INSERT INTO video (name, date) VALUES ("' + str(name) + '","' + str(date) + '")')
+            self.cursor.execute('INSERT INTO video (name, date) VALUES ("' + str(name) + '", datetime("now"))')
             self.connection.commit()
         except:
             self.connection.rollback()

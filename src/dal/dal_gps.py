@@ -22,17 +22,18 @@ class DAL_GPS(com_sqlite.SQLite):
     """ Insert """
     
     # TODO Ajout de 'vrai' datetime en base
-    def setCoordinate(self, mode, date, lon, lat, alt, lon_pres, lat_pres, alt_pres, speed):
+    def setCoordinate(self, mode, lon, lat, alt, lon_pres, lat_pres, alt_pres, speed):
         self.lock.acquire()
         try:
             self.cursor.execute(
                 'INSERT INTO coordinate (mode, date, longitude, latitude, altitude, longitude_precision, latitude_precision, altitude_precision, hspeed) VALUES("' + str(
-                    mode) + '", "' + str(date) + '", "' + str(lon) + '", "' + str(lat) + '", "' + str(alt) + '", "' + str(lon_pres) + '", "' + str(lat_pres) +
+                    mode) + '",datetime("now"),"' + str(lon) + '", "' + str(lat) + '", "' + str(alt) + '", "' + str(lon_pres) + '", "' + str(lat_pres) +
                 '","' + str(alt_pres) + '","' + str(speed) + '")')
             self.connection.commit()
         except:
             self.connection.rollback()
         self.lock.release()
+    
     """ Delete """
     
     def delCoordinate(self):

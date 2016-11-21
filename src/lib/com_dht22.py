@@ -5,12 +5,10 @@ Date : 11/11/2016
 """
 
 import atexit
-import datetime
 import time
 
 import pigpio
 
-from dal import dal_dht22
 from lib import com_logger
 
 
@@ -253,7 +251,7 @@ class DHT22:
         self.trigger()
         time.sleep(0.2)
         
-        dal.set_dht22(str(datetime.datetime.now()), self.name, str(self.temperature()), str(self.humidity()))
+        dal.set_dht22(self.name, str(self.temperature()), str(self.humidity()))
         logger = com_logger.Logger('DHT22 ' + self.name)
         logger.debug('Temperature:' + str(self.temperature()) + ' Humidity:' + str(self.humidity()))
         
