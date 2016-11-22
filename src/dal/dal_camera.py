@@ -16,20 +16,20 @@ class DAL_Camera(com_sqlite.SQLite):
     def get_last_picture_id(self):
         self.lock.acquire()
         rows = self.cursor.execute('SELECT id_picture FROM camera')
-        id = 0
+        index = 0
         for row in rows:
-            id = row[0]
+            index = row[0]
         self.lock.release()
-        return id
+        return index
     
     def get_last_video_id(self):
         self.lock.acquire()
         rows = self.cursor.execute('SELECT id_video FROM camera')
-        id = 0
+        index = 0
         for row in rows:
-            id = row[0]
+            index = row[0]
         self.lock.release()
-        return id
+        return index
     
     """ Update """
     

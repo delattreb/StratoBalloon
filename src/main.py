@@ -76,6 +76,7 @@ camera_thread.start()
 # dht22_thread_int.start()
 # sr04_thread.start()
 gps_thread.start()
+
 # ds18b20_thread_int.start()
 
 
