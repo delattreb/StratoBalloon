@@ -58,11 +58,11 @@ class Camera:
     
     def getPicture(self, dalcamera, dalpicture):
         if PiCamera != None:
-            id = dalcamera.get_last_picture_id()
-            name = self.path + self.imgName + str(id) + '.jpg'
+            index = dalcamera.get_last_picture_id()
+            name = self.path + self.imgName + str(index) + '.jpg'
             # self.camera.capture(name) #TODO comment
             
-            dalcamera.set_last_picture_id(id + 1)
+            dalcamera.set_last_picture_id(index + 1)
             dalpicture.setpicture(name)
             
             logger = com_logger.Logger('CAMERA')
@@ -70,13 +70,13 @@ class Camera:
     
     def getVideo(self, duration: int, dal):
         if PiCamera != None:
-            id = dal.get_last_video_id()
-            name = self.path + self.vidName + str(id) + '.h264'
+            index = dal.get_last_video_id()
+            name = self.path + self.vidName + str(index) + '.h264'
             self.camera.start_recording(name)
             sleep(duration)
             self.camera.stop_recording()
             
-            dal.set_last_video_id(id + 1)
+            dal.set_last_video_id(index + 1)
             dal.setvideo(name)
             
             logger = com_logger.Logger('CAMERA')
