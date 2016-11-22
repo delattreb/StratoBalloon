@@ -23,12 +23,12 @@ class DAL_Camera(com_sqlite.SQLite):
         return id
     
     def get_last_video_id(self):
-        
+        self.lock.acquire()
         rows = self.cursor.execute('SELECT id_video FROM camera')
         id = 0
         for row in rows:
             id = row[0]
-        
+        self.lock.release()
         return id
     
     """ Update """
@@ -43,9 +43,10 @@ class DAL_Camera(com_sqlite.SQLite):
         self.lock.release()
     
     def set_last_video_id(self, value):
-        
+        self.lock.acquire()
         try:
             self.cursor.execute('UPDATE camera SET id_video = "' + str(value) + '"')
             self.connection.commit()
         except:
             self.connection.rollback()
+        self.lock.release()

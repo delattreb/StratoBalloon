@@ -18,9 +18,10 @@ class DAL_Picture(com_sqlite.SQLite):
     """ Insert """
     
     def setpicture(self, name):
-        
+        self.lock.acquire()
         try:
             self.cursor.execute('INSERT INTO picture (name, date) VALUES ("' + str(name) + '",datetime("now"))')
             self.connection.commit()
         except:
             self.connection.rollback()
+        self.lock.release()

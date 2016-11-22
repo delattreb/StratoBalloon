@@ -13,12 +13,10 @@ class DAL_DHT22(com_sqlite.SQLite):
     
     """ Select"""
     
-    def get_dht22(self):
-        return self.cursor.execute('SELECT date, temperature, humidity  FROM DHT22 ORDER by id').fetchall()
-    
     """ Insert """
     
     def set_dht22(self, name, temperature, humidity):
+        self.lock.acquire()
         try:
             self.cursor.execute(
                 'INSERT INTO  DHT22 (date, name, temperature, humidity) VALUES (datetime("now"),"' + str(name) + '","' + str(temperature) + '","' + str(
@@ -26,3 +24,4 @@ class DAL_DHT22(com_sqlite.SQLite):
             self.connection.commit()
         except:
             self.connection.rollback()
+        self.lock.release()

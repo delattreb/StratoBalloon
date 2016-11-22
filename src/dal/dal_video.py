@@ -16,8 +16,10 @@ class DAL_Video(com_sqlite.SQLite):
     """ Update """
     
     def setvideo(self, name):
+        self.lock.acquire()
         try:
             self.cursor.execute('INSERT INTO video (name, date) VALUES ("' + str(name) + '", datetime("now"))')
             self.connection.commit()
         except:
             self.connection.rollback()
+        self.lock.release()

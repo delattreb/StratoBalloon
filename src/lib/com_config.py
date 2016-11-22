@@ -18,7 +18,7 @@ def setConfig():
     # Version
     config['APPLICATION'] = {}
     config['APPLICATION']['name'] = 'Strato Balloon'
-    config['APPLICATION']['version'] = '1.2.0'
+    config['APPLICATION']['version'] = '1.3.0'
     config['APPLICATION']['author'] = '© Bruno DELATTRE'
     config['APPLICATION']['trigger'] = '120'
     
