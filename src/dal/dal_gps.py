@@ -22,7 +22,6 @@ class DAL_GPS:
     
     """ Insert """
     
-    # TODO Ajout de 'vrai' datetime en base
     def setCoordinate(self, mode, lon, lat, alt, lon_pres, lat_pres, alt_pres, speed):
         try:
             self.cursor.execute(
