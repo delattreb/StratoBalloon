@@ -72,13 +72,13 @@ class Thread2(threading.Thread):
 
 threadlock = threading.Lock()
 
-t1 = Thread1('t1', threadlock, 2000, 0)
-t2 = Thread1('t2', threadlock, 2000, 0)
-t3 = Thread1('t3', threadlock, 2000, 0)
+t1 = Thread1('t1', threadlock, 5000, 0)
+t2 = Thread1('t2', threadlock, 5000, 0)
+t3 = Thread1('t3', threadlock, 5000, 0)
 
-t4 = Thread2('t4', threadlock, 2000, 0)
-t5 = Thread2('t5', threadlock, 2000, 0)
-t6 = Thread2('t6', threadlock, 2000, 0)
+t4 = Thread2('t4', threadlock, 5000, 0)
+t5 = Thread2('t5', threadlock, 5000, 0)
+t6 = Thread2('t6', threadlock, 5000, 0)
 
 t1.start()
 t2.start()
