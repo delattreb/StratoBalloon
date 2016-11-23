@@ -4,38 +4,40 @@ Auteur: Bruno DELATTRE
 Date : 06/10/2016
 """
 
+import sqlite3
 import threading
 import time
 
-from dal import dal_gps
-from lib import com_gps, com_logger
+from lib import com_config, com_gps, com_logger
 
 
 class ThreadAcquisitionGPS(threading.Thread):
-    def __init__(self, name, delay, counter):
+    def __init__(self, name, lock, delay, counter):
         super().__init__()
         
         self.name = name
         self.counter = counter
         self.delay = delay
+        self.lock = lock
     
     def run(self):
-        threadlock.acquire()
-        
-        dal = dal_gps.DAL_GPS()
         logger = com_logger.Logger('GPS:' + self.name)
         logger.info('Start')
-        self.getGPS(self.name, self.delay, self.counter, dal)
+        self.getGPS(self.delay, self.counter)
         logger.info('Stop')
-
-        threadlock.release()
     
-    def getGPS(self, threadName, delay, counter, dal):
+    def getGPS(self, delay, counter):
         instance = com_gps.GPS()
         while counter:
-            time.sleep(delay)
-            result = instance.getLocalisation(dal)
+            self.lock.acquire()
+            
+            config = com_config.getConfig()
+            connection = sqlite3.Connection(config['SQLITE']['database'])
+            cursor = connection.cursor()
+            
+            instance.getLocalisation(connection, cursor)
+            
+            self.lock.release()
+            
             counter -= 1
-
-
-threadlock = threading.Lock()
+            time.sleep(delay)

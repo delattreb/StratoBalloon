@@ -7,9 +7,10 @@ Date : 06/10/2016
 from lib import com_sqlite
 
 
-class DAL_GPS(com_sqlite.SQLite):
-    def __init__(self):
-        super().__init__()
+class DAL_GPS:
+    def __init__(self, connection, cursor):
+        self.connection = connection
+        self.cursor = cursor
     
     """ Select"""
     
@@ -23,7 +24,6 @@ class DAL_GPS(com_sqlite.SQLite):
     
     # TODO Ajout de 'vrai' datetime en base
     def setCoordinate(self, mode, lon, lat, alt, lon_pres, lat_pres, alt_pres, speed):
-        self.lock.acquire()
         try:
             self.cursor.execute(
                 'INSERT INTO coordinate (mode, date, longitude, latitude, altitude, longitude_precision, latitude_precision, altitude_precision, hspeed) VALUES("' + str(
@@ -32,15 +32,13 @@ class DAL_GPS(com_sqlite.SQLite):
             self.connection.commit()
         except:
             self.connection.rollback()
-        self.lock.release()
     
     """ Delete """
     
     def delCoordinate(self):
-        self.lock.acquire()
         try:
             self.cursor.execute('DELETE FROM coordinate')
             self.connection.commit()
         except:
             self.connection.rollback()
-        self.lock.release()
+

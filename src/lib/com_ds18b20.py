@@ -6,6 +6,7 @@ Date : 02/10/2016
 
 from os import system
 
+from dal import dal_ds18b20
 from lib import com_logger
 
 # module GPIO 1-wire Port GPIO4
@@ -19,12 +20,17 @@ class DS18B20:
         pass
     
     def read_file(self, file):
-        f = open(file, 'r')
-        lignes = f.readlines()
-        f.close()
-        return lignes
+        lines = ''
+        try:
+            f = open(file, 'r')
+            lines = f.readlines()
+            f.close()
+        except:
+            pass
+        return lines
     
-    def read(self, name, sensor, dal):
+    def read(self, name, sensor, connection, cursor):
+        dal = dal_ds18b20.DAL_DS18B20(connection, cursor)
         logger = com_logger.Logger('DS18B20 ' + name)
         
         lines = self.read_file(sensor)
@@ -34,15 +40,19 @@ class DS18B20:
             sleep(0.2)
             lines = self.read_file(sensor)
         """
-        if lines[0].strip()[-3:] != 'YES':
-            logger.debug('Connexion ERROR')
-            return -999
-        
-        temp_raw = lines[1].split("=")[1]  # quand on a eu YES, on lit la temp apres le signe = sur la ligne 1
-        temp = round(int(temp_raw) / 1000.0, 2)  # le 2 arrondi a 2 chiffres apres la virgule
-        
-        dal.set_ds18b20(name, str(temp))
-        
-        logger.debug('Temperature:' + str(temp))
-        
-        return temp
+        if len(lines) > 0:
+            if lines[0].strip()[-3:] != 'YES':
+                logger.debug('Connexion ERROR')
+                return -999
+            
+            temp_raw = lines[1].split("=")[1]  # quand on a eu YES, on lit la temp apres le signe = sur la ligne 1
+            temp = round(int(temp_raw) / 1000.0, 2)  # le 2 arrondi a 2 chiffres apres la virgule
+            
+            dal.set_ds18b20(name, str(temp))
+            
+            logger.debug('Temperature:' + str(temp))
+            
+            return temp
+        else:
+            logger.error('Not find file')
+            return 0

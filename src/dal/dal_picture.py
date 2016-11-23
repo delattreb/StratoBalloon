@@ -4,12 +4,11 @@ Auteur: Bruno DELATTRE
 Date : 15/11/2016
 """
 
-from lib import com_sqlite
 
-
-class DAL_Picture(com_sqlite.SQLite):
-    def __init__(self):
-        super().__init__()
+class DAL_Picture:
+    def __init__(self, connection, cursor):
+        self.connection = connection
+        self.cursor = cursor
     
     """ Select"""
     
@@ -18,10 +17,8 @@ class DAL_Picture(com_sqlite.SQLite):
     """ Insert """
     
     def setpicture(self, name):
-        self.lock.acquire()
         try:
             self.cursor.execute('INSERT INTO picture (name, date) VALUES ("' + str(name) + '",datetime("now"))')
             self.connection.commit()
         except:
             self.connection.rollback()
-        self.lock.release()

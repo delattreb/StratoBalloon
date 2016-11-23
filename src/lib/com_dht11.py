@@ -6,6 +6,7 @@ Date : 02/10/2016
 
 import time
 
+from dal import dal_dht11
 from lib import com_gpio, com_logger
 
 
@@ -35,8 +36,10 @@ class DHT11:
     def __delete__(self, instance):
         self.gpio.cleanup()
     
-    def read(self, name, dal):
+    def read(self, name, connection, cursor):
         if self.gpio.importlib != None:
+            dal = dal_dht11.DAL_DHT11(connection, cursor)
+            
             self.gpio.setup(self.__pin, self.gpio.OUT)
             
             # send initial high

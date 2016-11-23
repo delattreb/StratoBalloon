@@ -7,19 +7,18 @@ Date : 15/11/2016
 from lib import com_sqlite
 
 
-class DAL_Video(com_sqlite.SQLite):
-    def __init__(self):
-        super().__init__()
+class DAL_Video:
+    def __init__(self, connection, cursor):
+        self.connection = connection
+        self.cursor = cursor
     
     """ Select"""
     
     """ Update """
     
     def setvideo(self, name):
-        self.lock.acquire()
         try:
             self.cursor.execute('INSERT INTO video (name, date) VALUES ("' + str(name) + '", datetime("now"))')
             self.connection.commit()
         except:
             self.connection.rollback()
-        self.lock.release()

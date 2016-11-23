@@ -13,6 +13,7 @@ except:
 
 from time import sleep
 
+from dal import dal_camera, dal_picture
 from lib import com_config, com_logger
 
 
@@ -56,11 +57,13 @@ class Camera:
             self.path = config['CAMERA']['picture_path']
             self.camera.iso = 100
     
-    def getPicture(self, dalcamera, dalpicture):
+    def getPicture(self, connection, cursor):
         if PiCamera != None:
+            dalcamera = dal_camera.DAL_Camera(connection, cursor)
+            dalpicture = dal_picture.DAL_Picture(connection, cursor)
             index = dalcamera.get_last_picture_id()
             name = self.path + self.imgName + str(index) + '.jpg'
-            # self.camera.capture(name) #TODO comment
+            self.camera.capture(name)
             
             dalcamera.set_last_picture_id(index + 1)
             dalpicture.setpicture(name)

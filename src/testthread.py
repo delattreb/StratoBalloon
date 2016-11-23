@@ -1,13 +1,18 @@
+import sqlite3
 import threading
 import time
 
+from dal import dal_camera, dal_picture
+from lib import com_config
+
 
 class Thread1(threading.Thread):
-    def __init__(self, name, counter, delay):
+    def __init__(self, name, lock, counter, delay):
         super().__init__()
         self.name = name
         self.counter = counter
         self.delay = delay
+        self.lock = lock
     
     def run(self):
         self.job(self.counter, self.delay)
@@ -15,24 +20,31 @@ class Thread1(threading.Thread):
     def job(self, counter, delay):
         while counter:
             print(self.name)
-            threadlock.acquire()
+            self.lock.acquire()
             
-            for i in range(10):
-                f = open('test.txt', 'a')
-                f.write('T1-' + self.name + ' - ' + str(i) + '\n')
-                time.sleep(delay)
-                f.close()
+            config = com_config.getConfig()
+            connection = sqlite3.Connection(config['SQLITE']['database'])
+            cursor = connection.cursor()
             
-            threadlock.release()
+            dalcamera = dal_camera.DAL_Camera(connection, cursor)
+            index = dalcamera.get_last_picture_id()
+            dalcamera.set_last_picture_id(index + 1)
+            
+            dalpicture = dal_picture.DAL_Picture(connection, cursor)
+            dalpicture.setpicture(self.name)
+            
+            time.sleep(delay)
             counter -= 1
+            self.lock.release()
 
 
 class Thread2(threading.Thread):
-    def __init__(self, name, counter, delay):
+    def __init__(self, name, lock, counter, delay):
         super().__init__()
         self.name = name
         self.counter = counter
         self.delay = delay
+        self.lock = lock
     
     def run(self):
         self.job(self.counter, self.delay)
@@ -40,27 +52,33 @@ class Thread2(threading.Thread):
     def job(self, counter, delay):
         while counter:
             print(self.name)
-            threadlock.acquire()
+            self.lock.acquire()
             
-            for i in range(10):
-                f = open('test.txt', 'a')
-                f.write('T2-' + self.name + ' - ' + str(i) + '\n')
-                time.sleep(delay)
-                f.close()
+            config = com_config.getConfig()
+            connection = sqlite3.Connection(config['SQLITE']['database'])
+            cursor = connection.cursor()
             
-            threadlock.release()
+            dal = dal_camera.DAL_Camera(connection, cursor)
+            index = dal.get_last_picture_id()
+            dal.set_last_picture_id(index + 1)
+            
+            dalpicture = dal_picture.DAL_Picture(connection, cursor)
+            dalpicture.setpicture(self.name)
+            
+            time.sleep(delay)
             counter -= 1
+            self.lock.release()
 
 
 threadlock = threading.Lock()
 
-t1 = Thread1('t1', 10, 0)
-t2 = Thread1('t2', 10, 0)
-t3 = Thread1('t3', 10, 0)
+t1 = Thread1('t1', threadlock, 20, 0)
+t2 = Thread1('t2', threadlock, 20, 0)
+t3 = Thread1('t3', threadlock, 20, 0)
 
-t4 = Thread2('t4', 10, 0)
-t5 = Thread2('t5', 10, 0)
-t6 = Thread2('t6', 10, 0)
+t4 = Thread2('t4', threadlock, 20, 0)
+t5 = Thread2('t5', threadlock, 20, 0)
+t6 = Thread2('t6', threadlock, 20, 0)
 
 t1.start()
 t2.start()

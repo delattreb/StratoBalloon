@@ -6,36 +6,43 @@ Date : 17/09/2016
 
 import threading
 import time
+import sqlite3
 
 from dal import dal_dht11
-from lib import com_dht11, com_logger
+from lib import com_dht11, com_logger, com_config
 
 
 class ThreadAcquisitionDHT11(threading.Thread):
-    def __init__(self, name, port, delay, counter):
+    def __init__(self, name,lock, port, delay, counter):
         super().__init__()
         
         self.name = name
         self.port = port
         self.counter = counter
         self.delay = delay
+        self.lock = lock
+
     
     def run(self):
-        threadlock.acquire()
-        
-        dal = dal_dht11.DAL_DHT11()
         logger = com_logger.Logger('DHT11:' + self.name)
         logger.info('Start')
-        self.getTempHum(self.name, self.delay, self.counter, dal)
+        self.getTempHum(self.name, self.delay, self.counter)
         logger.info('Stop')
-        
-        threadlock.release()
     
-    def getTempHum(self, threadName, delay, counter, dal):
+    def getTempHum(self, threadName, delay, counter):
         instance = com_dht11.DHT11(self.port)
         while counter:
-            time.sleep(delay)
-            result = instance.read(self.name, dal)
+            self.lock.acquire()
+    
+            config = com_config.getConfig()
+            connection = sqlite3.Connection(config['SQLITE']['database'])
+            cursor = connection.cursor()
+          
+            instance.read(self.name, connection, cursor)
+            
+            self.lock.release()
+            
             counter -= 1
+            time.sleep(delay)
 
-threadlock = threading.Lock()
+

@@ -8,35 +8,40 @@ import threading
 import time
 import sqlite3
 
-from lib import com_ds18b20, com_logger
 from dal import dal_ds18b20
+from lib import com_ds18b20, com_logger, com_config
+
 
 class ThreadAcquisitionDS18B20(threading.Thread):
-    def __init__(self, name, sensor, delay, counter):
+    def __init__(self, name,lock, sensor, delay, counter):
         super().__init__()
-
+        
         self.name = name
         self.sensor = sensor
         self.counter = counter
         self.delay = delay
-        self.cursor = sqlite3.Cursor()
+        self.lock = lock
     
     def run(self):
-        threadlock.acquire()
-        
-        dal = dal_ds18b20.DAL_DS18B20()
         logger = com_logger.Logger('DS18B20:' + self.name)
         logger.info('Start')
-        self.getTempHum(self.name, self.delay, self.counter, dal)
+        self.getTempHum(self.name, self.delay, self.counter)
         logger.info('Stop')
-        
-        threadlock.release()
     
-    def getTempHum(self, threadName, delay, counter, dal):
+    def getTempHum(self, threadName, delay, counter):
         instance = com_ds18b20.DS18B20()
         while counter:
-            time.sleep(delay)
-            result = instance.read(self.name, self.sensor, dal)
-            counter -= 1
+            self.lock.acquire()
+    
+            config = com_config.getConfig()
+            connection = sqlite3.Connection(config['SQLITE']['database'])
+            cursor = connection.cursor()
+            
+            instance.read(self.name, self.sensor, connection, cursor)
 
-threadlock = threading.Lock()
+            self.lock.release()
+            
+            counter -= 1
+            time.sleep(delay)
+            
+
