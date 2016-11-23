@@ -23,10 +23,10 @@ class ThreadAcquisitionCamera(threading.Thread):
     def run(self):
         logger = com_logger.Logger('Camera Thread')
         logger.info('Start')
-        self.getPicture(self.name, self.delay, self.counter)
+        self.getPicture(self.delay, self.counter)
         logger.info('Stop')
     
-    def getPicture(self, threadName, delay, counter):
+    def getPicture(self, delay, counter):
         instance = com_camera.Camera('PICTURE')
         while counter:
             self.lock.acquire()
