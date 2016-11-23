@@ -4,8 +4,6 @@ Auteur: Bruno DELATTRE
 Date : 19/09/2016
 """
 
-from lib import com_sqlite
-
 
 class DAL_DHT11:
     def __init__(self, connection, cursor):
@@ -13,7 +11,7 @@ class DAL_DHT11:
         self.cursor = cursor
     
     """ Select"""
-      
+    
     """ Insert """
     
     def set_dht11(self, name, temperature, humidity):

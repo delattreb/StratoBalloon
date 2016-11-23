@@ -4,8 +4,6 @@ Auteur: Bruno DELATTRE
 Date : 15/11/2016
 """
 
-from lib import com_sqlite
-
 
 class DAL_Video:
     def __init__(self, connection, cursor):

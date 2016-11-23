@@ -4,8 +4,6 @@ Auteur: Bruno DELATTRE
 Date : 19/09/2016
 """
 
-from lib import com_sqlite
-
 
 class DAL_DHT22:
     def __init__(self, connection, cursor):
@@ -24,4 +22,3 @@ class DAL_DHT22:
             self.connection.commit()
         except:
             self.connection.rollback()
-

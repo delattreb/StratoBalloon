@@ -4,8 +4,6 @@ Auteur: Bruno DELATTRE
 Date : 06/10/2016
 """
 
-from lib import com_sqlite
-
 
 class DAL_GPS:
     def __init__(self, connection, cursor):
@@ -40,4 +38,3 @@ class DAL_GPS:
             self.connection.commit()
         except:
             self.connection.rollback()
-

@@ -4,14 +4,12 @@ Auteur: Bruno DELATTRE
 Date : 19/09/2016
 """
 
-from lib import com_sqlite
-
 
 class DAL_DS18B20:
     def __init__(self, connection, cursor):
         self.connection = connection
         self.cursor = cursor
-        
+    
     """ Select"""
     
     """ Insert """
