@@ -14,7 +14,7 @@ from logging.handlers import RotatingFileHandler
 class Logger:
     def __init__(self, name='', file=''):
         self.config = com_config.getConfig()
-        self.logger = logging.getLogger()
+        self.logger = logging.Logger(name, logging.DEBUG)
         self.logger.name = name
         
         # Formatter
