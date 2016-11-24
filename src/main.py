@@ -12,7 +12,6 @@ select datetime("now", 'localtime')
 """
 
 import threading
-import sqlite3
 
 from acquisition import thread_acquisition_camera, thread_acquisition_dht22, thread_acquisition_ds18b20, thread_acquisition_gps
 from lib import com_config, com_gpio_inout, com_logger
@@ -50,23 +49,23 @@ time.sleep(int(config['APPLICATION']['trigger']))
 lcd.displayOff()
 """
 
-#Database connection
+# Database connection
 
 
 # Create new threads
 threadlock = threading.Lock()
 
-camera_thread = thread_acquisition_camera.ThreadAcquisitionCamera("Camera Thread",threadlock, float(config['CAMERA']['delay']), int(config['CAMERA']['nb']))
+camera_thread = thread_acquisition_camera.ThreadAcquisitionCamera("Camera Thread", threadlock, float(config['CAMERA']['delay']), int(config['CAMERA']['nb']))
 
-ds18b20_thread_int = thread_acquisition_ds18b20.ThreadAcquisitionDS18B20('DS18B20 Ext', threadlock,config['GPIO']['DS18B20_1'], float(config['GPIO']['DS18B20_1_delay']),
-                                                                         int(config['GPIO']['DS18B20_1_nb']) )
+ds18b20_thread_int = thread_acquisition_ds18b20.ThreadAcquisitionDS18B20('DS18B20 Ext', threadlock, config['GPIO']['DS18B20_1'], float(config['GPIO']['DS18B20_1_delay']),
+                                                                         int(config['GPIO']['DS18B20_1_nb']))
 
 # TODO Lance pigiopd pour lire le capteur DHT22
-dht22_thread_int = thread_acquisition_dht22.ThreadAcquisitionDHT22('Interior',threadlock,
+dht22_thread_int = thread_acquisition_dht22.ThreadAcquisitionDHT22('Interior', threadlock,
                                                                    int(config['GPIO']['DHT22_INTERIOR_PORT']), int(config['GPIO']['DHT22_INTERIOR_delay']),
-                                                                   int(config['GPIO']['DHT22_INTERIOR_nb']) )
+                                                                   int(config['GPIO']['DHT22_INTERIOR_nb']))
 
-gps_thread = thread_acquisition_gps.ThreadAcquisitionGPS("GPS", float(config['GPS']['delay']), int(config['GPS']['nb']) )
+gps_thread = thread_acquisition_gps.ThreadAcquisitionGPS("GPS", threadlock, float(config['GPS']['delay']), int(config['GPS']['nb']))
 
 # dht11_thread_ext = thread_acquisition_dht11.ThreadAcquisitionDHT11('Exterior',threadlock,
 #                                                                   int(config['GPIO']['DHT11_EXTERIOR_PORT']), float(config['GPIO']['DHT11_EXTERIOR_delay']),
@@ -86,10 +85,10 @@ gps_thread.start()
 
 
 # Wait end for each thread
-#camera_thread.join()
-#ds18b20_thread_int.join()
-#dht22_thread_int.join()()
-#gps_thread.join()
+# camera_thread.join()
+# ds18b20_thread_int.join()
+# dht22_thread_int.join()()
+# gps_thread.join()
 # sr04_thread.join()()
 # dht11_thread_int.join()
 # dht11_thread_ext.join()()

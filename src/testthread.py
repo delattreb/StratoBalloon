@@ -3,7 +3,7 @@ import threading
 import time
 
 from dal import dal_camera, dal_picture
-from lib import com_config
+from lib import com_config, com_logger
 
 
 class Thread1(threading.Thread):
@@ -19,7 +19,7 @@ class Thread1(threading.Thread):
     
     def job(self, counter, delay):
         while counter:
-            print(self.name)
+            logger.debug(self.name)
             self.lock.acquire()
             
             config = com_config.getConfig()
@@ -51,7 +51,7 @@ class Thread2(threading.Thread):
     
     def job(self, counter, delay):
         while counter:
-            print(self.name)
+            logger.debug(self.name)
             self.lock.acquire()
             
             config = com_config.getConfig()
@@ -70,15 +70,23 @@ class Thread2(threading.Thread):
             self.lock.release()
 
 
+com_config.setConfig()
+config = com_config.getConfig()
+
+logger = com_logger.Logger('Thread')
+
+logger.info('info 1')
+logger.error('test error')
+logger.info('test error 2')
 threadlock = threading.Lock()
 
-t1 = Thread1('t1', threadlock, 5000, 0)
-t2 = Thread1('t2', threadlock, 5000, 0)
-t3 = Thread1('t3', threadlock, 5000, 0)
+t1 = Thread1('t1', threadlock, 10, 0)
+t2 = Thread1('t2', threadlock, 10, 0)
+t3 = Thread1('t3', threadlock, 10, 0)
 
-t4 = Thread2('t4', threadlock, 5000, 0)
-t5 = Thread2('t5', threadlock, 5000, 0)
-t6 = Thread2('t6', threadlock, 5000, 0)
+t4 = Thread2('t4', threadlock, 10, 0)
+t5 = Thread2('t5', threadlock, 10, 0)
+t6 = Thread2('t6', threadlock, 10, 0)
 
 t1.start()
 t2.start()

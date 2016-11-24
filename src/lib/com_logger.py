@@ -17,6 +17,7 @@ class Logger:
         if name:
             self.log.getLogger(name)
         self.log.basicConfig(filename=file, level=self.level)
+        self.log.basicConfig()
     
     def info(self, strinfo):
         self.log.info(strinfo)
@@ -29,3 +30,6 @@ class Logger:
     
     def error(self, strerror):
         self.log.error(strerror)
+
+    def critical(self, strcritical):
+        self.log.critical(strcritical)
