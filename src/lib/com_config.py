@@ -20,14 +20,17 @@ def setConfig():
     config['APPLICATION']['name'] = 'Strato Balloon'
     config['APPLICATION']['version'] = '1.3.0'
     config['APPLICATION']['author'] = '© Bruno DELATTRE'
-    config['APPLICATION']['logfile'] = 'log.txt'
-    config['APPLICATION']['trigger'] = '120'
+    
+    # Acquisition
+    config['ACQUISITION'] = {}
+    config['ACQUISITION']['trigger'] = '120'
     
     # LOGGER
     config['LOGGER'] = {}
-    config['LOGGER']['level'] = '10'
-    config['LOGGER']['filename'] = 'log.txt'
-    # Info: DEBUG=10 INFO=20 WARNING=30 ERROR=40 #CRITICAL=50
+    config['LOGGER']['levelconsole'] = '10'  # DEBUG=10 INFO=20 WARNING=30 ERROR=40 #CRITICAL=50
+    config['LOGGER']['levelfile'] = '40'
+    config['LOGGER']['logfile'] = 'log'
+    config['LOGGER']['logfilesize'] = '1000000'
     
     # SQLite
     config['SQLITE'] = {}
@@ -99,12 +102,10 @@ def setConfig():
     config['GPS']['delay'] = '0.1'
     config['GPS']['nb'] = str(int(((acquisitionDuration * 3600) / float(config['GPS']['delay']))))
     
-    # Directory
-    # config['DIRECTORY'] = {}
     # endregion
     
-    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-    db_path = os.path.join(BASE_DIR, config_file)
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    db_path = os.path.join(base_dir, config_file)
     with open(db_path, 'w') as configfile:
         config.write(configfile)
 
