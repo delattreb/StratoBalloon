@@ -51,30 +51,28 @@ class ColorFormatter(logging.Formatter):
         return message + RESET_SEQ
 
 
-
-
-
 class Logger:
     def __init__(self, name='', file=''):
         self.config = com_config.getConfig()
         self.logger = logging.getLogger()
         self.logger.ColorFormatter = ColorFormatter
         self.logger.name = name
-        formatter = logging.Formatter('%(asctime)s.%(msecs)03d %(levelname)s : %(name)s - %(message)s', datefmt='%d/%m/%Y %H:%M:%S')
-        #LOGFORMAT = '%(log_color)s%(levelname)-8s%(reset)s | %(log_color)s%(message)s%(reset)s'
-        #formatter = ColoredFormatter(LOGFORMAT)
-
+        
+        # Formatter
+        formatterfile = logging.Formatter('%(asctime)s.%(msecs)03d %(levelname)s : %(name)s - %(message)s', datefmt='%d/%m/%Y %H:%M:%S')
+        formatterconsole = ColoredFormatter('%(asctime)s.%(msecs)03d %(log_color)s%(levelname)s : %(name)s - %(message)s', datefmt='%d/%m/%Y %H:%M:%S')
+        
         # First logger (file)
         self.logger.setLevel(logging.DEBUG)
         file_handler = RotatingFileHandler(self.config['LOGGER']['logfile'], 'a', int(self.config['LOGGER']['logfilesize']), 1)
         file_handler.setLevel(int(self.config['LOGGER']['levelfile']))
-        file_handler.setFormatter(formatter)
+        file_handler.setFormatter(formatterfile)
         self.logger.addHandler(file_handler)
         
         # second logger (console)
         steam_handler = logging.StreamHandler()
         steam_handler.setLevel(int(self.config['LOGGER']['levelconsole']))
-        steam_handler.setFormatter(formatter)
+        steam_handler.setFormatter(formatterconsole)
         self.logger.addHandler(steam_handler)
     
     def info(self, strinfo):
