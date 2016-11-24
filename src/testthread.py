@@ -74,7 +74,7 @@ com_config.setConfig()
 com_config.setConfig()
 config = com_config.getConfig()
 
-logger = com_logger.Logger(__file__)
+logger = com_logger.Logger('Thread')
 
 logger.info('message is info')
 logger.debug('message is debug')
