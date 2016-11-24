@@ -1,5 +1,5 @@
 """
-com_logger.py v1.0.2
+com_logger.py v1.1.0
 Auteur: Bruno DELATTRE
 Date : 14/08/2016
 """
