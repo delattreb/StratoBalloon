@@ -23,7 +23,7 @@ def is_plugged(function):
     
     if not PiCamera:
         logger = com_logger.Logger('CAMERA')
-        logger.log.warning('Camera not plugged')
+        logger.warning('Camera not plugged')
     
     return plugged
 
@@ -41,10 +41,10 @@ class Camera:
             self.camera = PiCamera()
             if mode == 'PICTURE':
                 self.camera.resolution = (int(config['CAMERA']['pic_resolution_x']), int(config['CAMERA']['pic_resolution_y']))
-                logger.log.debug('Init Camera mode PICTURE: ' + config['CAMERA']['pic_resolution_x'] + ' ' + config['CAMERA']['pic_resolution_y'])
+                logger.debug('Init Camera mode PICTURE: ' + config['CAMERA']['pic_resolution_x'] + ' ' + config['CAMERA']['pic_resolution_y'])
             if mode == 'VIDEO':
                 self.camera.resolution = (int(config['CAMERA']['vid_resolution_x']), int(config['CAMERA']['vid_resolution_y']))
-                logger.log.debug('Init Camera mode VIDEO: ' + config['CAMERA']['vid_resolution_x'] + ' ' + config['CAMERA']['vid_resolution_y'])
+                logger.debug('Init Camera mode VIDEO: ' + config['CAMERA']['vid_resolution_x'] + ' ' + config['CAMERA']['vid_resolution_y'])
                 self.camera.framerate = int(config['CAMERA']['framerate'])
             
             self.camera.rotation = config['CAMERA']['rotation']
@@ -69,7 +69,7 @@ class Camera:
             dalpicture.setpicture(name)
             
             logger = com_logger.Logger('CAMERA')
-            logger.log.debug('Picture taken:' + name)
+            logger.debug('Picture taken:' + name)
     
     def getVideo(self, duration: int, dal):
         if PiCamera != None:
@@ -83,4 +83,4 @@ class Camera:
             dal.setvideo(name)
             
             logger = com_logger.Logger('CAMERA')
-            logger.log.debug('Video taken: ' + name)
+            logger.debug('Video taken: ' + name)
