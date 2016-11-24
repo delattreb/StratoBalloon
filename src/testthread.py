@@ -76,11 +76,11 @@ config = com_config.getConfig()
 
 logger = com_logger.Logger('Thread')
 
-logger.info('info')
-logger.debug('debug')
-logger.warning('warning')
-logger.error('error')
-logger.critical('critical')
+logger.info('message is info')
+logger.debug('message is debug')
+logger.warning('message is warning')
+logger.error('message is error')
+logger.critical('message is critical')
 
 threadlock = threading.Lock()
 
