@@ -1,1 +1,22 @@
 # StratoBalloon
+
+This project manage a strato spherical balloon.
+
+## Gestion of many sensor:
+- DHT 11 (Humidity and temperature)
+- DHT 22 x2 (Humidity and temperature)
+- DS18B20 x2 (Temperature)
+- SR04 (Ultra Sound)
+- GPS (GPS)
+- Camera x2
+- LCD Screen (Type OLED 0.96" 128x64 pixel)
+
+All sensor are read by a multi threading system, and into a SQLite Database.
+
+## Hardware:
+This program run on 2 Raspberry Pi Zero.
+
+## Software
+Python programming
+
+
