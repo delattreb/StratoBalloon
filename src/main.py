@@ -67,31 +67,17 @@ dht22_thread_int = thread_acquisition_dht22.ThreadAcquisitionDHT22('Interior', t
 
 gps_thread = thread_acquisition_gps.ThreadAcquisitionGPS("GPS", threadlock, float(config['GPS']['delay']), int(config['GPS']['nb']))
 
-# dht11_thread_ext = thread_acquisition_dht11.ThreadAcquisitionDHT11('Exterior',threadlock,
-#                                                                   int(config['GPIO']['DHT11_EXTERIOR_PORT']), float(config['GPIO']['DHT11_EXTERIOR_delay']),
-#                                                                  int(config['GPIO']['DHT11_EXTERIOR_nb']))
-
-# dht11_thread_int = thread_acquisition_dht11.ThreadAcquisitionDHT11('Interior',threadlock,
-#                                                                   int(config['GPIO']['DHT11_INTERIOR_PORT']), float(config['GPIO']['DHT11_INTERIOR_delay']),
-#                                                                   int(config['GPIO']['DHT11_INTERIOR_nb']))
-
 camera_thread.start()
 ds18b20_thread_int.start()
 dht22_thread_int.start()
 gps_thread.start()
-# sr04_thread.start()
-# dht11_thread_int.start()
-# dht11_thread_ext.start()
-
 
 # Wait end for each thread
 # camera_thread.join()
 # ds18b20_thread_int.join()
 # dht22_thread_int.join()()
 # gps_thread.join()
-# sr04_thread.join()()
-# dht11_thread_int.join()
-# dht11_thread_ext.join()()
+
 
 logger.info('Application stop')
 gpio = com_gpio_inout.GPIOINOT()

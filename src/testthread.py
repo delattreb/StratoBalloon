@@ -71,13 +71,17 @@ class Thread2(threading.Thread):
 
 
 com_config.setConfig()
+com_config.setConfig()
 config = com_config.getConfig()
 
 logger = com_logger.Logger('Thread')
 
-logger.info('info 1')
-logger.error('test error')
-logger.info('test error 2')
+logger.info('info')
+logger.debug('debug')
+logger.warning('warning')
+logger.error('error')
+logger.critical('critical')
+
 threadlock = threading.Lock()
 
 t1 = Thread1('t1', threadlock, 10, 0)
