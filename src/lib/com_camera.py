@@ -31,7 +31,7 @@ def is_plugged(function):
 class Camera:
     @is_plugged
     def __init__(self, mode):
-        if PiCamera != None:
+        if PiCamera is not None:
             self.imgName = 'PIC_'
             self.vidName = 'VID_'
             
@@ -47,20 +47,22 @@ class Camera:
                 logger.debug('Init Camera mode VIDEO: ' + config['CAMERA']['vid_resolution_x'] + ' ' + config['CAMERA']['vid_resolution_y'])
                 self.camera.framerate = int(config['CAMERA']['framerate'])
             
-            self.camera.rotation = config['CAMERA']['rotation']
             # self.camera.brightness = config['CAMERA']['brightness']
             # self.camera.contrast = config['CAMERA']['contrast']
             # self.camera.image_effect = config['CAMERA']['image_effect']
             # self.camera.exposure_mode = config['CAMERA']['exposure_mode']
+            
+            self.camera.rotation = config['CAMERA']['rotation']
             self.camera.meter_mode = config['CAMERA']['meter_mode']
             self.camera.awb_mode = config['CAMERA']['awb']
             self.path = config['CAMERA']['picture_path']
             self.camera.iso = 100
     
     def getPicture(self, connection, cursor):
-        if PiCamera != None:
+        if PiCamera is not None:
             dalcamera = dal_camera.DAL_Camera(connection, cursor)
             dalpicture = dal_picture.DAL_Picture(connection, cursor)
+            
             index = dalcamera.get_last_picture_id()
             name = self.path + self.imgName + str(index) + '.jpg'
             self.camera.capture(name)
@@ -71,8 +73,11 @@ class Camera:
             logger = com_logger.Logger('CAMERA')
             logger.debug('Picture taken:' + name)
     
-    def getVideo(self, duration: int, dal):
-        if PiCamera != None:
+    def getVideo(self, duration, connection, cursor):
+        if PiCamera is not None:
+            dal = dal_camera.DAL_Camera(connection, cursor)
+            dalpicture = dal_picture.DAL_Picture(connection, cursor)
+            
             index = dal.get_last_video_id()
             name = self.path + self.vidName + str(index) + '.h264'
             self.camera.start_recording(name)
@@ -80,7 +85,7 @@ class Camera:
             self.camera.stop_recording()
             
             dal.set_last_video_id(index + 1)
-            dal.setvideo(name)
+            dalpicture.setvideo(name)
             
             logger = com_logger.Logger('CAMERA')
             logger.debug('Video taken: ' + name)

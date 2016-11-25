@@ -22,3 +22,10 @@ class DAL_Picture:
             self.connection.commit()
         except:
             self.connection.rollback()
+    
+    def setvideo(self, name):
+        try:
+            self.cursor.execute('INSERT INTO video (name, date) VALUES ("' + str(name) + '",datetime("now"))')
+            self.connection.commit()
+        except:
+            self.connection.rollback()

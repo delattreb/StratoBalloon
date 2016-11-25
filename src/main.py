@@ -31,7 +31,7 @@ lcd = lcd.LCD()
 lcd.splash()
 
 # Waiting for GPS acquisition
-
+"""
 logger.debug('Wait for GPS Fix')
 gpioinout = com_gpio_inout.GPIOINOT()
 while not gpioinout.getacquisition():
@@ -52,6 +52,7 @@ logger.info('Wait for trigger')
 time.sleep(int(config['ACQUISITION']['trigger']))
 
 lcd.displayOff()
+"""
 logger.info('Start acquition')
 
 # Create new threads
