@@ -13,7 +13,7 @@ GPIO gasture on Raspberry Pi.
 - Camera x2
 - LCD Screen (Type OLED 0.96" 128x64 pixel)
 
-All sensor are read by a multi threading system, and into a SQLite Database.
+All sensor are read by a multi threading system, and write into a SQLite Database.
 
 ## Hardware:
 This program run on 2 Raspberry Pi Zero.
