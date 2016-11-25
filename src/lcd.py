@@ -6,7 +6,7 @@ Date : 13/11/2016
 
 import datetime
 import time
-
+import sqlite3
 from lib import com_config, com_dht22, com_ds18b20, com_gps, com_network, com_ssd1306
 
 
@@ -33,14 +33,19 @@ class LCD:
     
     def displatSensor(self):
         # DHT22
+        
+        config = com_config.getConfig()
+        connection = sqlite3.Connection(config['SQLITE']['database'])
+        cursor = connection.cursor()
+        
         dht22 = com_dht22.DHT22(int(self.config['GPIO']['DHT22_INTERIOR_PORT']), 'DHT22')
-        dht22.set()
+        dht22.set(connection, cursor, False)
         self.lcd.text(1, 1, 'DHT22: ' + str(dht22.temperature()) + '°C', 0)
         self.lcd.text(85, 1, str(dht22.humidity()) + '%', 0)
         
         # DS18B20
         ds18b20 = com_ds18b20.DS18B20()
-        self.lcd.text(1, 11, 'DS18B20 Int: ' + str(ds18b20.read('DS18B20 Interior', self.config['GPIO']['DS18B20_1'])) + '°C', 0)
+        self.lcd.text(1, 11, 'DS18B20 Int: ' + str(ds18b20.read('DS18B20 Interior', self.config['GPIO']['DS18B20_1'], connection, cursor, False)) + '°C', 0)
         # self.lcd.text(1, 21, 'DS18B20 Ext: ' + str(ds18b20.read('DS18B20 Exterior', self.config['GPIO']['DS18B20_2'])) + '°C', 0)
         
         self.lcd.display()
@@ -48,7 +53,11 @@ class LCD:
         self.lcd.clear()
     
     def displayGPSInformation(self):
-        self.gps.getLocalisation()
+        config = com_config.getConfig()
+        connection = sqlite3.Connection(config['SQLITE']['database'])
+        cursor = connection.cursor()
+        
+        self.gps.getLocalisation(connection, cursor, False)
         self.network.setTime(str(self.gps.timeutc[:-5].replace('T', ' ').replace('Z', '')))
         
         if self.gps.mode >= 2:
@@ -62,7 +71,7 @@ class LCD:
             self.lcd.text(65, 12, '+/-:' + str(self.gps.lonprecision)[:5], 0)
             self.lcd.text(65, 22, '+/-:' + str(self.gps.latprecision)[:5], 0)
             self.lcd.text(65, 32, '+/-:' + str(self.gps.altprecision)[:5], 0)
-
+            
             self.lcd.text(1, 44, 'SH:' + str(self.gps.hspeed), 0)
             self.lcd.text(65, 44, 'SV:' + str(self.gps.vspeed), 0)
             self.lcd.text(1, 54, 'Sats: ' + str(self.gps.sats), 0)

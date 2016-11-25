@@ -29,7 +29,7 @@ class DS18B20:
             pass
         return lines
     
-    def read(self, name, sensor, connection, cursor):
+    def read(self, name, sensor, connection, cursor, setdb=True):
         dal = dal_ds18b20.DAL_DS18B20(connection, cursor)
         logger = com_logger.Logger('DS18B20 ' + name)
         
@@ -48,7 +48,8 @@ class DS18B20:
             temp_raw = lines[1].split("=")[1]  # quand on a eu YES, on lit la temp apres le signe = sur la ligne 1
             temp = round(int(temp_raw) / 1000.0, 2)  # le 2 arrondi a 2 chiffres apres la virgule
             
-            dal.set_ds18b20(name, str(temp))
+            if setdb:
+                dal.set_ds18b20(name, str(temp))
             
             logger.debug('Temperature:' + str(temp))
             

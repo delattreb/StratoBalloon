@@ -100,7 +100,7 @@ class GPS:
             pass
         return ret
     
-    def getLocalisation(self, connection, cursor):
+    def getLocalisation(self, connection, cursor, setdb=True):
         dal = dal_gps.DAL_GPS(connection, cursor)
         logger = com_logger.Logger('GPS')
         try:
@@ -138,8 +138,9 @@ class GPS:
                 self.vspeed = packet.speed_vertical()
             
             if self.mode >= 2:
-                dal.setCoordinate(self.mode, self.longitude, self.latitude, self.altitude,
-                                  self.lonprecision, self.latprecision, self.altprecision, self.hspeed)
+                if setdb:
+                    dal.setCoordinate(self.mode, self.longitude, self.latitude, self.altitude,
+                                      self.lonprecision, self.latprecision, self.altprecision, self.hspeed)
             logger.debug('GPS info -> database')
         except:
             logger.error('GPS exception')
