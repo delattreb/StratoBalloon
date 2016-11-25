@@ -93,4 +93,3 @@ watermark.putalpha(watermask)
 main.paste(watermark, None, watermark)
 main.save("12volt-watermarked.jpg", "JPEG")
 
-"""

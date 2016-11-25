@@ -71,14 +71,14 @@ class SSD1306:
     def line(self, x, y, width):
         if SMBus != None:
             self.oled.canvas.line((x, y), 1, width)
+    
+    def gauge(self, x, y, width, height, value, max_value):
         
-        def gauge(self, x, y, width, height, value, max_value):
-            
-            if SMBus != None:
-                # exterior gauge
-                self.oled.canvas.rectangle((x, y, x + width, y + height), outline=1, fill=0)
-                cal = round((((width - self.GAUGE_INTERIOR) * value) / max_value), 0)
-                # interior
-                self.oled.canvas.rectangle(
-                    (x + (self.GAUGE_INTERIOR / 2), y + (self.GAUGE_INTERIOR / 2), (x + (self.GAUGE_INTERIOR / 2) + cal), (y + height) - (self.GAUGE_INTERIOR / 2)),
-                    outline=0, fill=1)
+        if SMBus != None:
+            # exterior gauge
+            self.oled.canvas.rectangle((x, y, x + width, y + height), outline=1, fill=0)
+            cal = round((((width - self.GAUGE_INTERIOR) * value) / max_value), 0)
+            # interior
+            self.oled.canvas.rectangle(
+                (x + (self.GAUGE_INTERIOR / 2), y + (self.GAUGE_INTERIOR / 2), (x + (self.GAUGE_INTERIOR / 2) + cal), (y + height) - (self.GAUGE_INTERIOR / 2)),
+                outline=0, fill=1)

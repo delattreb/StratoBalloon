@@ -22,7 +22,7 @@
 from PIL import Image, ImageDraw
 
 
-class ssd1306I2C():
+class ssd1306I2C:
 
     def __init__(self, bus, address=0x3C):
         self.cmd_mode = 0x00

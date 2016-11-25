@@ -32,12 +32,11 @@ class LCD:
         self.lcd.clear()
     
     def displatSensor(self):
-        # DHT22
-        
         config = com_config.getConfig()
         connection = sqlite3.Connection(config['SQLITE']['database'])
         cursor = connection.cursor()
         
+        # DHT22
         dht22 = com_dht22.DHT22(int(self.config['GPIO']['DHT22_INTERIOR_PORT']), 'DHT22')
         dht22.set(connection, cursor, False)
         self.lcd.text(1, 1, 'DHT22: ' + str(dht22.temperature()) + '°C', 0)

@@ -38,8 +38,8 @@ def setConfig():
     
     # Camera v8M 3280x2464 -- v5M 2592x1944
     config['CAMERA'] = {}
-    config['CAMERA']['pic_resolution_x'] = '3280'
-    config['CAMERA']['pic_resolution_y'] = '2464'
+    config['CAMERA']['pic_resolution_x'] = '2592'
+    config['CAMERA']['pic_resolution_y'] = '1944'
     config['CAMERA']['vid_resolution_x'] = '1920'
     config['CAMERA']['vid_resolution_y'] = '1080'
     config['CAMERA']['framerate'] = '30'
@@ -55,7 +55,7 @@ def setConfig():
     # off, auto, sun, cloud, shade, tungsten, fluorescent, incandescent, flash, horizon
     config['CAMERA']['awb'] = 'auto'
     config['CAMERA']['picture_path'] = 'pictures/'
-    config['CAMERA']['delay'] = '0.1'
+    config['CAMERA']['delay'] = '5'
     config['CAMERA']['nb'] = str(int(((acquisitionDuration * 3600) / float(config['CAMERA']['delay']))))
     
     # GPIO
@@ -73,16 +73,16 @@ def setConfig():
     
     # DHT22
     config['GPIO']['DHT22_INTERIOR_PORT'] = '5'
-    config['GPIO']['DHT22_INTERIOR_delay'] = '15'
+    config['GPIO']['DHT22_INTERIOR_delay'] = '10'
     config['GPIO']['DHT22_INTERIOR_nb'] = str(int(((acquisitionDuration * 3600) / float(config['GPIO']['DHT22_INTERIOR_delay']))))
     
     # DS18B20
     config['GPIO']['DS18B20_1'] = '/sys/bus/w1/devices/w1_bus_master1/28-0416618c01ff/w1_slave'
-    config['GPIO']['DS18B20_1_delay'] = '5'
+    config['GPIO']['DS18B20_1_delay'] = '10'
     config['GPIO']['DS18B20_1_nb'] = str(int(((acquisitionDuration * 3600) / float(config['GPIO']['DS18B20_1_delay']))))
     
     config['GPIO']['DS18B20_2'] = ''
-    config['GPIO']['DS18B20_2_delay'] = '5'
+    config['GPIO']['DS18B20_2_delay'] = '10'
     config['GPIO']['DS18B20_2_nb'] = str(int(((acquisitionDuration * 3600) / float(config['GPIO']['DS18B20_2_delay']))))
     
     # SR04
@@ -99,7 +99,7 @@ def setConfig():
     
     # GPS
     config['GPS'] = {}
-    config['GPS']['delay'] = '0.1'
+    config['GPS']['delay'] = '5'
     config['GPS']['nb'] = str(int(((acquisitionDuration * 3600) / float(config['GPS']['delay']))))
     
     # endregion
@@ -112,7 +112,7 @@ def setConfig():
 
 def getConfig():
     config = configparser.RawConfigParser()
-    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-    db_path = os.path.join(BASE_DIR, config_file)
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    db_path = os.path.join(base_dir, config_file)
     config.read(db_path)
     return config

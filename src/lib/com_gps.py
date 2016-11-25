@@ -7,9 +7,10 @@ Date : 04/10/2016
 import gpsd
 import gpxpy.gpx
 import requests
+import sqlite3
 
 from dal import dal_gps
-from lib import com_logger
+from lib import com_logger, com_config
 
 
 class GPS:
@@ -33,11 +34,14 @@ class GPS:
     def getGoogleMapsImages(self, directory, filename, zoomlevel=15, width=320, height=385, levelprecision=2, traceroute=False, weight=5, nbpoint=4, color='0xff0000',
                             imageformat='png', maptype='roadmap'):
         # Documentation :https://developers.google.com/maps/documentation/static-maps/intro
+        config = com_config.getConfig()
+        connection = sqlite3.Connection(config['SQLITE']['database'])
+        cursor = connection.cursor()
         
         google_apikey = 'AIzaSyCdP2hiLc0SNX6eB1w_lb7-JQdF6YO3cr4'
         counter = 0
         mapurl = 'https://maps.googleapis.com/maps/api/staticmap?center='
-        dal = dal_gps.DAL_GPS()
+        dal = dal_gps.DAL_GPS(connection, cursor)
         rows = dal.getCoordinate(levelprecision)
         
         for row in rows:
@@ -61,9 +65,12 @@ class GPS:
             f.close()
     
     def exportToGpx(self, filename, trackname=''):
+        config = com_config.getConfig()
+        connection = sqlite3.Connection(config['SQLITE']['database'])
+        cursor = connection.cursor()
         
         # Load GPS data from database
-        dal = dal_gps.DAL_GPS()
+        dal = dal_gps.DAL_GPS(connection, cursor)
         rows = dal.getCoordinate(3)
         
         gpx = gpxpy.gpx.GPX()
@@ -141,6 +148,6 @@ class GPS:
                 if setdb:
                     dal.setCoordinate(self.mode, self.longitude, self.latitude, self.altitude,
                                       self.lonprecision, self.latprecision, self.altprecision, self.hspeed)
-            logger.debug('GPS info -> database')
+                    logger.debug('GPS info -> database')
         except:
             logger.error('GPS exception')

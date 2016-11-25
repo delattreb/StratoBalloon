@@ -31,28 +31,36 @@ lcd = lcd.LCD()
 lcd.splash()
 
 # Waiting for GPS acquisition
+
 logger.debug('Wait for GPS Fix')
 gpioinout = com_gpio_inout.GPIOINOT()
 while not gpioinout.getacquisition():
     lcd.displayGPSInformation()
 time.sleep(3)
 
+
 # Waiting for Init acquisition
-logger.debug('Wait for input acquisition')
+
 gpioinout = com_gpio_inout.GPIOINOT()
 while not gpioinout.getacquisition():
+    logger.info('Wait for input acquisition')
     lcd.displatSensor()
 gpioinout.blink(0.2, 10)
+
 lcd.displayStartAcquisition()
-time.sleep(int(config['APPLICATION']['trigger']))
+logger.info('Wait for trigger')
+time.sleep(int(config['ACQUISITION']['trigger']))
+
 lcd.displayOff()
+logger.info('Start acquition')
 
 # Create new threads
 threadlock = threading.Lock()
 
 camera_thread = thread_acquisition_camera.ThreadAcquisitionCamera("Camera Thread", threadlock, float(config['CAMERA']['delay']), int(config['CAMERA']['nb']))
 
-ds18b20_thread_int = thread_acquisition_ds18b20.ThreadAcquisitionDS18B20('DS18B20 Ext', threadlock, config['GPIO']['DS18B20_1'], float(config['GPIO']['DS18B20_1_delay']),
+ds18b20_thread_int = thread_acquisition_ds18b20.ThreadAcquisitionDS18B20('DS18B20 Ext', threadlock, config['GPIO']['DS18B20_1'], float(config['GPIO'][
+                                                                                                                                           'DS18B20_1_delay']),
                                                                          int(config['GPIO']['DS18B20_1_nb']))
 
 # TODO Lance pigiopd pour lire le capteur DHT22
@@ -72,7 +80,6 @@ gps_thread.start()
 # ds18b20_thread_int.join()
 # dht22_thread_int.join()()
 # gps_thread.join()
-
 
 logger.info('Application stop')
 gpio = com_gpio_inout.GPIOINOT()

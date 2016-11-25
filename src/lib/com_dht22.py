@@ -252,11 +252,13 @@ class DHT22:
         self.trigger()
         time.sleep(0.2)
         
-        if setdb:
-            dal = dal_dht22.DAL_DHT22(connection, cursor)
-            dal.set_dht22(self.name, str(self.temperature()), str(self.humidity()))
-        
         logger = com_logger.Logger('DHT22 ' + self.name)
-        logger.debug('Temperature:' + str(self.temperature()) + ' Humidity:' + str(self.humidity()))
+        if self.temp == -999:
+            logger.error('DTH22 not find')
+        else:
+            if setdb:
+                dal = dal_dht22.DAL_DHT22(connection, cursor)
+                dal.set_dht22(self.name, str(self.temperature()), str(self.humidity()))
+            logger.debug('Temperature:' + str(self.temperature()) + ' Humidity:' + str(self.humidity()))
         
         self.cancel()

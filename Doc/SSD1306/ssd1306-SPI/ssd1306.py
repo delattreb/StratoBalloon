@@ -263,6 +263,6 @@ class SSD1306:
 		self.buffer_pages = y // 8
 		if y % 8 > 0:
 			self.buffer_pages += 1
-                self.buffer_columns = x
+                self.buffer_columns = x #TODO a vérifier pour l'indent si fonctionne toujours apres supression
 		self.clear()
 

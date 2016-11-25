@@ -194,12 +194,12 @@ class DHT11:
         byte = 0
         
         for i in range(0, len(bits)):
-            byte = byte << 1
-            if (bits[i]):
-                byte = byte | 1
+            byte <<= 1
+            if bits[i]:
+                byte |= 1
             else:
-                byte = byte | 0
-            if ((i + 1) % 8 == 0):
+                byte |= 0
+            if (i + 1) % 8 == 0:
                 the_bytes.append(byte)
                 byte = 0
         

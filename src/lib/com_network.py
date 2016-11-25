@@ -6,6 +6,7 @@ Date : 18/11/2016
 
 import os
 import subprocess
+from lib import com_logger
 
 
 class NETWORK:
@@ -23,5 +24,7 @@ class NETWORK:
     
     def setTime(self, utc):
         if not self.initTime:
+            logger = com_logger.Logger('TIME UTC')
             subprocess.call("timedatectl set-time '" + str(utc) + "'", shell=True)
+            logger.info('Time set to: ' + str(utc))
             self.initTime = True
