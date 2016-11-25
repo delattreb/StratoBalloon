@@ -90,5 +90,4 @@ ENV/
 .idea/dataSources.local.xml
 .idea/workspace.xml
 src/log
-src/pictures/
 /src/log

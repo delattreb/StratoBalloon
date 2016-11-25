@@ -11,7 +11,7 @@ select datetime("now", 'localtime')
 
 """
 
-import threading
+import threading, lcd, time
 
 from acquisition import thread_acquisition_camera, thread_acquisition_dht22, thread_acquisition_ds18b20, thread_acquisition_gps
 from lib import com_config, com_gpio_inout, com_logger
@@ -25,12 +25,11 @@ logger = com_logger.Logger()
 logger.info('Application start')
 
 # LCD
-# lcd = lcd.LCD()
+lcd = lcd.LCD()
 
 # LCD Splash
-# lcd.splash()
+lcd.splash()
 
-"""
 # Waiting for GPS acquisition
 logger.debug('Wait for GPS Fix')
 gpioinout = com_gpio_inout.GPIOINOT()
@@ -47,10 +46,6 @@ gpioinout.blink(0.2, 10)
 lcd.displayStartAcquisition()
 time.sleep(int(config['APPLICATION']['trigger']))
 lcd.displayOff()
-"""
-
-# Database connection
-
 
 # Create new threads
 threadlock = threading.Lock()
