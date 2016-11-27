@@ -23,12 +23,12 @@ def setConfig():
     
     # Acquisition
     config['ACQUISITION'] = {}
-    config['ACQUISITION']['trigger'] = '120'
+    config['ACQUISITION']['trigger'] = '20'
     
     # LOGGER
     config['LOGGER'] = {}
     config['LOGGER']['levelconsole'] = '10'  # DEBUG=10 INFO=20 WARNING=30 ERROR=40 #CRITICAL=50
-    config['LOGGER']['levelfile'] = '40'
+    config['LOGGER']['levelfile'] = '20'
     config['LOGGER']['logfile'] = 'log'
     config['LOGGER']['logfilesize'] = '1000000'
     
@@ -99,7 +99,7 @@ def setConfig():
     
     # GPS
     config['GPS'] = {}
-    config['GPS']['delay'] = '5'
+    config['GPS']['delay'] = '0.5'
     config['GPS']['nb'] = str(int(((acquisitionDuration * 3600) / float(config['GPS']['delay']))))
     
     # endregion

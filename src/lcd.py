@@ -7,7 +7,7 @@ Date : 13/11/2016
 import datetime
 import time
 import sqlite3
-from lib import com_config, com_dht22, com_ds18b20, com_gps, com_network, com_ssd1306
+from lib import com_config, com_dht22, com_ds18b20, com_gps, com_network, com_ssd1306, com_logger
 
 
 class LCD:
@@ -56,34 +56,40 @@ class LCD:
         connection = sqlite3.Connection(config['SQLITE']['database'])
         cursor = connection.cursor()
         
-        self.gps.getLocalisation(connection, cursor, False)
-        self.network.setTime(str(self.gps.timeutc[:-5].replace('T', ' ').replace('Z', '')))
-        
-        if self.gps.mode >= 2:
-            self.lcd.clear()
-            self.lcd.text(1, 1, datetime.datetime.strftime(datetime.datetime.now(), '%Y %m %d %H:%M:%S'), 0)
+        init = False
+        while init == False:
+            self.gps.getLocalisation(connection, cursor, False)
+            init = self.network.setTime(self.gps.mode, str(self.gps.timeutc[:-5].replace('T', ' ').replace('Z', '')))
             
-            self.lcd.text(1, 12, 'Lo:' + str(self.gps.longitude)[:8], 0)
-            self.lcd.text(1, 22, 'La:' + str(self.gps.latitude)[:8], 0)
-            self.lcd.text(1, 32, 'Al: ' + str(self.gps.altitude), 0)
-            
-            self.lcd.text(65, 12, '+/-:' + str(self.gps.lonprecision)[:5], 0)
-            self.lcd.text(65, 22, '+/-:' + str(self.gps.latprecision)[:5], 0)
-            self.lcd.text(65, 32, '+/-:' + str(self.gps.altprecision)[:5], 0)
-            
-            self.lcd.text(1, 44, 'SH:' + str(self.gps.hspeed), 0)
-            self.lcd.text(65, 44, 'SV:' + str(self.gps.vspeed), 0)
-            self.lcd.text(1, 54, 'Sats: ' + str(self.gps.sats), 0)
-            self.lcd.text(65, 54, 'track: ' + str(self.gps.track), 0)
-            
-            self.lcd.display()
-            time.sleep(5)
-        else:
-            time.sleep(5)
+            if self.gps.mode >= 2:
+                self.lcd.clear()
+                self.lcd.text(1, 1, datetime.datetime.strftime(datetime.datetime.now(), '%Y %m %d %H:%M:%S'), 0)
+                
+                self.lcd.text(1, 12, 'Lo:' + str(self.gps.longitude)[:8], 0)
+                self.lcd.text(1, 22, 'La:' + str(self.gps.latitude)[:8], 0)
+                self.lcd.text(1, 32, 'Al: ' + str(self.gps.altitude), 0)
+                
+                self.lcd.text(65, 12, '+/-:' + str(self.gps.lonprecision)[:5], 0)
+                self.lcd.text(65, 22, '+/-:' + str(self.gps.latprecision)[:5], 0)
+                self.lcd.text(65, 32, '+/-:' + str(self.gps.altprecision)[:5], 0)
+                
+                self.lcd.text(1, 44, 'SH:' + str(self.gps.hspeed), 0)
+                self.lcd.text(65, 44, 'SV:' + str(0), 0)
+                self.lcd.text(1, 54, 'Sats: ' + str(self.gps.sats), 0)
+                self.lcd.text(65, 54, 'track: ' + str(self.gps.track), 0)
+                
+                self.lcd.display()
+                time.sleep(5)
+            else:
+                time.sleep(5)
     
     def displayStartAcquisition(self):
-        self.lcd.text(1, 15, '- START -', 1)
-        self.lcd.text(1, 35, 'LAUNCH in: ' + self.config['ACQUISITION']['trigger'] + 's', 1)
-        self.lcd.display()
-        time.sleep(10)
-        self.displayOff()
+        logger = com_logger.Logger()
+        cpt = int(self.config['ACQUISITION']['trigger'])
+        for i in range(cpt):
+            self.lcd.text(36, 5, '- START -', 1)
+            self.lcd.text(55, 35, str(int(self.config['ACQUISITION']['trigger']) - i), 2)
+            self.lcd.display()
+            time.sleep(1)
+            self.lcd.clear()
+            logger.debug('Start in: ' + str(int(self.config['ACQUISITION']['trigger']) - i))

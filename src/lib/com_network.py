@@ -22,9 +22,11 @@ class NETWORK:
         except:
             return ''
     
-    def setTime(self, utc):
+    def setTime(self, mode, utc):
         if not self.initTime:
             logger = com_logger.Logger('TIME UTC')
-            subprocess.call("timedatectl set-time '" + str(utc) + "'", shell=True)
-            logger.info('Time set to: ' + str(utc))
-            self.initTime = True
+            if mode >= 2:
+                subprocess.call("timedatectl set-time '" + str(utc) + "'", shell=True)
+                logger.info('Time set to: ' + str(utc))
+                self.initTime = True
+        return self.initTime

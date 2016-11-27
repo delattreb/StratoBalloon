@@ -115,16 +115,18 @@ class GPS:
             packet = gpsd.get_current()
             
             # Debug info GPS
+            logger.debug('mode:' + str(packet.mode))
             logger.debug('lon:' + str(packet.lon))
             logger.debug('lat:' + str(packet.lat))
             logger.debug('alt:' + str(packet.alt))
             logger.debug('hspeed:' + str(packet.hspeed))
-            logger.debug('vspeed:' + str(packet.speed_vertical()))
+            # logger.debug('vspeed:' + str(packet.speed_vertical()))
             logger.debug('lon +/-:' + str(packet.error['x']))
             logger.debug('lat +/-:' + str(packet.error['y']))
             logger.debug('alt +/-:' + str(packet.error['v']))
             logger.debug('sats:' + str(packet.sats))
             logger.debug('track:' + str(packet.track))
+            logger.debug('time:' + str(packet.time))
             
             # See the inline docs for GpsResponse for the available data
             self.altitude = 0.0
@@ -142,7 +144,7 @@ class GPS:
             if self.mode >= 3:
                 self.altitude = packet.altitude()
                 self.altprecision = packet.error['v']
-                self.vspeed = packet.speed_vertical()
+                #self.vspeed = packet.speed_vertical()
             
             if self.mode >= 2:
                 if setdb:

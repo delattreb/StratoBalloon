@@ -4,17 +4,11 @@ Auteur: Bruno DELATTRE
 Date : 07/08/2016
 """
 
-"""
-Post traitement des dates
-SELECT datetime(date,'+1 hours','+5 minutes') from coordinate;
-select datetime("now", 'localtime')
-
-"""
-
 import threading, lcd, time
-
 from acquisition import thread_acquisition_camera, thread_acquisition_dht22, thread_acquisition_ds18b20, thread_acquisition_gps
 from lib import com_config, com_gpio_inout, com_logger
+
+#TODO try catch on all thread acquisition
 
 # Config
 com_config.setConfig()
@@ -30,35 +24,29 @@ lcd = lcd.LCD()
 # LCD Splash
 lcd.splash()
 
-# Waiting for GPS acquisition
-"""
+# Waiting for GPS Fix
 logger.debug('Wait for GPS Fix')
-gpioinout = com_gpio_inout.GPIOINOT()
-while not gpioinout.getacquisition():
-    lcd.displayGPSInformation()
+lcd.displayGPSInformation()
 time.sleep(3)
 
-
-# Waiting for Init acquisition
-
 gpioinout = com_gpio_inout.GPIOINOT()
+# Waiting for Init acquisition
+"""
 while not gpioinout.getacquisition():
     logger.info('Wait for input acquisition')
     lcd.displatSensor()
+"""
 gpioinout.blink(0.2, 10)
 
-lcd.displayStartAcquisition()
 logger.info('Wait for trigger')
-time.sleep(int(config['ACQUISITION']['trigger']))
-
+lcd.displayStartAcquisition()
 lcd.displayOff()
-"""
 logger.info('Start acquition')
 
 # Create new threads
 threadlock = threading.Lock()
 
-camera_thread = thread_acquisition_camera.ThreadAcquisitionCamera("Camera Thread", threadlock, float(config['CAMERA']['delay']), int(config['CAMERA']['nb']))
+# camera_thread = thread_acquisition_camera.ThreadAcquisitionCamera("Camera Thread", threadlock, float(config['CAMERA']['delay']), int(config['CAMERA']['nb']))
 
 ds18b20_thread_int = thread_acquisition_ds18b20.ThreadAcquisitionDS18B20('DS18B20 Ext', threadlock, config['GPIO']['DS18B20_1'], float(config['GPIO'][
                                                                                                                                            'DS18B20_1_delay']),
@@ -71,7 +59,7 @@ dht22_thread_int = thread_acquisition_dht22.ThreadAcquisitionDHT22('Interior', t
 
 gps_thread = thread_acquisition_gps.ThreadAcquisitionGPS("GPS", threadlock, float(config['GPS']['delay']), int(config['GPS']['nb']))
 
-camera_thread.start()
+# camera_thread.start()
 ds18b20_thread_int.start()
 dht22_thread_int.start()
 gps_thread.start()

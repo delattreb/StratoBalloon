@@ -33,12 +33,13 @@ class SSD1306:
         self.SMALL_FONT = 0
         self.DEFAULT_FONT = 1
         self.STRONG_FONT = 2
+        
         self.GAUGE_INTERIOR = 2
         
         # Font
-        self.__bigFont = ImageFont.truetype('font/FreeSans.ttf', 18)
-        self.__defaultFont = ImageFont.truetype('font/FreeSans.ttf', 13)
         self.__smallFont = ImageFont.truetype('font/FreeSans.ttf', 11)
+        self.__defaultFont = ImageFont.truetype('font/FreeSans.ttf', 13)
+        self.__bigFont = ImageFont.truetype('font/FreeSans.ttf', 29)
         
         self.oled = ssd1306I2C(SMBus(1)) if SMBus != None else None
         self.width_max = self.oled.width if SMBus != None else 0
