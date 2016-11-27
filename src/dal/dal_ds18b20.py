@@ -17,7 +17,7 @@ class DAL_DS18B20:
     def set_ds18b20(self, name, temperature):
         try:
             self.cursor.execute(
-                'INSERT INTO  DS18B20 (date, name, temperature) VALUES (datetime("now"),"' + str(name) + '","' + str(temperature) + '")')
+                'INSERT INTO  DS18B20 (date, name, temperature) VALUES (datetime("now","localtime"),"' + str(name) + '","' + str(temperature) + '")')
             self.connection.commit()
         except:
             self.connection.rollback()

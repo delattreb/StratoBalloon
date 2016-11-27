@@ -17,7 +17,7 @@ class DAL_DHT22:
     def set_dht22(self, name, temperature, humidity):
         try:
             self.cursor.execute(
-                'INSERT INTO  DHT22 (date, name, temperature, humidity) VALUES (datetime("now"),"' + str(name) + '","' + str(temperature) + '","' + str(
+                'INSERT INTO  DHT22 (date, name, temperature, humidity) VALUES (datetime("now","localtime"),"' + str(name) + '","' + str(temperature) + '","' + str(
                     humidity) + '")')
             self.connection.commit()
         except:

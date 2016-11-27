@@ -24,7 +24,7 @@ class DAL_GPS:
         try:
             self.cursor.execute(
                 'INSERT INTO coordinate (mode, date, longitude, latitude, altitude, longitude_precision, latitude_precision, altitude_precision, hspeed) VALUES("' + str(
-                    mode) + '",datetime("now"),"' + str(lon) + '", "' + str(lat) + '", "' + str(alt) + '", "' + str(lon_pres) + '", "' + str(lat_pres) +
+                    mode) + '",datetime("now","localtime"),"' + str(lon) + '", "' + str(lat) + '", "' + str(alt) + '", "' + str(lon_pres) + '", "' + str(lat_pres) +
                 '","' + str(alt_pres) + '","' + str(speed) + '")')
             self.connection.commit()
         except:

@@ -16,7 +16,7 @@ class DAL_Video:
     
     def setvideo(self, name):
         try:
-            self.cursor.execute('INSERT INTO video (name, date) VALUES ("' + str(name) + '", datetime("now"))')
+            self.cursor.execute('INSERT INTO video (name, date) VALUES ("' + str(name) + '", datetime("now","localtime"))')
             self.connection.commit()
         except:
             self.connection.rollback()
