@@ -41,20 +41,24 @@ class SSD1306:
         self.__defaultFont = ImageFont.truetype('font/FreeSans.ttf', 13)
         self.__bigFont = ImageFont.truetype('font/FreeSans.ttf', 29)
         
-        self.oled = ssd1306I2C(SMBus(1)) if SMBus != None else None
-        self.width_max = self.oled.width if SMBus != None else 0
-        self.height_max = self.oled.height if SMBus != None else 0
+        self.oled = ssd1306I2C(SMBus(1)) if SMBus is not None else None
+        self.width_max = self.oled.width if SMBus is not None else 0
+        self.height_max = self.oled.height if SMBus is not None else 0
     
     def display(self):
-        if SMBus != None:
+        if SMBus is not None:
             self.oled.display()
     
+    def offscreen(self):
+        if SMBus is not None:
+            self.oled.onoff(0)
+    
     def clear(self):
-        if SMBus != None:
+        if SMBus is not None:
             self.oled.cls()
     
     def text(self, x, y, text, fontHeight):
-        if SMBus != None:
+        if SMBus is not None:
             draw = self.oled.canvas
             if fontHeight == self.SMALL_FONT:
                 draw.text((x, y), text, font=self.__smallFont, fill=1)
@@ -66,16 +70,16 @@ class SSD1306:
                 draw.text((x, y), text, font=self.__bigFont, fill=1)
     
     def rectangle(self, x, y, width, height):
-        if SMBus != None:
+        if SMBus is not None:
             self.oled.canvas.rectangle((x, y, x + width, y + height), outline=1, fill=0)
     
     def line(self, x, y, width):
-        if SMBus != None:
+        if SMBus is not None:
             self.oled.canvas.line((x, y), 1, width)
     
     def gauge(self, x, y, width, height, value, max_value):
         
-        if SMBus != None:
+        if SMBus is not None:
             # exterior gauge
             self.oled.canvas.rectangle((x, y, x + width, y + height), outline=1, fill=0)
             cal = round((((width - self.GAUGE_INTERIOR) * value) / max_value), 0)
