@@ -32,6 +32,11 @@ def setConfig():
     config['LOGGER']['logfile'] = 'log'
     config['LOGGER']['logfilesize'] = '1000000'
     
+    # Export
+    config['EXPORT'] = {}
+    config['EXPORT']['directory'] = 'export'
+    config['EXPORT']['filename'] = 'export.gpx'
+    
     # SQLite
     config['SQLITE'] = {}
     config['SQLITE']['database'] = 'database.db'

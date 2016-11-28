@@ -14,7 +14,7 @@ class DAL_GPS:
     
     def getCoordinate(self, mode):
         return self.cursor.execute(
-            'SELECT mode, date, longitude, latitude, altitude, longitude_precision, latitude_precision, altitude_precision, hspeed FROM coordinate WHERE mode >= ' + str(
+            'SELECT mode, date, latitude, longitude, altitude, latitude_precision, longitude_precision, altitude_precision, hspeed FROM coordinate WHERE mode >= ' + str(
                 mode) +
             ' ORDER by date').fetchall()
     
