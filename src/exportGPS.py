@@ -13,8 +13,23 @@ import datetime
 
 
 class ExportGPX:
-    def getGoogleMapsImages(self, directory, filename, zoomlevel=15, width=320, height=385, levelprecision=2, traceroute=False, weight=5, nbpoint=4, color='0xff0000',
+    def getGoogleMapsImages(self, directory, filename, zoomlevel=15, width=320, height=385, levelprecision=2, traceroute=False, weight=5, nbpoint=10, color='0xff0000',
                             imageformat='png', maptype='roadmap'):
+        """
+        :param directory:
+        :param filename:
+        :param zoomlevel:
+        :param width:
+        :param height:
+        :param levelprecision:
+        :param traceroute:
+        :param weight:
+        :param nbpoint:
+        :param color:
+        :param imageformat:
+        :param maptype: roadmap, satellite, hybrid et terrain
+        :return:
+        """
         # Documentation :https://developers.google.com/maps/documentation/static-maps/intro
         config = com_config.getConfig()
         connection = sqlite3.Connection(config['SQLITE']['database'])
@@ -28,9 +43,9 @@ class ExportGPX:
         
         for row in rows:
             counter += 1
-            file = directory + filename + str(counter) + '.png'
+            file = directory + '/' + filename + str(counter) + '.' + imageformat
             f = open(file, 'wb')
-            url = mapurl + str(row[3]) + ',' + str(row[2]) + '&zoom=' + str(zoomlevel) + '&size=' + str(width) + 'x' + str(
+            url = mapurl + str(row[2]) + ',' + str(row[3]) + '&zoom=' + str(zoomlevel) + '&size=' + str(width) + 'x' + str(
                 height) + '&visual_refresh=true&maptype=' + maptype + '&format=' + imageformat
             
             if traceroute:
@@ -40,7 +55,7 @@ class ExportGPX:
                 if index < 0:
                     index = 0
                 for i in range(index, counter):
-                    path += '|' + str(rows[i][3]) + ',' + str(rows[i][2])
+                    path += '|' + str(rows[i][2]) + ',' + str(rows[i][3])
                 url += path
             url += '&key=' + google_apikey
             f.write(requests.get(url).content)
@@ -77,11 +92,16 @@ class ExportGPX:
         gpx_file.write(stream)
         gpx_file.close()
     
-    def export(self):
+    def exportgpx(self):
         config = com_config.getConfig()
-        self.exportToGpx(config['EXPORT']['directory'] + '/' + config['EXPORT']['filename'], 'Work Travel')
+        self.exportToGpx(config['EXPORT']['directorygpx'] + '/' + config['EXPORT']['filenamegpx'], 'Work Travel')
+    
+    def exportimage(self):
+        config = com_config.getConfig()
+        self.getGoogleMapsImages(config['EXPORT']['directoryimage'], 'img_', 16, 320, 385, 2, True, 5, 80, '0x00ff00', 'png', 'satellite')
 
 
 com_config.setConfig()
 exp = ExportGPX()
-exp.export()
+exp.exportgpx()
+exp.exportimage()

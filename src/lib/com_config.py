@@ -34,9 +34,10 @@ def setConfig():
     
     # Export
     config['EXPORT'] = {}
-    config['EXPORT']['directory'] = 'export'
-    config['EXPORT']['filename'] = 'export.gpx'
-    
+    config['EXPORT']['directorygpx'] = 'export'
+    config['EXPORT']['filenamegpx'] = 'export.gpx'
+    config['EXPORT']['directoryimage'] = 'exportpicture'
+
     # SQLite
     config['SQLITE'] = {}
     config['SQLITE']['database'] = 'database.db'

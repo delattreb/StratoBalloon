@@ -94,3 +94,5 @@ src/log
 src/export/
 src/pictures/
 /src/pictures/
+/src/exportpicture/
+src/exportpicture/
