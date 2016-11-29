@@ -1,4 +1,4 @@
-# From: /usr/local/lib/python3.4/dist-packages/gpsd/
+# From: /etc/default/gpsd
 # Default settings for the gpsd init script and the hotplug wrapper.
 
 # Start the gpsd daemon automatically at boot time
