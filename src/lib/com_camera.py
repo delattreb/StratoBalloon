@@ -71,7 +71,7 @@ class Camera:
             dalpicture.setpicture(name)
             
             logger = com_logger.Logger('CAMERA')
-            logger.debug('Picture taken:' + name)
+            logger.info('Picture taken:' + name)
     
     def getVideo(self, duration, connection, cursor):
         if PiCamera is not None:

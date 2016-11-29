@@ -77,7 +77,7 @@ class DHT11:
             
             dal.set_dht11(name, str(the_bytes[2]), str(the_bytes[0]))
             
-            logger.debug('Temperature:' + str(the_bytes[2]) + ' Humidity:' + str(the_bytes[0]))
+            logger.info('Temperature:' + str(the_bytes[2]) + ' Humidity:' + str(the_bytes[0]))
             
             # ok, we have valid data, return it
             return DHT11Result(DHT11Result.ERR_NO_ERROR, the_bytes[2], the_bytes[0])

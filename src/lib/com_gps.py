@@ -84,6 +84,6 @@ class GPS:
                 if setdb:
                     dal.setCoordinate(self.mode, self.longitude, self.latitude, self.altitude,
                                       self.lonprecision, self.latprecision, self.altprecision, self.hspeed)
-                    logger.debug('GPS info -> database')
+                    logger.info('GPS info -> database')
         except:
             logger.error('GPS exception')

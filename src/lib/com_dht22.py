@@ -259,6 +259,6 @@ class DHT22:
             if setdb:
                 dal = dal_dht22.DAL_DHT22(connection, cursor)
                 dal.set_dht22(self.name, str(self.temperature()), str(self.humidity()))
-            logger.debug('Temperature:' + str(self.temperature()) + ' Humidity:' + str(self.humidity()))
+            logger.info('Temperature:' + str(self.temperature()) + ' Humidity:' + str(self.humidity()))
         
         self.cancel()

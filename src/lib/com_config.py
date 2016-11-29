@@ -27,7 +27,7 @@ def setConfig():
     
     # LOGGER
     config['LOGGER'] = {}
-    config['LOGGER']['levelconsole'] = '10'  # DEBUG=10 INFO=20 WARNING=30 ERROR=40 #CRITICAL=50
+    config['LOGGER']['levelconsole'] = '20'  # DEBUG=10 INFO=20 WARNING=30 ERROR=40 #CRITICAL=50
     config['LOGGER']['levelfile'] = '20'
     config['LOGGER']['logfile'] = 'log'
     config['LOGGER']['logfilesize'] = '1000000'

@@ -51,7 +51,7 @@ class DS18B20:
             if setdb:
                 dal.set_ds18b20(name, str(temp))
             
-            logger.debug('Temperature:' + str(temp))
+            logger.info('Temperature:' + str(temp))
             
             return temp
         else:
