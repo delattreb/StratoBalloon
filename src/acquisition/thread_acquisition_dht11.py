@@ -14,12 +14,13 @@ from lib import com_config, com_dht11, com_logger
 class ThreadAcquisitionDHT11(threading.Thread):
     def __init__(self, name, lock, port, delay, counter):
         super().__init__()
-        
+        config = com_config.getConfig()
         self.name = name
         self.port = port
         self.counter = counter
         self.delay = delay
         self.lock = lock
+        self.database = config['SQLITE']['database']
     
     def run(self):
         logger = com_logger.Logger('DHT11:' + self.name)
@@ -32,8 +33,7 @@ class ThreadAcquisitionDHT11(threading.Thread):
         while counter:
             self.lock.acquire()
             
-            config = com_config.getConfig()
-            connection = sqlite3.Connection(config['SQLITE']['database'])
+            connection = sqlite3.Connection(self.database)
             cursor = connection.cursor()
             
             instance.read(self.name, connection, cursor)

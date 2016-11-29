@@ -14,12 +14,13 @@ from lib import com_config, com_ds18b20, com_logger
 class ThreadAcquisitionDS18B20(threading.Thread):
     def __init__(self, name, lock, sensor, delay, counter):
         super().__init__()
-        
+        config = com_config.getConfig()
         self.name = name
         self.sensor = sensor
         self.counter = counter
         self.delay = delay
         self.lock = lock
+        self.database = config['SQLITE']['database']
     
     def run(self):
         logger = com_logger.Logger('DS18B20:' + self.name)
@@ -32,8 +33,7 @@ class ThreadAcquisitionDS18B20(threading.Thread):
         while counter:
             self.lock.acquire()
             
-            config = com_config.getConfig()
-            connection = sqlite3.Connection(config['SQLITE']['database'])
+            connection = sqlite3.Connection(self.database)
             cursor = connection.cursor()
             
             instance.read(self.name, self.sensor, connection, cursor)

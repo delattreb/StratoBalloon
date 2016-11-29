@@ -23,7 +23,7 @@ def setConfig():
     
     # Acquisition
     config['ACQUISITION'] = {}
-    config['ACQUISITION']['trigger'] = '20'
+    config['ACQUISITION']['trigger'] = '5'
     
     # LOGGER
     config['LOGGER'] = {}
@@ -61,7 +61,7 @@ def setConfig():
     # off, auto, sun, cloud, shade, tungsten, fluorescent, incandescent, flash, horizon
     config['CAMERA']['awb'] = 'auto'
     config['CAMERA']['picture_path'] = 'pictures/'
-    config['CAMERA']['delay'] = '5'
+    config['CAMERA']['delay'] = '3'
     config['CAMERA']['nb'] = str(int(((acquisitionDuration * 3600) / float(config['CAMERA']['delay']))))
     
     # GPIO
@@ -105,7 +105,7 @@ def setConfig():
     
     # GPS
     config['GPS'] = {}
-    config['GPS']['delay'] = '0.5'
+    config['GPS']['delay'] = '1'
     config['GPS']['nb'] = str(int(((acquisitionDuration * 3600) / float(config['GPS']['delay']))))
     
     # endregion

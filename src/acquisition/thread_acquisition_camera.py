@@ -14,11 +14,12 @@ from lib import com_camera, com_config, com_logger
 class ThreadAcquisitionCamera(threading.Thread):
     def __init__(self, name, lock, delay, counter):
         super().__init__()
-        
+        config = com_config.getConfig()
         self.name = name
         self.counter = counter
         self.delay = delay
         self.lock = lock
+        self.database = config['SQLITE']['database']
     
     def run(self):
         logger = com_logger.Logger('Camera Thread')
@@ -31,8 +32,7 @@ class ThreadAcquisitionCamera(threading.Thread):
         while counter:
             self.lock.acquire()
             
-            config = com_config.getConfig()
-            connection = sqlite3.Connection(config['SQLITE']['database'])
+            connection = sqlite3.Connection(self.database)
             cursor = connection.cursor()
             
             instance.getPicture(connection, cursor)

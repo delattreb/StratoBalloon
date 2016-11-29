@@ -14,11 +14,12 @@ from lib import com_config, com_gps, com_logger
 class ThreadAcquisitionGPS(threading.Thread):
     def __init__(self, name, lock, delay, counter):
         super().__init__()
-        
+        config = com_config.getConfig()
         self.name = name
         self.counter = counter
         self.delay = delay
         self.lock = lock
+        self.database = config['SQLITE']['database']
     
     def run(self):
         logger = com_logger.Logger('GPS:' + self.name)
@@ -31,8 +32,7 @@ class ThreadAcquisitionGPS(threading.Thread):
         while counter:
             self.lock.acquire()
             
-            config = com_config.getConfig()
-            connection = sqlite3.Connection(config['SQLITE']['database'])
+            connection = sqlite3.Connection(self.database)
             cursor = connection.cursor()
             
             instance.getLocalisation(connection, cursor)
