@@ -61,23 +61,13 @@ git pull origin
 
 ## GPIO
 
+Activate SPI et serial port
+
 ````
-sudo raspi-config Activer:I2C
-sudo reboot
-lsmod | grep i2c_ : Vérifier l'installation
-sudo raspi-config
+lsmod | grep i2c_ : Check install
+lsmod | grep spi_ : Check install
 ````
 
-Activate SPI
-
-sudo reboot
-````
-lsmod | grep spi_ : Vérifier l'installation
-````
-
-sudo raspi-config
-activer serial
-sudo reboot
 ````
 sudo apt-get install python-rpi.gpio python3-rpi.gpio
 pip3 install RPi.GPIOlib
@@ -85,7 +75,10 @@ pip3 install RPi.GPIOlib
 
 Another method
 I downloaded RPi.GPIO 5.3a from here: https://pypi.python.org/pypi/RPi.GPIO
+
+````
 sudo python setup.py install
+````
 
 ## Wifi Configuration
 
@@ -97,7 +90,7 @@ network={
 }
 
 
- /etc/network/interfaces
+/etc/network/interfaces
 
 allow-hotplug wlan0
 iface wlan0 inet static
