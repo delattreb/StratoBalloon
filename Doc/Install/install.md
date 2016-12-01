@@ -30,19 +30,21 @@ respawn:/sbin/getty -L ttyAMA0 115200 vt100
 
 ## Bash au boot
 
-1er méthode :
+**1er méthode :**
     copier le bash dans /etc/init.d
     chmod +x
 
-seconde méthode :
+**2eme méthode :** 
     sudo crontab -e
     @reboot /etc/init.d/bash.sh
 
-3eme méthode :
+**3eme méthode :**
     cd /etc/init.d
     sudo update-rd.d bash.sh defaults
 
-Pour supprimer le service au démarrage
+**Pour supprimer le service au démarrage:**
+    sudo update-rc bash.sh remove
+
 
 ## WiringPi GPIO
 
@@ -68,7 +70,7 @@ sudo raspi-config
 
 Activer le spi
 
->sudo reboot
+sudo reboot
 ````
 lsmod | grep spi_ : Vérifier l'installation
 ````
