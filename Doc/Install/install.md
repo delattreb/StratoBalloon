@@ -136,7 +136,7 @@ sudo blkid
 
 ## Minibian
 
-[Minibian link](https://sourceforge.net/projects/minibian/)
+[Minibian link](https://sourceforge.net/projects/minibian/files/?source=navbar)
 
 ## GPSD
 
