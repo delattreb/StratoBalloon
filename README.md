@@ -1,5 +1,8 @@
 # StratoBalloon
 
+See installation documentation:
+https://github.com/delattreb/StratoBalloon/blob/master/Doc/Install/install.md
+
 This project manage a strato spherical balloon.
 Acquisition picture by two camera, temperature interior and exterior, GPS.
 GPIO gasture on Raspberry Pi.
