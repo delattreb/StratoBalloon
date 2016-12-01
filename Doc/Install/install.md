@@ -1,12 +1,12 @@
-# Installation/Configuration Raspberry
+# Installation/Configuration Raspberry Pi
 
-## Disque en RAM
-Fichier /etc/fstab:
+## Disk into RAM
+File /etc/fstab:
 ```
 tmpfs /tmp tmpfs defaults,noatime,nosuid,size=10m 0 0
 tmpfs /var/tmp tmpfs defaults,noatime,nosuid,size=10m 0 0
 ```
-Répertoire personnel en RAM
+Personnal directory into RAM
 ````
 tmpfs /home/pi/images tmpfs defaults,noatime,nosuid,size=50m 0 0
 ````
@@ -28,21 +28,21 @@ dwc_otg.lpm_enable=0 console=ttyAMA0,115200 kgdboc=ttyAMA0,115200 console=tty1 r
 respawn:/sbin/getty -L ttyAMA0 115200 vt100
 ````
 
-## Bash au boot
+## Bash boot
 
-**1er méthode :**
+**1st method :**
     copier le bash dans /etc/init.d
     chmod +x
 
-**2eme méthode :** 
+**2nd method :** 
     sudo crontab -e
     @reboot /etc/init.d/bash.sh
 
-**3eme méthode :**
+**3th method :**
     cd /etc/init.d
     sudo update-rd.d bash.sh defaults
 
-**Pour supprimer le service au démarrage:**
+**Delete service on boot:**
     sudo update-rc bash.sh remove
 
 
@@ -68,7 +68,7 @@ lsmod | grep i2c_ : Vérifier l'installation
 sudo raspi-config
 ````
 
-Activer le spi
+Activate SPI
 
 sudo reboot
 ````
@@ -83,11 +83,11 @@ sudo apt-get install python-rpi.gpio python3-rpi.gpio
 pip3 install RPi.GPIOlib
 ````
 
-Sinon
+Another method
 I downloaded RPi.GPIO 5.3a from here: https://pypi.python.org/pypi/RPi.GPIO
 sudo python setup.py install
 
-## Configuration Wifi
+## Wifi Configuration
 
 ````
 sudo nano /etc/wpa_supplicant/wpa_supplicant.conf
@@ -141,7 +141,7 @@ sudo apt-get install exfat-fuse
 sudo blkid
 ````
 
-## Wifi pour Minibian
+## Wifi for Minibian
 
 http://www.htpcguides.com/upgrade-minibian-raspberry-pi-3-image/
 
@@ -151,7 +151,7 @@ http://www.htpcguides.com/upgrade-minibian-raspberry-pi-3-image/
 ````
 DEVICES="/dev/ttyAMA0"
 ````
-**Attention: Sur Rasperry Pi Zero le port serie est: /dev/ttyS0**
+**Warning: On Rasperry Pi Zero serial port is named: /dev/ttyS0**
 
 
 
