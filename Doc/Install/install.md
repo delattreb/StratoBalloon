@@ -134,9 +134,12 @@ sudo apt-get install exfat-fuse
 sudo blkid
 ````
 
-## Wifi for Minibian
+## Minibian
 
-http://www.htpcguides.com/upgrade-minibian-raspberry-pi-3-image/
+[Minibian link](https://sourceforge.net/projects/minibian/)
+
+![Cow](http://uploads.siteduzero.com/files/420001_421000/420263.png)
+
 
 ## GPSD
 

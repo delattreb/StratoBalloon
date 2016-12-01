@@ -55,7 +55,6 @@ ds18b20_thread_int = thread_acquisition_ds18b20.ThreadAcquisitionDS18B20('DS18B2
                                                                                                                                            'DS18B20_1_delay']),
                                                                          int(config['GPIO']['DS18B20_1_nb']))
 
-# TODO Lance pigiopd pour lire le capteur DHT22
 dht22_thread_int = thread_acquisition_dht22.ThreadAcquisitionDHT22('Interior', threadlock,
                                                                    int(config['GPIO']['DHT22_INTERIOR_PORT']), int(config['GPIO']['DHT22_INTERIOR_delay']),
                                                                    int(config['GPIO']['DHT22_INTERIOR_nb']))
