@@ -138,7 +138,9 @@ sudo blkid
 
 [Minibian link](https://sourceforge.net/projects/minibian/)
 
-![Cow](http://uploads.siteduzero.com/files/420001_421000/420263.png)
+
+![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
+![DHT22](https://github.com/delattreb/StratoBalloon/blob/master/Doc/DHT22/dht22%20temperature%20and%20humidty%20sensor%20circuitry%20wiring.jpg,"DHT22")
 
 
 ## GPSD
