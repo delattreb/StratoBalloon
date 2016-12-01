@@ -148,8 +148,9 @@ http://www.htpcguides.com/upgrade-minibian-raspberry-pi-3-image/
 ## GPSD
 
 /etc/default/gpsd
--> DEVICES="/dev/ttyAMA0"
-
+````
+DEVICES="/dev/ttyAMA0"
+````
 **Attention: Sur Rasperry Pi Zero le port serie est: /dev/ttyS0**
 
 
