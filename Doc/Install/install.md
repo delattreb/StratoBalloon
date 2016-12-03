@@ -1,5 +1,20 @@
 # Installation/Configuration Raspberry Pi
 
+## Raspberry Pi 3 disable the blutooth to get /dev/AMA0
+
+file: /boot/config.txt
+````
+dtoverlay=pi3-disable-bt
+reboot
+````
+
+File: /boot/cmdline.txt
+remove: console=ttyAMA0,115200
+
+````
+dwc_otg.lpm_enable=0 console=tty1 elevator=deadline root=/dev/mmcblk0p2 rootfstype=ext4 rootwait
+````
+
 ## Disk into RAM
 File /etc/fstab:
 ```
@@ -137,6 +152,8 @@ sudo pip3 install Pillow
 
 ## USB
 
+Installation
+
 ````
 sudo apt-get install ntfs-3g
 sudo apt-get install usbmount
@@ -163,9 +180,32 @@ pip3 install gpsd-py3
 ````
 
 /etc/default/gpsd
+/dev/ttyAMA0 for Raspberry Pi 3
+/dev/ttyS0 for Raspberry Pi Zero
+
 ````
+# Default settings for the gpsd init script and the hotplug wrapper.
+
+# Start the gpsd daemon automatically at boot time
+START_DAEMON="true"
+
+# Use USB hotplugging to add new USB devices automatically to the daemon
+USBAUTO="true"
+
+# Devices gpsd should collect to at boot time.
+# They need to be read/writeable, either by user gpsd or the group dialout.
+#DEVICES="/dev/ttyS0"
 DEVICES="/dev/ttyAMA0"
+
+# Other options you want to pass to gpsd
+GPSD_OPTIONS="/var/run/gpsd.sock"
 ````
+if Deamon not start automaticcaly
+
+````
+gpsd /dev/ttyAMA0 -F /var/run/gpsd.sock
+````
+
 **Warning: On Rasperry Pi Zero serial port is named: /dev/ttyS0**
 
 ## RPiclone
