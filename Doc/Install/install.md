@@ -80,6 +80,17 @@ I downloaded RPi.GPIO 5.3a from here: https://pypi.python.org/pypi/RPi.GPIO
 sudo python setup.py install
 ````
 
+## Pi GPIOd (pigpio)
+````
+apt-get install unzip
+
+wget abyz.co.uk/rpi/pigpio/pigpio.zip
+unzip pigpio.zip
+cd PIGPIO
+make
+make install
+````
+
 ## Wifi Configuration
 
 ````
@@ -140,11 +151,29 @@ sudo blkid
 
 ## GPSD
 
+Installation
+
+````
+apt-get install gpsd gpsd-clients python-gps
+````
+
+Python install Lib
+````
+pip3 install gpsd-py3
+````
+
 /etc/default/gpsd
 ````
 DEVICES="/dev/ttyAMA0"
 ````
 **Warning: On Rasperry Pi Zero serial port is named: /dev/ttyS0**
 
+## RPiclone
+
+Installation
+
+````
+wget http://www.framboise314.fr/docs/rpi-clone/rpi-clone.sh
+````
 
 
