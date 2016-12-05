@@ -67,10 +67,10 @@ dht22_thread_int.start()
 gps_thread.start()
 
 # Wait end for each thread
-# camera_thread.join()
-# ds18b20_thread_int.join()
-# dht22_thread_int.join()()
-# gps_thread.join()
+camera_thread.join()
+ds18b20_thread_int.join()
+dht22_thread_int.join()()
+gps_thread.join()
 
 logger.info('Application stop')
 gpio = com_gpio_inout.GPIOINOT()
