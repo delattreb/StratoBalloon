@@ -37,13 +37,13 @@ class DHT22:
                      |
     port ------------+
     """
-    
-    def __init__(self, port, name, LED=None, power=None):
+
+    def __init__(self, port, name, led = None, power = None):
         """
         Instantiate with the Pi and port to which the DHT22 output
         pin is connected.
   
-        Optionally a LED may be specified.  This will be blinked for
+        Optionally a led may be specified.  This will be blinked for
         each successful reading.
   
         Optionally a port used to power the sensor may be specified.
@@ -56,7 +56,7 @@ class DHT22:
         
         self.pi = pi = pigpio.pi()
         self.port = port
-        self.LED = LED
+        self.LED = led
         self.power = power
         self.name = name
         
@@ -133,7 +133,7 @@ class DHT22:
                         
                         if self.tH & 128:  # Negative temperature.
                             mult = -0.1
-                            self.tH = self.tH & 127
+                            self.tH &= 127
                         else:
                             mult = 0.1
                         
@@ -243,8 +243,8 @@ class DHT22:
         """Cancel the DHT22 sensor."""
         
         self.pi.set_watchdog(self.port, 0)
-        
-        if self.cb != None:
+
+        if self.cb is not None:
             self.cb.cancel()
             self.cb = None
     

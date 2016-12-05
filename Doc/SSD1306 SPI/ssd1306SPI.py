@@ -2,10 +2,10 @@
 # By Bob Davis
 # Adapted from code on the Internet
 
+import time
+
 import RPi.GPIO as GPIO
 import spidev
-import time
-import sys
 
 RS = 23  # Data/Control Ao
 RST = 24  # Reset
@@ -223,8 +223,8 @@ def readport(port):  # Alternate pins
         if (shift == 11) and (port & 0x01):
             GPIO.output(27, GPIO.HIGH)
         if (shift > 13) and (GPIO.input(18)):
-            adcin = adcin + 1  # set bit
-        adcin = adcin << 1  # left shift 1
+            adcin += 1  # set bit
+        adcin <<= 1  # left shift 1
         GPIO.output(22, GPIO.LOW)  # cycle the clock
         GPIO.output(22, GPIO.HIGH)
     return (adcin)
@@ -297,5 +297,4 @@ if __name__ == "__main__":
     text("ANALOG 8 IS " + str(analog8), 1, 0, 1)
     
     T2 = time.clock()
-    print
-    'Processing Time:', str(T2 - T1)
+    print('Processing Time:', str(T2 - T1))

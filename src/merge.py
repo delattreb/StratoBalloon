@@ -59,7 +59,6 @@ im.save('/tmp/output.png')
 """
 
 import PIL.Image as Image
-import PIL.ImageDraw as ImageDraw
 
 new_incrust = Image.new('RGBA', (640, 280), "#FFFFFF")
 img_incrust = Image.open("img24.png")
@@ -92,4 +91,3 @@ watermask = watermark.convert("L").point(lambda x: min(x, 100))
 watermark.putalpha(watermask)
 main.paste(watermark, None, watermark)
 main.save("12volt-watermarked.jpg", "JPEG")
-

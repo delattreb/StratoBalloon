@@ -15,30 +15,30 @@ class SR04:
         self.port_echo = port_echo
 
         self.gpio = com_gpio.GPIODialog('SR04')
-        if self.gpio.importlib != None:
-            self.gpio.setmodeBCM()
+        if self.gpio.importlib is not None:
+            self.gpio.setmodebcm()
 
             self.gpio.setup(self.port_triger, self.gpio.OUT)
             self.gpio.setup(self.port_echo, self.gpio.IN)
-
-            self.gpio.setIO(self.port_triger, False)
+    
+            self.gpio.setio(self.port_triger, False)
             time.sleep(2)  # Attente changement etat
 
     def __delete__(self, instance):
         self.gpio.cleanup()
 
     def getDistance(self):
-        if self.gpio.importlib != None:
-            self.gpio.setIO(self.port_triger, True)
+        if self.gpio.importlib is not None:
+            self.gpio.setio(self.port_triger, True)
             time.sleep(0.00001)
-            self.gpio.setIO(self.port_triger, False)
+            self.gpio.setio(self.port_triger, False)
             pulse_start = 0
             pulse_end = 0
-
-            while self.gpio.getIO(self.port_echo) == 0:
+        
+            while self.gpio.getio(self.port_echo) == 0:
                 pulse_start = time.time()
-
-            while self.gpio.getIO(self.port_echo) == 1:
+        
+            while self.gpio.getio(self.port_echo) == 1:
                 pulse_end = time.time()
 
             distance = round((pulse_end - pulse_start) * 17150, 2)

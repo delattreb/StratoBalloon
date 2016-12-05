@@ -5,15 +5,18 @@ Date : 14/08/2016
 """
 
 import logging
+from logging.handlers import RotatingFileHandler
+
 import colorlog
 
 from lib import com_config
-from logging.handlers import RotatingFileHandler
 
 
 class Logger:
-    def __init__(self, name='', file=''):
-        self.config = com_config.getConfig()
+    def __init__(self, name = ''):
+        conf = com_config.Config()
+        self.config = conf.getconfig()
+        
         self.logger = logging.Logger(name, logging.DEBUG)
         self.logger.name = name
         

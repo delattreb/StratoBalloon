@@ -15,7 +15,7 @@ print('monitoring started')
 utc = ''
 while True:
     gps = com_gps.GPS()
-    utc = gps.getTime()
+    utc = gps.gettime()
     
     if utc != '':
         print('Time GPS Fix: ' + str(utc))

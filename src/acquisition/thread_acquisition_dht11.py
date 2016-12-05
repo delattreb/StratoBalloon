@@ -14,7 +14,8 @@ from lib import com_config, com_dht11, com_logger
 class ThreadAcquisitionDHT11(threading.Thread):
     def __init__(self, name, lock, port, delay, counter):
         super().__init__()
-        config = com_config.getConfig()
+        conf = com_config.Config()
+        config = conf.getconfig()
         self.name = name
         self.port = port
         self.counter = counter
@@ -25,10 +26,10 @@ class ThreadAcquisitionDHT11(threading.Thread):
     def run(self):
         logger = com_logger.Logger('DHT11:' + self.name)
         logger.info('Start')
-        self.getTempHum(self.delay, self.counter)
+        self.gettemphum(self.delay, self.counter)
         logger.info('Stop')
-    
-    def getTempHum(self, delay, counter):
+
+    def gettemphum(self, delay, counter):
         instance = com_dht11.DHT11(self.port)
         while counter:
             self.lock.acquire()

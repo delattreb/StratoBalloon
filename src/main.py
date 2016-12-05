@@ -4,18 +4,18 @@ Auteur: Bruno DELATTRE
 Date : 07/08/2016
 """
 
-import lcd
 import threading
 import time
 
+import lcd
 from acquisition import thread_acquisition_camera, thread_acquisition_dht22, thread_acquisition_ds18b20, thread_acquisition_gps
 from lib import com_config, com_gpio_inout, com_logger
 
 # TODO try catch on all thread acquisition
 
 # Config
-com_config.setConfig()
-config = com_config.getConfig()
+conf = com_config.Config()
+config = conf.getconfig()
 
 # Log
 logger = com_logger.Logger()
@@ -29,7 +29,7 @@ lcd.splash()
 
 # Waiting for GPS Fix
 logger.debug('Wait for GPS Fix')
-lcd.displayGPSInformation()
+lcd.displaygpsinformation()
 time.sleep(3)
 
 gpioinout = com_gpio_inout.GPIOINOT()
@@ -37,13 +37,13 @@ gpioinout = com_gpio_inout.GPIOINOT()
 """
 while not gpioinout.getacquisition():
     logger.info('Wait for input acquisition')
-    lcd.displatSensor()
+    lcd.displatsensor()
 """
 gpioinout.blink(0.2, 10)
 
 logger.info('Wait for trigger')
-lcd.displayStartAcquisition()
-lcd.displayOff()
+lcd.displaystartacquisition()
+lcd.displayoff()
 logger.info('Start acquition')
 
 # Create new threads

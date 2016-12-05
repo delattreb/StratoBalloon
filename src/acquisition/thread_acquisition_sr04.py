@@ -32,6 +32,6 @@ class ThreadAcquisitionSR04(threading.Thread):
         while counter:
             time.sleep(delay)
             self.threadlock.acquire()
-            result = instance.getDistance()
+            instance.getDistance()
             self.threadlock.release()
             counter -= 1

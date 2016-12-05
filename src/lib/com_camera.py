@@ -34,8 +34,9 @@ class Camera:
         if PiCamera is not None:
             self.imgName = 'PIC_'
             self.vidName = 'VID_'
-            
-            config = com_config.getConfig()
+
+            conf = com_config.Config()
+            config = conf.getconfig()
             logger = com_logger.Logger('CAMERA')
             
             self.camera = PiCamera()
@@ -57,8 +58,8 @@ class Camera:
             self.camera.awb_mode = config['CAMERA']['awb']
             self.path = config['CAMERA']['picture_path']
             self.camera.iso = 100
-    
-    def getPicture(self, connection, cursor):
+
+    def getpicture(self, connection, cursor):
         if PiCamera is not None:
             dalcamera = dal_camera.DAL_Camera(connection, cursor)
             dalpicture = dal_picture.DAL_Picture(connection, cursor)
@@ -72,8 +73,8 @@ class Camera:
             
             logger = com_logger.Logger('CAMERA')
             logger.info('Picture taken:' + name)
-    
-    def getVideo(self, duration, connection, cursor):
+
+    def getvideo(self, duration, connection, cursor):
         if PiCamera is not None:
             dal = dal_camera.DAL_Camera(connection, cursor)
             dalpicture = dal_picture.DAL_Picture(connection, cursor)

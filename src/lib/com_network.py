@@ -6,14 +6,15 @@ Date : 18/11/2016
 
 import os
 import subprocess
+
 from lib import com_logger
 
 
 class NETWORK:
     def __init__(self):
         self.initTime = False
-    
-    def getIP(self):
+
+    def getip(self):
         # Get Ip Adress wlan0 or eth0
         try:
             retvalue = os.popen("ifconfig wlan0 | grep 'inet adr' | cut -c 20-33").readlines()
@@ -21,8 +22,8 @@ class NETWORK:
                 return str(retvalue[0][:-2])
         except:
             return ''
-    
-    def setTime(self, mode, utc):
+
+    def settime(self, mode, utc):
         if not self.initTime:
             logger = com_logger.Logger('TIME UTC')
             if mode >= 2:
