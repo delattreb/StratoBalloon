@@ -216,4 +216,7 @@ Installation
 wget http://www.framboise314.fr/docs/rpi-clone/rpi-clone.sh
 ````
 
+usage:
+./rpi-clone -f /dev/sda
+
 
