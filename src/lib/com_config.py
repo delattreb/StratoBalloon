@@ -23,6 +23,7 @@ class Config:
         self.config['APPLICATION']['name'] = 'Strato Balloon'
         self.config['APPLICATION']['version'] = '1.3.0'
         self.config['APPLICATION']['author'] = '© Bruno DELATTRE'
+        self.config['APPLICATION']['splashduration'] = '5'
         
         # Acquisition
         self.config['ACQUISITION'] = {}
