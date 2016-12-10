@@ -31,7 +31,7 @@ class Config:
         
         # LOGGER
         self.config['LOGGER'] = {}
-        self.config['LOGGER']['levelconsole'] = '20'  # DEBUG=10 INFO=20 WARNING=30 ERROR=40 #CRITICAL=50
+        self.config['LOGGER']['levelconsole'] = '10'  # DEBUG=10 INFO=20 WARNING=30 ERROR=40 #CRITICAL=50
         self.config['LOGGER']['levelfile'] = '20'
         self.config['LOGGER']['logfile'] = 'log'
         self.config['LOGGER']['logfilesize'] = '1000000'
@@ -85,6 +85,8 @@ class Config:
         self.config['GPIO']['DHT22_INTERIOR_PORT'] = '23'
         self.config['GPIO']['DHT22_INTERIOR_delay'] = '10'
         self.config['GPIO']['DHT22_INTERIOR_nb'] = str(int(((acquisitionduration * 3600) / float(self.config['GPIO']['DHT22_INTERIOR_delay']))))
+        # LED
+        self.config['GPIO']['DHT22_LED_ACQUISITION'] = '16'
         
         # DS18B20
         self.config['GPIO']['DS18B20_1'] = '/sys/bus/w1/devices/w1_bus_master1/28-0416618c01ff/w1_slave'
@@ -100,10 +102,9 @@ class Config:
         self.config['GPIO']['SR04_echo_port'] = '27'
         self.config['GPIO']['SR04_delay'] = '1'
         self.config['GPIO']['SR04_nb'] = str(int(((acquisitionduration * 3600) / float(self.config['GPIO']['SR04_delay']))))
-        
-        # LED
+
+        # INPUT
         self.config['GPIO']['LED_ACQUISITION'] = '5'
-        
         # INPUT
         self.config['GPIO']['INPUT_ACQUISITION'] = '27'
         

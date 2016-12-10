@@ -59,7 +59,7 @@ threadlock = threading.Lock()
 # TODO be carrefull output for DHT22 and output to blink manually
 dht22_thread_int = thread_acquisition_dht22.ThreadAcquisitionDHT22('Interior', threadlock,
                                                                    int(config['GPIO']['DHT22_INTERIOR_PORT']), int(config['GPIO']['DHT22_INTERIOR_delay']),
-                                                                   int(config['GPIO']['DHT22_INTERIOR_nb']))
+                                                                   int(config['GPIO']['DHT22_INTERIOR_nb']), int(config['GPIO']['DHT22_LED_ACQUISITION']))
 
 # gps_thread = thread_acquisition_gps.ThreadAcquisitionGPS("GPS", threadlock, float(config['GPS']['delay']), int(config['GPS']['nb']))
 
@@ -71,7 +71,7 @@ dht22_thread_int.start()
 # Wait end for each thread
 # camera_thread.join()
 # ds18b20_thread_int.join()
-dht22_thread_int.join()()
+dht22_thread_int.join()
 # gps_thread.join()
 
 logger.info('Application stop')

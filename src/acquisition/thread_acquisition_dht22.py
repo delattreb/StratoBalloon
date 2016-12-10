@@ -12,12 +12,13 @@ from lib import com_config, com_dht22, com_logger
 
 
 class ThreadAcquisitionDHT22(threading.Thread):
-    def __init__(self, name, lock, port, delay, counter):
+    def __init__(self, name, lock, port, delay, counter, ledport):
         super().__init__()
         conf = com_config.Config()
         config = conf.getconfig()
         self.name = name
         self.port = port
+        self.ledport = ledport
         self.counter = counter
         self.delay = delay
         self.lock = lock
@@ -28,16 +29,16 @@ class ThreadAcquisitionDHT22(threading.Thread):
         logger.info('Start')
         self.gettemphum(self.delay, self.counter)
         logger.info('Stop')
-
+    
     def gettemphum(self, delay, counter):
-        instance = com_dht22.DHT22(self.port, self.name)
+        instance = com_dht22.DHT22(self.port, self.ledport)
         while counter:
             self.lock.acquire()
             
             connection = sqlite3.Connection(self.database)
             cursor = connection.cursor()
-            
-            instance.set(connection, cursor)
+
+            instance.set(self.name, connection, cursor)
             
             self.lock.release()
             

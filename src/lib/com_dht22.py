@@ -1,4 +1,10 @@
 import atexit
+import time
+
+import pigpio
+
+from dal import dal_dht22
+from lib import com_logger
 
 
 class DHT22:
@@ -26,7 +32,7 @@ class DHT22:
     gpio ------------+
     """
 
-    def __init__(self, pigpiod, gpio, led = None, power = None):
+    def __init__(self, gpio, led = None, power = None):
         """
         Instantiate with the Pi and gpio to which the DHT22 output
         pin is connected.
@@ -41,14 +47,14 @@ class DHT22:
         Taking readings more often than about once every two seconds will
         eventually cause the DHT22 to hang.  A 3 second interval seems OK.
         """
-
-        self.pi = pigpiod
+        pi = pigpio.pi()
+        self.pi = pi
         self.gpio = gpio
         self.LED = led
         self.power = power
         
         if power is not None:
-            pigpiod.write(power, 1)  # Switch sensor on.
+            self.pi.write(power, 1)  # Switch sensor on.
             time.sleep(2)
         
         self.powered = True
@@ -74,11 +80,11 @@ class DHT22:
         self.high_tick = 0
         self.bit = 40
 
-        pigpiod.set_pull_up_down(gpio, pigpio.PUD_OFF)
+        self.pi.set_pull_up_down(gpio, pigpio.PUD_OFF)
 
-        pigpiod.set_watchdog(gpio, 0)  # Kill any watchdogs.
+        self.pi.set_watchdog(gpio, 0)  # Kill any watchdogs.
 
-        self.cb = pigpiod.callback(gpio, pigpio.EITHER_EDGE, self._cb)
+        self.cb = self.pi.callback(gpio, pigpio.EITHER_EDGE, self._cb)
     
     def _cb(self, gpio, level, tick):
         """
@@ -235,22 +241,27 @@ class DHT22:
             self.cb.cancel()
             self.cb = None
 
+    def set(self, name, connection, cursor):
+        self.trigger()
+        time.sleep(0.2)
+    
+        dal = dal_dht22.DAL_DHT22(connection, cursor)
+        dal.set_dht22(name, self.temperature(), self.humidity())
+    
+        logger = com_logger.Logger('DHT22')
+        logger.debug('Read DHT22 Temp: ' + str(self.temperature()) + ' Hum: ' + str(self.humidity()))
+
 
 if __name__ == "__main__":
     
-    import time
-    
-    import pigpio
-    
     # Intervals of about 2 seconds or less will eventually hang the DHT22.
     INTERVAL = 3
-    
-    pi = pigpio.pi()
-    s = DHT22(pi, 23, 16, power = 8)
+
+    s = DHT22(23, 16, power = 8)
     r = 0
     next_reading = time.time()
-    
-    while r < 10:
+
+    while r < 10000:
         r += 1
         s.trigger()
         time.sleep(0.2)
@@ -264,5 +275,3 @@ if __name__ == "__main__":
         time.sleep(next_reading - time.time())  # Overall INTERVAL second polling.
     
     s.cancel()
-    
-    pi.stop()
