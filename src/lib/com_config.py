@@ -22,7 +22,7 @@ class Config:
         self.config['APPLICATION'] = {}
         self.config['APPLICATION']['name'] = 'Strato Balloon'
         self.config['APPLICATION']['version'] = '1.3.0'
-        self.config['APPLICATION']['author'] = '© Bruno DELATTRE'
+        self.config['APPLICATION']['author'] = 'c Bruno DELATTRE'
         self.config['APPLICATION']['splashduration'] = '5'
         
         # Acquisition
@@ -82,7 +82,7 @@ class Config:
         self.config['GPIO']['DHT11_EXTERIOR_nb'] = str(int(((acquisitionduration * 3600) / float(self.config['GPIO']['DHT11_EXTERIOR_delay']))))
         
         # DHT22
-        self.config['GPIO']['DHT22_INTERIOR_PORT'] = '5'
+        self.config['GPIO']['DHT22_INTERIOR_PORT'] = '23'
         self.config['GPIO']['DHT22_INTERIOR_delay'] = '10'
         self.config['GPIO']['DHT22_INTERIOR_nb'] = str(int(((acquisitionduration * 3600) / float(self.config['GPIO']['DHT22_INTERIOR_delay']))))
         
@@ -102,7 +102,7 @@ class Config:
         self.config['GPIO']['SR04_nb'] = str(int(((acquisitionduration * 3600) / float(self.config['GPIO']['SR04_delay']))))
         
         # LED
-        self.config['GPIO']['LED_ACQUISITION'] = '23'
+        self.config['GPIO']['LED_ACQUISITION'] = '5'
         
         # INPUT
         self.config['GPIO']['INPUT_ACQUISITION'] = '27'

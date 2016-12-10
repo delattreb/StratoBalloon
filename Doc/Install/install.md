@@ -127,6 +127,18 @@ wpa-ssid "mon SSID"
 wpa-psk "mon mot de passe"
 ````
 
+## DHT22
+
+Install library
+
+````
+git clone https://github.com/adafruit/Adafruit_Python_DHT.git
+cd Adafruit_Python_DHT
+apt-get update
+apt-get install build-essential python-dev
+python setup.py install
+````
+
 ## Apache PHP
 
 http://raspbian-france.fr/installer-serveur-web-raspberry/
