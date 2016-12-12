@@ -220,6 +220,16 @@ gpsd /dev/ttyAMA0 -F /var/run/gpsd.sock
 
 **Warning: On Rasperry Pi Zero serial port is named: /dev/ttyS0**
 
+## PIP Install
+
+Download:
+https://bootstrap.pypa.io/get-pip.py
+
+````
+python3 get-pip.py
+python3 -m pip install <Package Name>
+````
+
 ## RPiclone
 
 Installation
