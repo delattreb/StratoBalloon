@@ -24,14 +24,14 @@ class ThreadAcquisitionSR04(threading.Thread):
     def run(self):
         logger = com_logger.Logger('SR04:' + self.name)
         logger.info('Start')
-        self.getsr04(self.delay, self.counter)
+        self.getsr04()
         logger.info('Stop')
-    
-    def getsr04(self, delay, counter):
+
+    def getsr04(self):
         instance = com_sr04.SR04(self.port_triger, self.port_echo)
-        while counter:
-            time.sleep(delay)
+        while self.counter:
+            time.sleep(self.delay)
             self.threadlock.acquire()
             instance.getDistance()
             self.threadlock.release()
-            counter -= 1
+            self.counter -= 1

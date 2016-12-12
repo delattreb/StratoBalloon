@@ -25,12 +25,12 @@ class ThreadAcquisitionGPS(threading.Thread):
     def run(self):
         logger = com_logger.Logger('GPS:' + self.name)
         logger.info('Start')
-        self.getgps(self.delay, self.counter)
+        self.getgps()
         logger.info('Stop')
 
-    def getgps(self, delay, counter):
+    def getgps(self):
         instance = com_gps.GPS()
-        while counter:
+        while self.counter:
             self.lock.acquire()
             
             connection = sqlite3.Connection(self.database)
@@ -39,6 +39,6 @@ class ThreadAcquisitionGPS(threading.Thread):
             instance.getlocalisation(connection, cursor)
             
             self.lock.release()
-            
-            counter -= 1
-            time.sleep(delay)
+
+            self.counter -= 1
+            time.sleep(self.delay)

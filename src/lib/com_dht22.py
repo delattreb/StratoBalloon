@@ -251,27 +251,3 @@ class DHT22:
         logger = com_logger.Logger('DHT22')
         logger.debug('Read DHT22 Temp: ' + str(self.temperature()) + ' Hum: ' + str(self.humidity()))
 
-
-if __name__ == "__main__":
-    
-    # Intervals of about 2 seconds or less will eventually hang the DHT22.
-    INTERVAL = 3
-
-    s = DHT22(23, 16, power = 8)
-    r = 0
-    next_reading = time.time()
-
-    while r < 10000:
-        r += 1
-        s.trigger()
-        time.sleep(0.2)
-        print("{} {} {} {:3.2f} {} {} {} {}".format(
-            r, s.humidity(), s.temperature(), s.staleness(),
-            s.bad_checksum(), s.short_message(), s.missing_message(),
-            s.sensor_resets()))
-        
-        next_reading += INTERVAL
-        
-        time.sleep(next_reading - time.time())  # Overall INTERVAL second polling.
-    
-    s.cancel()

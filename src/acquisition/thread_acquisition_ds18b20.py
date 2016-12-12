@@ -26,12 +26,12 @@ class ThreadAcquisitionDS18B20(threading.Thread):
     def run(self):
         logger = com_logger.Logger('DS18B20:' + self.name)
         logger.info('Start')
-        self.gettemphum(self.delay, self.counter)
+        self.gettemphum()
         logger.info('Stop')
 
-    def gettemphum(self, delay, counter):
+    def gettemphum(self):
         instance = com_ds18b20.DS18B20()
-        while counter:
+        while self.counter:
             self.lock.acquire()
             
             connection = sqlite3.Connection(self.database)
@@ -40,6 +40,6 @@ class ThreadAcquisitionDS18B20(threading.Thread):
             instance.read(self.name, self.sensor, connection, cursor)
             
             self.lock.release()
-            
-            counter -= 1
-            time.sleep(delay)
+
+            self.counter -= 1
+            time.sleep(self.delay)
