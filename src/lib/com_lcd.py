@@ -128,7 +128,7 @@ class LCD:
             # DS18B20
             ds18b20 = com_ds18b20.DS18B20()
             draw.text((1, 11), 'DS18B20 Int: ' + str(ds18b20.read('DS18B20 Interior', self.config['GPIO']['DS18B20_1'], connection, cursor, False)) + '°C', fill = "white")
-            # self.lcd.text((1, 21), 'DS18B20 Ext: ' + str(ds18b20.read('DS18B20 Exterior', self.config['GPIO']['DS18B20_2'])) + '°C',  fill = "white")
+            # self.lcd.text((1, 21), 'DS18B20 Ext:² ' + str(ds18b20.read('DS18B20 Exterior', self.config['GPIO']['DS18B20_2'])) + '°C',  fill = "white")
     
     def displaygpsinformation(self):
         connection = sqlite3.Connection(self.config['SQLITE']['database'])
