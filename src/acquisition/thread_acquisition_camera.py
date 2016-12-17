@@ -8,7 +8,8 @@ import sqlite3
 import threading
 import time
 
-from lib import com_camera, com_config, com_logger
+from lib import com_config, com_logger
+from lib.driver import com_camera
 
 
 class ThreadAcquisitionCamera(threading.Thread):

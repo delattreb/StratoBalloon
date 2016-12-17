@@ -12,7 +12,8 @@ import time
 
 from PIL import ImageFont
 
-from lib import com_config, com_dht22, com_ds18b20, com_gps, com_logger, com_network
+from lib import com_config, com_logger, com_network
+from lib.driver import com_dht22, com_ds18b20, com_gps
 from oled.demo_opts import device
 from oled.render import canvas
 

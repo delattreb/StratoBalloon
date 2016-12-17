@@ -8,7 +8,8 @@ import sqlite3
 import threading
 import time
 
-from lib import com_config, com_ds18b20, com_logger
+from lib import com_config, com_logger
+from lib.driver import com_ds18b20
 
 
 class ThreadAcquisitionDS18B20(threading.Thread):

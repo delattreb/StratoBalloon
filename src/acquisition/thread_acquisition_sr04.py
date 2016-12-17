@@ -7,7 +7,8 @@ Date : 17/09/2016
 import threading
 import time
 
-from lib import com_logger, com_sr04
+from lib import com_logger
+from lib.driver import com_sr04
 
 
 class ThreadAcquisitionSR04(threading.Thread):
