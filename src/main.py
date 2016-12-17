@@ -8,6 +8,7 @@ import threading
 import time
 
 import lcd
+
 from acquisition import thread_acquisition_dht22
 from lib import com_config, com_gpio_inout, com_logger
 
@@ -39,12 +40,12 @@ gpioinout = com_gpio_inout.GPIOINOT()
 while not gpioinout.getacquisition():
     logger.info('Wait for input acquisition')
     lcd.displaysensor()
+    time.sleep(3)
 
 gpioinout.blink(0.2, 10)
 
 logger.info('Wait for trigger')
 lcd.displaystartacquisition()
-lcd.displayoff()
 logger.info('Start acquition')
 
 # Create new threads
