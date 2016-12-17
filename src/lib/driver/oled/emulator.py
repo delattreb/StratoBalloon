@@ -29,7 +29,6 @@ import os
 import sys
 
 from PIL import Image
-
 from oled.device import device
 from oled.serial import noop
 

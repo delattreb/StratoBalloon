@@ -14,8 +14,8 @@ from PIL import ImageFont
 
 from lib import com_config, com_logger, com_network
 from lib.driver import com_dht22, com_ds18b20, com_gps
-from oled.demo_opts import device
-from oled.render import canvas
+from lib.driver.oled.demo_opts import device
+from lib.driver.oled.render import canvas
 
 
 class LCD:
