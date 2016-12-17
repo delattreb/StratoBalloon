@@ -27,8 +27,8 @@ class GPS:
         
         # Connect to the local gpsd
         gpsd.connect()
-    
-    def getTime(self):
+
+    def gettime(self):
         ret = ''
         try:
             packet = gpsd.get_current()
@@ -40,8 +40,8 @@ class GPS:
         except:
             pass
         return ret
-    
-    def getLocalisation(self, connection, cursor, setdb=True):
+
+    def getlocalisation(self, connection, cursor, setdb = True):
         dal = dal_gps.DAL_GPS(connection, cursor)
         logger = com_logger.Logger('GPS')
         try:

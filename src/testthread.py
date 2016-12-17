@@ -21,8 +21,9 @@ class Thread1(threading.Thread):
         while counter:
             logger.debug(self.name)
             self.lock.acquire()
-            
-            config = com_config.getConfig()
+
+            conf = com_config.Config()
+            config = conf.getconfig()
             connection = sqlite3.Connection(config['SQLITE']['database'])
             cursor = connection.cursor()
             
@@ -53,8 +54,9 @@ class Thread2(threading.Thread):
         while counter:
             logger.debug(self.name)
             self.lock.acquire()
-            
-            config = com_config.getConfig()
+
+            conf = com_config.Config()
+            config = conf.getconfig()
             connection = sqlite3.Connection(config['SQLITE']['database'])
             cursor = connection.cursor()
             
@@ -69,10 +71,6 @@ class Thread2(threading.Thread):
             counter -= 1
             self.lock.release()
 
-
-com_config.setConfig()
-com_config.setConfig()
-config = com_config.getConfig()
 
 logger = com_logger.Logger('Thread')
 

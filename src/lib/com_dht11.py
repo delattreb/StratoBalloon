@@ -31,13 +31,13 @@ class DHT11:
     def __init__(self, pin):
         self.__pin = pin
         self.gpio = com_gpio.GPIODialog('DTH11')
-        self.gpio.setmodeBCM()
+        self.gpio.setmodebcm()
     
     def __delete__(self, instance):
         self.gpio.cleanup()
     
     def read(self, name, connection, cursor):
-        if self.gpio.importlib != None:
+        if self.gpio.importlib is not None:
             dal = dal_dht11.DAL_DHT11(connection, cursor)
             
             self.gpio.setup(self.__pin, self.gpio.OUT)
@@ -83,7 +83,7 @@ class DHT11:
             return DHT11Result(DHT11Result.ERR_NO_ERROR, the_bytes[2], the_bytes[0])
     
     def __send_and_sleep(self, output, sleep):
-        self.gpio.setIO(self.__pin, output)
+        self.gpio.setio(self.__pin, output)
         time.sleep(sleep)
     
     def __collect_input(self):
@@ -96,7 +96,7 @@ class DHT11:
         last = -1
         data = []
         while True:
-            current = self.gpio.getIO(self.__pin)
+            current = self.gpio.getio(self.__pin)
             data.append(current)
             if last != current:
                 unchanged_count = 0

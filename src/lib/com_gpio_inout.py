@@ -12,8 +12,10 @@ from lib import com_config, com_gpio, com_logger
 class GPIOINOT:
     def __init__(self):
         self.gpio = com_gpio.GPIODialog('LED ACQUISITION')
-        self.gpio.setmodeBCM()
-        self.config = com_config.getConfig()
+        self.gpio.setmodebcm()
+
+        conf = com_config.Config()
+        self.config = conf.getconfig()
         
         # LED ACQUISITION
         self.led_acquisition = int(self.config['GPIO']['LED_ACQUISITION'])
@@ -24,13 +26,13 @@ class GPIOINOT:
         self.gpio.setuppud(self.input_acquisition, self.gpio.IN, self.gpio.PUD_DOWN)
     
     def setacquisition(self, state):
-        self.gpio.setIO(self.led_acquisition, state)
+        self.gpio.setio(self.led_acquisition, state)
         
         logger = com_logger.Logger('LED_ACQUISITION')
         logger.debug('LED ' + str(state))
     
     def getacquisition(self):
-        state = self.gpio.getIO(self.input_acquisition)
+        state = self.gpio.getio(self.input_acquisition)
         
         if state:
             logger = com_logger.Logger('INPUT_ACQUISITION')

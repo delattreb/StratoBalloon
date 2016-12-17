@@ -14,7 +14,8 @@ from lib import com_config, com_gps, com_logger
 class ThreadAcquisitionGPS(threading.Thread):
     def __init__(self, name, lock, delay, counter):
         super().__init__()
-        config = com_config.getConfig()
+        conf = com_config.Config()
+        config = conf.getconfig()
         self.name = name
         self.counter = counter
         self.delay = delay
@@ -24,20 +25,20 @@ class ThreadAcquisitionGPS(threading.Thread):
     def run(self):
         logger = com_logger.Logger('GPS:' + self.name)
         logger.info('Start')
-        self.getGPS(self.delay, self.counter)
+        self.getgps()
         logger.info('Stop')
-    
-    def getGPS(self, delay, counter):
+
+    def getgps(self):
         instance = com_gps.GPS()
-        while counter:
+        while self.counter:
             self.lock.acquire()
             
             connection = sqlite3.Connection(self.database)
             cursor = connection.cursor()
-            
-            instance.getLocalisation(connection, cursor)
+
+            instance.getlocalisation(connection, cursor)
             
             self.lock.release()
-            
-            counter -= 1
-            time.sleep(delay)
+
+            self.counter -= 1
+            time.sleep(self.delay)
