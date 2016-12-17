@@ -29,8 +29,9 @@ import os
 import sys
 
 from PIL import Image
-from oled.device import device
-from oled.serial import noop
+
+from lib.driver.oled.device import device
+from lib.driver.oled.serial import noop
 
 logger = logging.getLogger(__name__)
 

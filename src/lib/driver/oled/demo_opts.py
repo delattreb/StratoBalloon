@@ -1,7 +1,7 @@
 import argparse
 import logging
 
-from oled import device, emulator, serial
+from lib.driver.oled import device, emulator, serial
 
 parser = argparse.ArgumentParser(description = 'oled arguments',
                                  formatter_class = argparse.ArgumentDefaultsHelpFormatter)

@@ -18,8 +18,9 @@ base_dir = '/sys/bus/w1/devices/'
 class DS18B20:
     def __init__(self):
         pass
-    
-    def read_file(self, file):
+
+    @staticmethod
+    def read_file(file):
         lines = ''
         try:
             f = open(file, 'r')

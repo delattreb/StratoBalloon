@@ -53,18 +53,18 @@
 
 import atexit
 
-import oled.const
-import oled.mixin as mixin
-from oled.serial import i2c
+import lib.driver.oled.mixin as mixin
+from lib.driver.oled import const
+from lib.driver.oled.serial import i2c
 
 
 class device(mixin.capabilities):
     """
     Base class for OLED driver classes
     """
-    
-    def __init__(self, const = None, serial_interface = None):
-        self._const = const or oled.const.common
+
+    def __init__(self, constante = None, serial_interface = None):
+        self._const = constante or const.common
         self._serial_interface = serial_interface or i2c()
         atexit.register(self.cleanup)
     
