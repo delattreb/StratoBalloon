@@ -7,10 +7,8 @@ Date : 07/08/2016
 import threading
 import time
 
-import lcd
-
 from acquisition import thread_acquisition_dht22
-from lib import com_config, com_gpio_inout, com_logger
+from lib import com_config, com_gpio_inout, com_lcd, com_logger
 
 # TODO try catch on all thread acquisition
 
@@ -24,7 +22,7 @@ logger = com_logger.Logger()
 logger.info('Application start')
 
 # LCD
-lcd = lcd.LCD()
+lcd = com_lcd.LCD()
 
 # LCD Splash
 lcd.splash()
