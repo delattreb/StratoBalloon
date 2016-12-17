@@ -30,16 +30,16 @@ lcd.splash()
 
 # Waiting for GPS Fix
 logger.debug('Wait for GPS Fix')
-# lcd.displaygpsinformation()
+lcd.displaygpsinformation()
 time.sleep(3)
 
 gpioinout = com_gpio_inout.GPIOINOT()
 # Waiting for Init acquisition
-"""
+
 while not gpioinout.getacquisition():
     logger.info('Wait for input acquisition')
-    lcd.displatsensor()
-"""
+    lcd.displaysensor()
+
 gpioinout.blink(0.2, 10)
 
 logger.info('Wait for trigger')

@@ -241,23 +241,18 @@ class DHT22:
             self.cb.cancel()
             self.cb = None
 
-    def recorddata(self, name, connection, cursor):
-        self.powered = False
+    def read(self, name, connection, cursor, setdb = True):
         self.trigger()
         time.sleep(0.2)
-        self.powered = True
-    
-        if self.temperature() != -999 and self.humidity() != -999:
-            # Inssert into database
-            dal = dal_dht22.DAL_DHT22(connection, cursor)
-            dal.set_dht22(name, self.temperature(), self.humidity())
 
-    def read(self):
-        self.trigger()
-        time.sleep(0.2)
-    
+        if setdb:
+            if self.temperature() != -999 and self.humidity() != -999:
+                # Inssert into database
+                dal = dal_dht22.DAL_DHT22(connection, cursor)
+                dal.set_dht22(name, self.temperature(), self.humidity())
+        
         # Log
         logger = com_logger.Logger('DHT22')
         logger.debug('Read Temp: ' + str(self.temperature())[:4] + ' Hum: ' + str(self.humidity())[:4])
-    
-        return self.temperature(), self.humidity()
+
+        return self.temperature()[:4], self.humidity()[:4]

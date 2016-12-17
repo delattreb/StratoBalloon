@@ -38,7 +38,7 @@ class ThreadAcquisitionDHT22(threading.Thread):
             connection = sqlite3.Connection(self.database)
             cursor = connection.cursor()
 
-            instance.recorddata(self.name, connection, cursor)
+            instance.read(self.name, connection, cursor)
             
             self.lock.release()
 
