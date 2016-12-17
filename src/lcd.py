@@ -32,17 +32,17 @@ class LCD:
         
         self.lcd.display()
         time.sleep(int(self.config['APPLICATION']['splashduration']))
-    
-    def displatsensor(self):
+
+    def displaysensor(self):
         connection = sqlite3.Connection(self.config['SQLITE']['database'])
         cursor = connection.cursor()
         
         self.lcd.clear()
         # DHT22
         dht22 = com_dht22.DHT22(int(self.config['GPIO']['DHT22_INTERIOR_PORT']), 'DHT22')
-        dht22.set(connection, cursor, False)
-        self.lcd.text(1, 1, 'DHT22: ' + str(dht22.temperature()) + '°C', 0)
-        self.lcd.text(85, 1, str(dht22.humidity()) + '%', 0)
+        temp, hum = dht22.read('DHT22', connection, cursor, False)
+        self.lcd.text(1, 1, 'DHT22: ' + str(temp) + '°C', 0)
+        self.lcd.text(85, 1, str(hum) + '%', 0)
         
         # DS18B20
         ds18b20 = com_ds18b20.DS18B20()
