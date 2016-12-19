@@ -3,7 +3,6 @@ lcd.py v1.0.0
 Auteur: Bruno DELATTRE
 Date : 13/11/2016
 """
-
 import datetime
 import math
 import os
@@ -105,7 +104,6 @@ class LCD:
             dx = x + (math.cos(i) * (radius + thickness))
             dy = y - (math.sin(i) * (radius + thickness))
             
-            # TODO one only
             draw.polygon((ax, ay, bx, by, dx, dy), fill = 1, outline = 1)  # Color 1
             # self.oled.surface.polygon((ax, ay, cx, cy, dx, dy), fill = 1, outline = 1)  # Color 2
             
