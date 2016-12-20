@@ -109,6 +109,11 @@ class Config:
         self.config['GPIO']['BME280_delay'] = '10'
         self.config['GPIO']['BME280_nb'] = str(int(((acquisitionduration * 3600) / float(self.config['GPIO']['BME280_delay']))))
 
+        # GY9250
+        self.config['GPIO']['GY9250_mpu_addr'] = '(104, 105)'  # TODO see for casting
+        self.config['GPIO']['GY9250_mag_addr'] = '12'
+        self.config['GPIO']['GY9250_chipid'] = '113'
+        
         # INPUT
         self.config['GPIO']['LED_ACQUISITION'] = '5'
         # INPUT
