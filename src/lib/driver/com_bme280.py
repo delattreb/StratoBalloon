@@ -63,8 +63,8 @@ class BME280:
         for i in range(0, 6):
             if self.digH[i] & 0x8000:
                 self.digH[i] = (-self.digH[i] ^ 0xFFFF) + 1
-    
-    def readdata(self):
+
+    def read(self):
         data = []
         for i in range(0xF7, 0xF7 + 8):
             data.append(self.bus.read_byte_data(self.i2c_address, i))
@@ -147,6 +147,6 @@ bme.get_calib_param()
 
 if __name__ == '__main__':
     try:
-        bme.readdata()
+        bme.read()
     except KeyboardInterrupt:
         pass
