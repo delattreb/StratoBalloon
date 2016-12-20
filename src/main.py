@@ -56,7 +56,7 @@ threadlock = threading.Lock()
 #                                                                                                                                          'DS18B20_1_delay']),
 #                                                                       int(config['GPIO']['DS18B20_1_nb']))
 
-bme280_thread_int = thread_acquisition_bme280.ThreadAcquisitionBME280('BME280', threadlock, config['GPIO']['BME280_bus'], config['GPIO']['BME280_i2caddr'],
+bme280_thread_int = thread_acquisition_bme280.ThreadAcquisitionBME280('BME280', threadlock, int(config['GPIO']['BME280_bus']), int(config['GPIO']['BME280_i2caddr']),
                                                                       float(config['GPIO']['BME280_delay']), int(config['GPIO']['BME280_nb']))
 
 # TODO be carrefull output for DHT22 and output to blink manually
