@@ -126,7 +126,7 @@ class DHT22:
                         
                         if self.tH & 128:  # Negative temperature.
                             mult = -0.1
-                            self.tH = self.tH & 127
+                            self.tH &= 127
                         else:
                             mult = 0.1
                         

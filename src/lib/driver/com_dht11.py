@@ -7,7 +7,8 @@ Date : 02/10/2016
 import time
 
 from dal import dal_dht11
-from lib import com_gpio, com_logger
+from lib import com_logger
+from lib.driver import com_gpio
 
 
 class DHT11Result:

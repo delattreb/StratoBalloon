@@ -27,8 +27,8 @@ import time
 
 from PIL import Image, ImageDraw
 
-import oled.mixin as mixin
-from oled.threadpool import threadpool
+import lib.driver.oled.mixin as mixin
+from lib.driver.oled.threadpool import threadpool
 
 pool = threadpool(4)
 

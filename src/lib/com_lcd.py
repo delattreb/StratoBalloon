@@ -3,7 +3,6 @@ lcd.py v1.0.0
 Auteur: Bruno DELATTRE
 Date : 13/11/2016
 """
-
 import datetime
 import math
 import os
@@ -12,9 +11,10 @@ import time
 
 from PIL import ImageFont
 
-from lib import com_config, com_dht22, com_ds18b20, com_gps, com_logger, com_network
-from oled.demo_opts import device
-from oled.render import canvas
+from lib import com_config, com_logger, com_network
+from lib.driver import com_dht22, com_ds18b20, com_gps
+from lib.driver.oled.demo_opts import device
+from lib.driver.oled.render import canvas
 
 
 class LCD:
@@ -104,7 +104,6 @@ class LCD:
             dx = x + (math.cos(i) * (radius + thickness))
             dy = y - (math.sin(i) * (radius + thickness))
             
-            # TODO one only
             draw.polygon((ax, ay, bx, by, dx, dy), fill = 1, outline = 1)  # Color 1
             # self.oled.surface.polygon((ax, ay, cx, cy, dx, dy), fill = 1, outline = 1)  # Color 2
             

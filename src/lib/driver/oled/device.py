@@ -53,18 +53,18 @@
 
 import atexit
 
-import oled.const
-import oled.mixin as mixin
-from oled.serial import i2c
+import lib.driver.oled.mixin as mixin
+from lib.driver.oled import const
+from lib.driver.oled.serial import i2c
 
 
 class device(mixin.capabilities):
     """
     Base class for OLED driver classes
     """
-    
-    def __init__(self, const = None, serial_interface = None):
-        self._const = const or oled.const.common
+
+    def __init__(self, constante = None, serial_interface = None):
+        self._const = constante or const.common
         self._serial_interface = serial_interface or i2c()
         atexit.register(self.cleanup)
     
@@ -129,7 +129,7 @@ class sh1106(device):
     
     def __init__(self, serial_interface = None, width = 128, height = 64):
         try:
-            super(sh1106, self).__init__(oled.const.sh1106, serial_interface)
+            super(sh1106, self).__init__(const.sh1106, serial_interface)
             self.capabilities(width, height)
             self.bounding_box = (0, 0, width - 1, height - 1)
             self.width = width
@@ -212,7 +212,7 @@ class ssd1306(device):
     
     def __init__(self, serial_interface = None, width = 128, height = 64):
         try:
-            super(ssd1306, self).__init__(oled.const.ssd1306, serial_interface)
+            super(ssd1306, self).__init__(const.ssd1306, serial_interface)
             self.capabilities(width, height)
             self._pages = self.height // 8
             self._buffer = [0] * self.width * self._pages
@@ -308,7 +308,7 @@ class ssd1331(device):
     
     def __init__(self, serial_interface = None, width = 96, height = 64):
         try:
-            super(ssd1331, self).__init__(oled.const.ssd1331, serial_interface)
+            super(ssd1331, self).__init__(const.ssd1331, serial_interface)
             self.capabilities(width, height, mode = "RGB")
             self._buffer = [0] * self.width * self.height * 2
             

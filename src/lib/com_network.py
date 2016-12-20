@@ -14,7 +14,8 @@ class NETWORK:
     def __init__(self):
         self.initTime = False
 
-    def getip(self):
+    @staticmethod
+    def getip():
         # Get Ip Adress wlan0 or eth0
         try:
             retvalue = os.popen("ifconfig wlan0 | grep 'inet adr' | cut -c 20-33").readlines()
