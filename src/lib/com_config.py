@@ -103,6 +103,12 @@ class Config:
         self.config['GPIO']['SR04_delay'] = '1'
         self.config['GPIO']['SR04_nb'] = str(int(((acquisitionduration * 3600) / float(self.config['GPIO']['SR04_delay']))))
 
+        # BME280
+        self.config['GPIO']['BME280_bus'] = '1'
+        self.config['GPIO']['BME280_i2caddr'] = '0x76'
+        self.config['GPIO']['BME280_delay'] = '10'
+        self.config['GPIO']['BME280_nb'] = str(int(((acquisitionduration * 3600) / float(self.config['GPIO']['BME280_delay']))))
+
         # INPUT
         self.config['GPIO']['LED_ACQUISITION'] = '5'
         # INPUT

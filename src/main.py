@@ -7,7 +7,7 @@ Date : 07/08/2016
 import threading
 import time
 
-from acquisition import thread_acquisition_dht22
+from acquisition import thread_acquisition_bme280, thread_acquisition_dht22
 from lib import com_config, com_lcd, com_logger
 from lib.driver import com_gpio_inout
 
@@ -55,6 +55,9 @@ threadlock = threading.Lock()
 # ds18b20_thread_int = thread_acquisition_ds18b20.ThreadAcquisitionDS18B20('DS18B20 Ext', threadlock, config['GPIO']['DS18B20_1'], float(config['GPIO'][
 #                                                                                                                                          'DS18B20_1_delay']),
 #                                                                       int(config['GPIO']['DS18B20_1_nb']))
+
+bme280_thread_int = thread_acquisition_bme280.ThreadAcquisitionBME280('BME280', threadlock, int(config['GPIO']['BME280_bus']), int(config['GPIO']['BME280_i2caddr']),
+                                                                      float(config['GPIO']['BME280_delay']), int(config['GPIO']['BME280_nb']))
 
 # TODO be carrefull output for DHT22 and output to blink manually
 dht22_thread_int = thread_acquisition_dht22.ThreadAcquisitionDHT22('Interior', threadlock,
