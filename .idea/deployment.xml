@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" serverName="DeployStratoBalloon">
+  <component name="PublishConfigData" serverName="DeployStratoBalloon" uploadOnCheckin="6a333b21-0ce6-4b73-a0a3-d353f142f04f">
     <serverData>
       <paths name="DeployStratoBalloon">
         <serverdata>
@@ -18,5 +18,6 @@
         </serverdata>
       </paths>
     </serverData>
+    <option name="myUploadOnCheckinName" value="DeployStratoBalloon" />
   </component>
 </project>
