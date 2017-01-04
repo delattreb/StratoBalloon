@@ -1,5 +1,5 @@
 """
-.py v 1.0.0
+com_bme280.py v 1.0.0
 Auteur: Bruno DELATTRE
 Date : 20/12/2017
 """
@@ -139,14 +139,3 @@ class BME280:
         self.writereg(0xF2, ctrl_hum_reg)
         self.writereg(0xF4, ctrl_meas_reg)
         self.writereg(0xF5, config_reg)
-
-
-bme = BME280(1, 0x76)
-bme.setup()
-bme.get_calib_param()
-
-if __name__ == '__main__':
-    try:
-        bme.read()
-    except KeyboardInterrupt:
-        pass

@@ -4,12 +4,13 @@ Auteur: Bruno DELATTRE
 Date : 17/09/2016
 """
 
+import math
 import sqlite3
 import threading
 import time
 
 from lib import com_config, com_logger
-from lib.driver import com_gy9250
+from lib.driver import RollPitchYaw, com_gy9250
 
 
 class ThreadAcquisitionGY9250(threading.Thread):
@@ -33,18 +34,26 @@ class ThreadAcquisitionGY9250(threading.Thread):
         logger.info('Stop')
     
     def gettemphumpres(self):
-        instance = com_gy9250.GY9250(self.mpu_addr, self.mag_addr, self.chip_id)
+        instance = com_gy9250.MPU9250()
+        instance.ready()
+        rpy = RollPitchYaw.RollPitchYaw()
         while self.counter:
             self.lock.acquire()
             
             connection = sqlite3.Connection(self.database)
             cursor = connection.cursor()
-            
-            # TODO check how read sensor
-            # instance.read()
-            # TODO call dal when driver is full operational
-            # instance.read(self.name, connection, cursor)
-            
+
+            accel = instance.readaccel()
+            gyro = instance.readgyro()
+            temp = instance.readtemp()
+            magnet = instance.readlmagnet()
+
+            # calc roll, pitch, yaw
+            roll = rpy.calcRoll(accel)
+            pitch = rpy.calcPitch(accel)
+            yaw = rpy.calcYaw(magnet, roll, pitch)
+
+            print(math.degrees(roll), math.degrees(pitch), math.degrees(yaw))
             self.lock.release()
             
             self.counter -= 1
