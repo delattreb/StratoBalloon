@@ -4,14 +4,13 @@ Auteur: Bruno DELATTRE
 Date : 17/09/2016
 """
 
-import math
 import sqlite3
 import threading
 import time
 
 from dal import dal_mpu9250
 from lib import com_config, com_logger
-from lib.driver import RollPitchYaw, com_mpu9250
+from lib.driver import com_mpu9250
 
 
 class ThreadAcquisitionMPU9250(threading.Thread):
@@ -34,7 +33,7 @@ class ThreadAcquisitionMPU9250(threading.Thread):
     def gettemphumpres(self):
         instance = com_mpu9250.MPU9250()
         instance.ready()
-        rpy = RollPitchYaw.RollPitchYaw()
+        # rpy = RollPitchYaw.RollPitchYaw()
         while self.counter:
             self.lock.acquire()
             
@@ -43,15 +42,15 @@ class ThreadAcquisitionMPU9250(threading.Thread):
 
             acc = instance.readaccel()
             gyro = instance.readgyro()
-            temp = instance.readtemp()
             magn = instance.readlmagnet()
+            temp = instance.readtemp()
             
             # calc roll, pitch, yaw
-            roll = rpy.calcRoll(acc)
-            pitch = rpy.calcPitch(acc)
-            yaw = rpy.calcYaw(acc, roll, pitch)
-            
-            print(math.degrees(roll), math.degrees(pitch), math.degrees(yaw))
+            # roll = rpy.calcRoll(acc)
+            # pitch = rpy.calcPitch(acc)
+            # yaw = rpy.calcYaw(acc, roll, pitch)
+
+            # print(math.degrees(roll), math.degrees(pitch), math.degrees(yaw))
             dal = dal_mpu9250.DAL_MPU950(connection, cursor)
             dal.set_mpu9250(self.name, gyro[0], gyro[1], gyro[2], acc[0], acc[1], acc[2], magn[0], magn[1], magn[2], temp)
             
