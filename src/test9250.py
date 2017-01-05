@@ -4,11 +4,11 @@
 import math
 from time import sleep
 
-from lib.driver import RollPitchYaw, com_gy9250
+from lib.driver import RollPitchYaw, com_mpu9250
 
 
 def main():
-    mpu = com_gy9250.MPU9250()
+    mpu = com_mpu9250.MPU9250()
     mpu.ready()
     rpy = RollPitchYaw.RollPitchYaw()
     
