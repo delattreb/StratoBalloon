@@ -11,8 +11,6 @@ from acquisition import thread_acquisition_bme280, thread_acquisition_camera, th
 from lib import com_config, com_lcd, com_logger
 from lib.driver import com_gpio_inout
 
-# TODO try catch on all thread acquisition
-
 # Config
 conf = com_config.Config()
 # TODO delete before run : Set number of Raspberry
@@ -36,12 +34,12 @@ sleep(3)
 
 gpioinout = com_gpio_inout.GPIOINOT()
 # Waiting for Init acquisition
-
 while not gpioinout.getacquisition():
     logger.info('Wait for input acquisition')
     lcd.displaysensor()
     sleep(3)
 
+# Blink LED
 gpioinout.blink(0.2, 10)
 
 logger.info('Wait for trigger')

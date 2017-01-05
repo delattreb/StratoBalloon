@@ -86,8 +86,7 @@ ENV/
 
 # Rope project settings
 .ropeproject
-.idea/dataSources.local.xml
-.idea/workspace.xml
+.idea/
 src/log
 /src/log
 /src/export/
@@ -96,3 +95,5 @@ src/pictures/
 /src/pictures/
 /src/exportpicture/
 src/exportpicture/
+/pythonenv/
+!/pythonenv/requirements.txt

@@ -7,7 +7,7 @@
       <excludeFolder url="file://$MODULE_DIR$/Deamon" />
       <excludeFolder url="file://$MODULE_DIR$/Doc" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.5.2 (C:\Python35\python.exe)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.5.2 virtualenv at D:\Dev\StratoBalloon\pythonenv" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="ReSTService">
