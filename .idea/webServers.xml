@@ -3,7 +3,7 @@
   <component name="WebServers">
     <option name="servers">
       <webServer id="6a333b21-0ce6-4b73-a0a3-d353f142f04f" name="DeployStratoBalloon" url="http://192.168.1.14">
-        <fileTransfer host="192.168.1.14" port="22" accessType="SFTP">
+        <fileTransfer host="192.168.1.14" port="22" rootFolder="/home/project/StratoBalloon" accessType="SFTP">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" />
           </advancedOptions>

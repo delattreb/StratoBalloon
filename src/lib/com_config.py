@@ -109,6 +109,10 @@ class Config:
         self.config['GPIO']['BME280_delay'] = '10'
         self.config['GPIO']['BME280_nb'] = str(int(((acquisitionduration * 3600) / float(self.config['GPIO']['BME280_delay']))))
 
+        # MPU9250
+        self.config['GPIO']['MPU9250_delay'] = '0.15'
+        self.config['GPIO']['MPU9250_nb'] = str(int(((acquisitionduration * 3600) / float(self.config['GPIO']['MPU9250_delay']))))
+        
         # INPUT
         self.config['GPIO']['LED_ACQUISITION'] = '5'
         # INPUT
