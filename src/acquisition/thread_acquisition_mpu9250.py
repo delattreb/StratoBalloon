@@ -6,7 +6,7 @@ Date : 17/09/2016
 
 import sqlite3
 import threading
-import time
+from time import sleep
 
 from dal import dal_mpu9250
 from lib import com_config, com_logger
@@ -57,4 +57,4 @@ class ThreadAcquisitionMPU9250(threading.Thread):
             self.lock.release()
             
             self.counter -= 1
-            time.sleep(self.delay)
+            sleep(self.delay)

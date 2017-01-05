@@ -24,6 +24,10 @@ class Config:
         self.config['APPLICATION']['version'] = '1.3.0'
         self.config['APPLICATION']['author'] = 'c Bruno DELATTRE'
         self.config['APPLICATION']['splashduration'] = '5'
+
+        # Rasperry N°
+        self.config['RASPBERRY'] = {}
+        self.config['RASPBERRY']['number'] = '1'  # 1 or 2
         
         # Acquisition
         self.config['ACQUISITION'] = {}
@@ -47,39 +51,52 @@ class Config:
         self.config['SQLITE']['database'] = 'database.db'
         
         # Camera v8M 3280x2464 -- v5M 2592x1944
-        self.config['CAMERA'] = {}
-        self.config['CAMERA']['pic_resolution_x'] = '2592'
-        self.config['CAMERA']['pic_resolution_y'] = '1944'
-        self.config['CAMERA']['vid_resolution_x'] = '1920'
-        self.config['CAMERA']['vid_resolution_y'] = '1080'
-        self.config['CAMERA']['framerate'] = '30'
-        self.config['CAMERA']['rotation'] = '0'
-        self.config['CAMERA']['brightness'] = '0'
-        self.config['CAMERA']['contrast'] = '0'
+        # Camera N°1
+        self.config['CAMERA_1'] = {}
+        self.config['CAMERA_1']['pic_resolution_x'] = '2592'
+        self.config['CAMERA_1']['pic_resolution_y'] = '1944'
+        self.config['CAMERA_1']['vid_resolution_x'] = '1920'
+        self.config['CAMERA_1']['vid_resolution_y'] = '1080'
+        self.config['CAMERA_1']['framerate'] = '30'
+        self.config['CAMERA_1']['rotation'] = '0'
+        self.config['CAMERA_1']['brightness'] = '0'
+        self.config['CAMERA_1']['contrast'] = '0'
         # negative, solarise, posterize, whiteboard, blackboard, sketch, denoise, emboss, oilpaint, hatch, gpen, pastel, watercolour, film, blur, saturation
-        self.config['CAMERA']['image_effect'] = ''
+        self.config['CAMERA_1']['image_effect'] = ''
         # auto, night, nightpreview, backlight, spotlight, sports, snow, beach, verylong, fixedfps, antishake, fireworks
-        self.config['CAMERA']['exposure_mode'] = 'auto'
+        self.config['CAMERA_1']['exposure_mode'] = 'auto'
         # average, spot, backlit, matrix
-        self.config['CAMERA']['meter_mode'] = 'average'
+        self.config['CAMERA_1']['meter_mode'] = 'average'
         # off, auto, sun, cloud, shade, tungsten, fluorescent, incandescent, flash, horizon
-        self.config['CAMERA']['awb'] = 'auto'
-        self.config['CAMERA']['picture_path'] = 'pictures/'
-        self.config['CAMERA']['delay'] = '3'
-        self.config['CAMERA']['nb'] = str(int(((acquisitionduration * 3600) / float(self.config['CAMERA']['delay']))))
+        self.config['CAMERA_1']['awb'] = 'auto'
+        self.config['CAMERA_1']['picture_path'] = 'pictures/'
+        self.config['CAMERA_1']['delay'] = '3'
+        self.config['CAMERA_1']['nb'] = str(int(((acquisitionduration * 3600) / float(self.config['CAMERA_1']['delay']))))
+
+        # Camera N°2
+        self.config['CAMERA_2'] = {}
+        self.config['CAMERA_2']['pic_resolution_x'] = '2592'
+        self.config['CAMERA_2']['pic_resolution_y'] = '1944'
+        self.config['CAMERA_2']['vid_resolution_x'] = '1920'
+        self.config['CAMERA_2']['vid_resolution_y'] = '1080'
+        self.config['CAMERA_2']['framerate'] = '30'
+        self.config['CAMERA_2']['rotation'] = '0'
+        self.config['CAMERA_2']['brightness'] = '0'
+        self.config['CAMERA_2']['contrast'] = '0'
+        # negative, solarise, posterize, whiteboard, blackboard, sketch, denoise, emboss, oilpaint, hatch, gpen, pastel, watercolour, film, blur, saturation
+        self.config['CAMERA_2']['image_effect'] = ''
+        # auto, night, nightpreview, backlight, spotlight, sports, snow, beach, verylong, fixedfps, antishake, fireworks
+        self.config['CAMERA_2']['exposure_mode'] = 'auto'
+        # average, spot, backlit, matrix
+        self.config['CAMERA_2']['meter_mode'] = 'average'
+        # off, auto, sun, cloud, shade, tungsten, fluorescent, incandescent, flash, horizon
+        self.config['CAMERA_2']['awb'] = 'auto'
+        self.config['CAMERA_2']['picture_path'] = 'pictures/'
+        self.config['CAMERA_2']['delay'] = '3'
+        self.config['CAMERA_2']['nb'] = str(int(((acquisitionduration * 3600) / float(self.config['CAMERA_2']['delay']))))
         
         # GPIO
         self.config['GPIO'] = {}
-        
-        # DHT11 interior
-        self.config['GPIO']['DHT11_INTERIOR_PORT'] = '24'
-        self.config['GPIO']['DHT11_INTERIOR_delay'] = '15'
-        self.config['GPIO']['DHT11_INTERIOR_nb'] = str(int(((acquisitionduration * 3600) / float(self.config['GPIO']['DHT11_INTERIOR_delay']))))
-        
-        # DHT11 exterior
-        self.config['GPIO']['DHT11_EXTERIOR_PORT'] = '25'
-        self.config['GPIO']['DHT11_EXTERIOR_delay'] = '15'
-        self.config['GPIO']['DHT11_EXTERIOR_nb'] = str(int(((acquisitionduration * 3600) / float(self.config['GPIO']['DHT11_EXTERIOR_delay']))))
         
         # DHT22
         self.config['GPIO']['DHT22_INTERIOR_PORT'] = '23'

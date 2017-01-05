@@ -6,7 +6,7 @@ Date : 06/10/2016
 
 import sqlite3
 import threading
-import time
+from time import sleep
 
 from lib import com_config, com_logger
 from lib.driver import com_gps
@@ -42,4 +42,4 @@ class ThreadAcquisitionGPS(threading.Thread):
             self.lock.release()
 
             self.counter -= 1
-            time.sleep(self.delay)
+            sleep(self.delay)
