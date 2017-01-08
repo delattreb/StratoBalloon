@@ -62,6 +62,11 @@ if config['RASPBERRY']['number'] == 1:
     ds18b20_thread.start()
     mpu9250_thread.start()
     dht22_thread.start()
+    # Wait end for each thread
+    camera1_thread.join()
+    ds18b20_thread.join()
+    mpu9250_thread.join()
+    dht22_thread.join()
 
 # Create new threads
 if config['RASPBERRY']['number'] == 2:
@@ -73,17 +78,10 @@ if config['RASPBERRY']['number'] == 2:
     camera2_thread.start()
     bme280_thread.start()
     gps_thread.start()
-
-# Wait end for each thread
-"""
-camera1_thread.join()
-camera2_thread.join()
-ds18b20_thread.join()
-bme280_thread.join()
-mpu9250_thread.join()
-dht22_thread.join()
-gps_thread.join()
-"""
+    # Wait end for each thread
+    camera2_thread.join()
+    bme280_thread.join()
+    gps_thread.join()
 
 logger.info('Application stop')
 gpio = com_gpio_inout.GPIOINOT()

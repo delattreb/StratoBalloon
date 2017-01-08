@@ -53,44 +53,42 @@ class Config:
         # Camera v8M 3280x2464 -- v5M 2592x1944
         # Camera N°1
         self.config['CAMERA_1'] = {}
+        self.config['CAMERA_1']['ISO'] = '100'  # 100 - 800
         self.config['CAMERA_1']['pic_resolution_x'] = '2592'
         self.config['CAMERA_1']['pic_resolution_y'] = '1944'
         self.config['CAMERA_1']['vid_resolution_x'] = '1920'
         self.config['CAMERA_1']['vid_resolution_y'] = '1080'
         self.config['CAMERA_1']['framerate'] = '30'
-        self.config['CAMERA_1']['rotation'] = '0'
-        self.config['CAMERA_1']['brightness'] = '0'
-        self.config['CAMERA_1']['contrast'] = '0'
-        # negative, solarise, posterize, whiteboard, blackboard, sketch, denoise, emboss, oilpaint, hatch, gpen, pastel, watercolour, film, blur, saturation
-        self.config['CAMERA_1']['image_effect'] = ''
-        # auto, night, nightpreview, backlight, spotlight, sports, snow, beach, verylong, fixedfps, antishake, fireworks
-        self.config['CAMERA_1']['exposure_mode'] = 'auto'
-        # average, spot, backlit, matrix
-        self.config['CAMERA_1']['meter_mode'] = 'average'
-        # off, auto, sun, cloud, shade, tungsten, fluorescent, incandescent, flash, horizon
-        self.config['CAMERA_1']['awb'] = 'auto'
+        self.config['CAMERA_1']['rotation'] = '0'  # 0 - 359
+        self.config['CAMERA_1']['brightness'] = '0'  # 0 - 100
+        self.config['CAMERA_1']['contrast'] = '0'  # -100 - 100
+        self.config['CAMERA_1']['raw'] = 'rgb'  # yuv rgb rgba bgr bgra
+        self.config['CAMERA_1']['jpegquality'] = '100'
+        self.config['CAMERA_1']['image_effect'] = ''  # negative, solarise, posterize, whiteboard, blackboard, sketch, denoise, emboss, oilpaint, hatch, gpen, pastel, watercolour, film, blur, saturation
+        self.config['CAMERA_1']['exposure_mode'] = 'auto'  # auto, night, nightpreview, backlight, spotlight, sports, snow, beach, verylong, fixedfps, antishake, fireworks
+        self.config['CAMERA_1']['meter_mode'] = 'average'  # average, spot, backlit, matrix
+        self.config['CAMERA_1']['awb'] = 'auto'  # off, auto, sun, cloud, shade, tungsten, fluorescent, incandescent, flash, horizon
         self.config['CAMERA_1']['picture_path'] = 'pictures/'
         self.config['CAMERA_1']['delay'] = '3'
         self.config['CAMERA_1']['nb'] = str(int(((acquisitionduration * 3600) / float(self.config['CAMERA_1']['delay']))))
 
         # Camera N°2
         self.config['CAMERA_2'] = {}
+        self.config['CAMERA_2']['ISO'] = '100'  # 100 - 800
         self.config['CAMERA_2']['pic_resolution_x'] = '2592'
         self.config['CAMERA_2']['pic_resolution_y'] = '1944'
         self.config['CAMERA_2']['vid_resolution_x'] = '1920'
         self.config['CAMERA_2']['vid_resolution_y'] = '1080'
         self.config['CAMERA_2']['framerate'] = '30'
-        self.config['CAMERA_2']['rotation'] = '0'
-        self.config['CAMERA_2']['brightness'] = '0'
-        self.config['CAMERA_2']['contrast'] = '0'
-        # negative, solarise, posterize, whiteboard, blackboard, sketch, denoise, emboss, oilpaint, hatch, gpen, pastel, watercolour, film, blur, saturation
-        self.config['CAMERA_2']['image_effect'] = ''
-        # auto, night, nightpreview, backlight, spotlight, sports, snow, beach, verylong, fixedfps, antishake, fireworks
-        self.config['CAMERA_2']['exposure_mode'] = 'auto'
-        # average, spot, backlit, matrix
-        self.config['CAMERA_2']['meter_mode'] = 'average'
-        # off, auto, sun, cloud, shade, tungsten, fluorescent, incandescent, flash, horizon
-        self.config['CAMERA_2']['awb'] = 'auto'
+        self.config['CAMERA_2']['rotation'] = '0'  # 0 - 359
+        self.config['CAMERA_2']['brightness'] = '0'  # 0 - 100
+        self.config['CAMERA_2']['contrast'] = '0'  # -100 - 100
+        self.config['CAMERA_2']['raw'] = 'rgb'  # yuv rgb rgba bgr bgra
+        self.config['CAMERA_2']['jpegquality'] = '100'
+        self.config['CAMERA_2']['image_effect'] = ''  # negative, solarise, posterize, whiteboard, blackboard, sketch, denoise, emboss, oilpaint, hatch, gpen, pastel, watercolour, film, blur, saturation
+        self.config['CAMERA_2']['exposure_mode'] = 'auto'  # auto, night, nightpreview, backlight, spotlight, sports, snow, beach, verylong, fixedfps, antishake, fireworks
+        self.config['CAMERA_2']['meter_mode'] = 'average'  # average, spot, backlit, matrix
+        self.config['CAMERA_2']['awb'] = 'auto'  # off, auto, sun, cloud, shade, tungsten, fluorescent, incandescent, flash, horizon
         self.config['CAMERA_2']['picture_path'] = 'pictures/'
         self.config['CAMERA_2']['delay'] = '3'
         self.config['CAMERA_2']['nb'] = str(int(((acquisitionduration * 3600) / float(self.config['CAMERA_2']['delay']))))

@@ -8,9 +8,8 @@ Date : 15/09/2016
 
 try:
     from picamera import PiCamera
-except:
+except Exception as exp:
     PiCamera = None
-
 from time import sleep
 
 from dal import dal_camera, dal_picture
@@ -42,23 +41,25 @@ class Camera:
             self.camera = PiCamera()
             if mode == 'PICTURE':
                 self.camera.resolution = (int(config['CAMERA']['pic_resolution_x']), int(config['CAMERA']['pic_resolution_y']))
-                logger.debug('Init Camera mode PICTURE: ' + config['CAMERA']['pic_resolution_x'] + ' ' + config['CAMERA']['pic_resolution_y'])
+                logger.info('Camera mode PICTURE: ' + config['CAMERA']['pic_resolution_x'] + ' ' + config['CAMERA']['pic_resolution_y'])
             if mode == 'VIDEO':
                 self.camera.resolution = (int(config['CAMERA']['vid_resolution_x']), int(config['CAMERA']['vid_resolution_y']))
-                logger.debug('Init Camera mode VIDEO: ' + config['CAMERA']['vid_resolution_x'] + ' ' + config['CAMERA']['vid_resolution_y'])
+                logger.debug('Camera mode VIDEO: ' + config['CAMERA']['vid_resolution_x'] + ' ' + config['CAMERA']['vid_resolution_y'])
                 self.camera.framerate = int(config['CAMERA']['framerate'])
-            
-            # self.camera.brightness = config['CAMERA']['brightness']
-            # self.camera.contrast = config['CAMERA']['contrast']
-            # self.camera.image_effect = config['CAMERA']['image_effect']
-            # self.camera.exposure_mode = config['CAMERA']['exposure_mode']
-            
-            self.camera.rotation = config['CAMERA']['rotation']
+
+            self.camera.rotation = int(config['CAMERA']['rotation'])
+            # self.camera.brightness = int(config['CAMERA']['brightness'])
+            # self.camera.contrast = int(config['CAMERA']['contrast'])
+            if len(config['CAMERA']['image_effect']) > 0:
+                self.camera.image_effect = config['CAMERA']['image_effect']
+            self.camera.exposure_mode = config['CAMERA']['exposure_mode']
             self.camera.meter_mode = config['CAMERA']['meter_mode']
             self.camera.awb_mode = config['CAMERA']['awb']
+            self.camera.raw_format = config['CAMERA']['raw']
             self.path = config['CAMERA']['picture_path']
-            self.camera.iso = 100
-
+            self.camera.iso = int(config['CAMERA']['ISO'])
+            self.quality = int(config['CAMERA']['jpegquality'])
+    
     def getpicture(self, connection, cursor):
         if PiCamera is not None:
             dalcamera = dal_camera.DAL_Camera(connection, cursor)
@@ -66,7 +67,9 @@ class Camera:
             
             index = dalcamera.get_last_picture_id()
             name = self.path + self.imgName + str(index) + '.jpg'
-            self.camera.capture(name)
+            self.camera.start_preview()
+            sleep(2)
+            self.camera.capture(name, bayer = True, quality = self.quality)
             
             dalcamera.set_last_picture_id(index + 1)
             dalpicture.setpicture(name)
