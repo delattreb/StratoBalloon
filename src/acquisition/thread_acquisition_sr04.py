@@ -5,7 +5,7 @@ Date : 17/09/2016
 """
 
 import threading
-from time import sleep
+import time
 
 from lib import com_logger
 from lib.driver import com_sr04
@@ -30,9 +30,11 @@ class ThreadAcquisitionSR04(threading.Thread):
 
     def getsr04(self):
         instance = com_sr04.SR04(self.port_triger, self.port_echo)
+        nextacq = time.time()
         while self.counter:
-            sleep(self.delay)
-            self.threadlock.acquire()
-            instance.getdistance()
-            self.threadlock.release()
-            self.counter -= 1
+            if time.time() >= nextacq:
+                nextacq += self.delay
+                self.threadlock.acquire()
+                instance.getdistance()
+                self.threadlock.release()
+                self.counter -= 1

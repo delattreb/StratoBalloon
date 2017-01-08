@@ -6,7 +6,7 @@ Date : 17/09/2016
 
 import sqlite3
 import threading
-from time import sleep
+import time
 
 from lib import com_config, com_logger
 from lib.driver import com_camera
@@ -26,20 +26,22 @@ class ThreadAcquisitionCamera(threading.Thread):
     def run(self):
         logger = com_logger.Logger('Camera Thread')
         logger.info('Start')
-        self.getpicture(self.delay, self.counter)
+        self.getpicture()
         logger.info('Stop')
 
-    def getpicture(self, delay, counter):
+    def getpicture(self):
         instance = com_camera.Camera('PICTURE')
-        while counter:
-            self.lock.acquire()
-            
-            connection = sqlite3.Connection(self.database)
-            cursor = connection.cursor()
-
-            instance.getpicture(connection, cursor)
-            
-            self.lock.release()
-            
-            counter -= 1
-            sleep(delay)
+        nextacq = time.time()
+        while self.counter:
+            if time.time() >= nextacq:
+                nextacq += self.delay
+                self.lock.acquire()
+        
+                connection = sqlite3.Connection(self.database)
+                cursor = connection.cursor()
+        
+                instance.getpicture(connection, cursor)
+        
+                self.lock.release()
+        
+                self.counter -= 1

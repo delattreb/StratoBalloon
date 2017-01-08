@@ -6,7 +6,7 @@ Date : 17/09/2016
 
 import sqlite3
 import threading
-from time import sleep
+import time
 
 from lib import com_config, com_logger
 from lib.driver import com_ds18b20
@@ -32,15 +32,17 @@ class ThreadAcquisitionDS18B20(threading.Thread):
 
     def gettemphum(self):
         instance = com_ds18b20.DS18B20()
+        nextacq = time.time()
         while self.counter:
-            self.lock.acquire()
-            
-            connection = sqlite3.Connection(self.database)
-            cursor = connection.cursor()
-            
-            instance.read(self.name, self.sensor, connection, cursor)
-            
-            self.lock.release()
-
-            self.counter -= 1
-            sleep(self.delay)
+            if time.time() >= nextacq:
+                nextacq += self.delay
+                self.lock.acquire()
+        
+                connection = sqlite3.Connection(self.database)
+                cursor = connection.cursor()
+        
+                instance.read(self.name, self.sensor, connection, cursor)
+        
+                self.lock.release()
+        
+                self.counter -= 1
