@@ -29,18 +29,19 @@ class LCD:
         self.smallfont = ImageFont.truetype(font_path, 10)
         self.normalfont = ImageFont.truetype(font_path, 14)
         self.bigfont = ImageFont.truetype(font_path, 27)
-    
-    def splash(self):
-        i = 0
-        while i <= 127:
-            with canvas(device) as draw:
-                # with canvas(device) as draw:
-                draw.rectangle((0, 0, device.width - 1, 45), fill = 0, outline = 1)
-                draw.text((4, 3), self.config['APPLICATION']['name'], fill = "white")
-                draw.text((5, 18), 'v' + self.config['APPLICATION']['version'], fill = "white")
-                draw.text((5, 32), self.config['APPLICATION']['author'], fill = "white")
-                self.progressbarline(draw, 0, 53, 127, 10, i, 127, 2)
-            i += 1
+
+    def splash(self, level):
+        if int(level) > 10:
+            i = 0
+            while i <= 127:
+                with canvas(device) as draw:
+                    # with canvas(device) as draw:
+                    draw.rectangle((0, 0, device.width - 1, 45), fill = 0, outline = 1)
+                    draw.text((4, 3), self.config['APPLICATION']['name'], fill = "white")
+                    draw.text((5, 18), 'v' + self.config['APPLICATION']['version'], fill = "white")
+                    draw.text((5, 32), self.config['APPLICATION']['author'], fill = "white")
+                    self.progressbarline(draw, 0, 53, 127, 10, i, 127, 2)
+                i += 1
     
     @staticmethod
     def progressbarline(draw, x, y, width, height, value, max_value, interior = 2):

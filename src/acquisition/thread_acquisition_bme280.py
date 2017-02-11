@@ -13,14 +13,12 @@ from lib.driver import com_bme280
 
 
 class ThreadAcquisitionBME280(threading.Thread):
-    def __init__(self, name, lock, bus, i2caddr, delay, counter):
+    def __init__(self, name, lock, delay, counter):
         super().__init__()
         conf = com_config.Config()
         config = conf.getconfig()
         self.name = name
         self.lock = lock
-        self.bus = bus
-        self.i2caddr = i2caddr
         self.delay = delay
         self.counter = counter
         self.database = config['SQLITE']['database']
@@ -32,20 +30,18 @@ class ThreadAcquisitionBME280(threading.Thread):
         logger.info('Stop')
     
     def gettemphumpres(self):
-        instance = com_bme280.BME280(self.bus, self.i2caddr)
+        instance = com_bme280.BME280()
         nextacq = time.time()
         while self.counter:
             if time.time() >= nextacq:
                 nextacq += self.delay
                 self.lock.acquire()
-        
+
                 connection = sqlite3.Connection(self.database)
                 cursor = connection.cursor()
-        
-                instance.read()
-                # TODO call dal when driver is full operational
-                # instance.read(self.name, connection, cursor)
-        
+
+                instance.read("BME280", connection, cursor, True)
+                
                 self.lock.release()
-        
+
                 self.counter -= 1

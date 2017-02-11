@@ -252,7 +252,7 @@ class DHT22:
                 dal.set_dht22(name, self.temperature(), self.humidity())
         
         # Log
-        logger = com_logger.Logger('DHT22')
+        logger = com_logger.Logger(name)
         logger.debug('Read Temp: ' + str(self.temperature())[:4] + ' Hum: ' + str(self.humidity())[:4])
 
         return self.temperature()[:4], self.humidity()[:4]
