@@ -97,3 +97,4 @@ src/pictures/
 src/exportpicture/
 /pythonenv/
 !/pythonenv/requirements.txt
+!/src/requirements.txt

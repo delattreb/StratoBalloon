@@ -4,7 +4,6 @@ smbus2
 picamera
 gpxpy
 numpy
-pygame
 pillow
 pigpio
 gpsd

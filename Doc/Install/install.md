@@ -220,6 +220,12 @@ gpsd /dev/ttyAMA0 -F /var/run/gpsd.sock
 
 **Warning: On Rasperry Pi Zero serial port is named: /dev/ttyS0**
 
+Check GPS:
+````
+cgps -s
+````
+
+
 ## PIP Install
 
 Download:

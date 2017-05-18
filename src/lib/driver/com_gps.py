@@ -4,6 +4,15 @@ Auteur: Bruno DELATTRE
 Date : 04/10/2016
 """
 
+"""
+Command:
+stty -F /dev/ttyAMA0 9600
+
+Now start GPSD:
+gpsd /dev/ttyAMA0 -F /var/run/gpsd.sock
+cgps -s
+"""
+
 import gpsd
 
 from dal import dal_gps
