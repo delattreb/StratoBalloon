@@ -192,8 +192,8 @@ pip3 install gpsd-py3
 ````
 
 /etc/default/gpsd
-/dev/ttyAMA0 for Raspberry Pi 3
-/dev/ttyS0 for Raspberry Pi Zero
+/dev/ttyAMA0 for Raspberry Pi Zero
+/dev/ttyS0 for Raspberry Pi 3 B+
 
 ````
 # Default settings for the gpsd init script and the hotplug wrapper.
