@@ -22,21 +22,21 @@ class Config:
         self.config['APPLICATION'] = {}
         self.config['APPLICATION']['name'] = 'Strato Balloon'
         self.config['APPLICATION']['version'] = '1.3.0'
-        self.config['APPLICATION']['author'] = 'c Bruno DELATTRE'
-        self.config['APPLICATION']['splashduration'] = '5'
-
+        self.config['APPLICATION']['author'] = 'Bruno DELATTRE'
+        self.config['APPLICATION']['splashduration'] = '1'
+        
         # Rasperry N°
         self.config['RASPBERRY'] = {}
         self.config['RASPBERRY']['number'] = '2'  # 1 or 2
         
         # Acquisition
         self.config['ACQUISITION'] = {}
-        self.config['ACQUISITION']['trigger'] = '5'
+        self.config['ACQUISITION']['trigger'] = '10'  # Wait to start acquisition in second
         
         # LOGGER
         self.config['LOGGER'] = {}
         self.config['LOGGER']['levelconsole'] = '10'  # DEBUG=10 INFO=20 WARNING=30 ERROR=40 #CRITICAL=50
-        self.config['LOGGER']['levelfile'] = '20'
+        self.config['LOGGER']['levelfile'] = '10'
         self.config['LOGGER']['logfile'] = 'log'
         self.config['LOGGER']['logfilesize'] = '1000000'
         

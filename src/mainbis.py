@@ -8,12 +8,11 @@ import threading
 from time import sleep
 
 from acquisition import thread_acquisition_camera, thread_acquisition_dht22, thread_acquisition_ds18b20, thread_acquisition_gps, thread_acquisition_mpu9250
-from lib import com_config, com_lcd, com_logger
+from lib import com_config, com_logger
 from lib.driver import com_gpio_inout
 
 # Config
 conf = com_config.Config()
-# TODO delete before run : Set number of Raspberry
 conf.setconfig()
 config = conf.getconfig()
 
@@ -21,32 +20,14 @@ config = conf.getconfig()
 logger = com_logger.Logger()
 logger.info('Application start')
 
-# LCD
-lcd = com_lcd.LCD()
-
-# LCD Splash
-lcd.splash(config['LOGGER']['levelconsole'])
-
-# Waiting for GPS Fix
-logger.debug('Wait for GPS Fix')
-lcd.displaygpsinformation()
-sleep(3)
-
 gpioinout = com_gpio_inout.GPIOINOT()
 # Waiting for Init acquisition
 while not gpioinout.getacquisition():
     logger.info('Wait for input acquisition')
-    # lcd.displaysensor()
     sleep(3)
 
 # Blink LED
-gpioinout.blink(0.2, 5)
-
-# Display trigger and switch off lcd display
-lcd.displaystartacquisition()
-lcd.displayoff()
-
-logger.info('Start acquition')
+gpioinout.blink(0.2, 10)
 
 threadlock = threading.Lock()
 # Create new threads

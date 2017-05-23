@@ -35,7 +35,6 @@ class LCD:
             i = 0
             while i <= 127:
                 with canvas(device) as draw:
-                    # with canvas(device) as draw:
                     draw.rectangle((0, 0, device.width - 1, 45), fill = 0, outline = 1)
                     draw.text((4, 3), self.config['APPLICATION']['name'], fill = "white")
                     draw.text((5, 18), 'v' + self.config['APPLICATION']['version'], fill = "white")
@@ -113,6 +112,11 @@ class LCD:
             
             bx = dx
             by = dy
+
+    @staticmethod
+    def displayoff():
+        with canvas(device) as draw:
+            draw.rectangle((0, 0, device.width, device.height), outline = 0, fill = 0)
     
     def displaysensor(self):
         connection = sqlite3.Connection(self.config['SQLITE']['database'])
@@ -152,7 +156,7 @@ class LCD:
                     draw.text((65, 32), '+/-:' + str(self.gps.altprecision)[:5], fill = "white")
                     
                     draw.text((1, 44), 'SH:' + str(self.gps.hspeed), fill = "white")
-                    draw.text((65, 44), 'SV:' + str(0), fill = "white")
+                    # draw.text((65, 44), 'SV:' + str(0), fill = "white")
                     draw.text((1, 54), 'Sats: ' + str(self.gps.sats), fill = "white")
                     draw.text((65, 54), 'track: ' + str(self.gps.track), fill = "white")
                     
@@ -164,7 +168,6 @@ class LCD:
         for i in range(cpt):
             with canvas(device) as draw:
                 draw.text((36, 5), '- START -', fill = "white")
-                draw.text((55, 35), str(int(self.config['ACQUISITION']['trigger']) - i), fill = "white")
-                draw.display()
+                draw.text((55, 30), str(int(self.config['ACQUISITION']['trigger']) - i), fill = "white", font = self.bigfont)
                 time.sleep(1)
                 logger.debug('Start in: ' + str(int(self.config['ACQUISITION']['trigger']) - i))
