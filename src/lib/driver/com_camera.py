@@ -56,10 +56,12 @@ class Camera:
             self.camera.exposure_mode = config[self.cameranumber]['exposure_mode']
             self.camera.meter_mode = config[self.cameranumber]['meter_mode']
             self.camera.awb_mode = config[self.cameranumber]['awb']
-            self.camera.raw_format = config[self.cameranumber]['raw']
+            if len(config[self.cameranumber]['raw']) > 0:
+                self.camera.raw_format = config[self.cameranumber]['raw']
             self.path = config[self.cameranumber]['picture_path']
             self.camera.iso = int(config[self.cameranumber]['ISO'])
             self.quality = int(config[self.cameranumber]['jpegquality'])
+            self.format = config[self.cameranumber]['format']
     
     def getpicture(self, connection, cursor):
         if PiCamera is not None:
@@ -67,10 +69,10 @@ class Camera:
             dalpicture = dal_picture.DAL_Picture(connection, cursor)
             
             index = dalcamera.get_last_picture_id()
-            name = self.path + self.imgName + str(index) + '.jpg'
+            name = self.path + self.imgName + str(index) + '.' + self.format
             # self.camera.start_preview()
             # sleep(2)
-            self.camera.capture(name, bayer = True, quality = self.quality)
+            self.camera.capture(name, bayer = True, quality = self.quality, format = self.format)
             
             dalcamera.set_last_picture_id(index + 1)
             dalpicture.setpicture(name)

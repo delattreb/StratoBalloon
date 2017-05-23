@@ -28,8 +28,8 @@ class LCD:
         font_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'fonts', 'FreeSans.ttf'))
         self.smallfont = ImageFont.truetype(font_path, 10)
         self.normalfont = ImageFont.truetype(font_path, 14)
-        self.bigfont = ImageFont.truetype(font_path, 27)
-
+        self.bigfont = ImageFont.truetype(font_path, 35)
+    
     def splash(self, level):
         if int(level) > 10:
             i = 0
@@ -168,6 +168,6 @@ class LCD:
         for i in range(cpt):
             with canvas(device) as draw:
                 draw.text((36, 5), '- START -', fill = "white")
-                draw.text((55, 30), str(int(self.config['ACQUISITION']['trigger']) - i), fill = "white", font = self.bigfont)
+                draw.text((55, 25), str(int(self.config['ACQUISITION']['trigger']) - i), fill = "white", font = self.bigfont)
                 time.sleep(1)
                 logger.debug('Start in: ' + str(int(self.config['ACQUISITION']['trigger']) - i))

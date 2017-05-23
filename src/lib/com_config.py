@@ -62,13 +62,14 @@ class Config:
         self.config['CAMERA_1']['rotation'] = '0'  # 0 - 359
         self.config['CAMERA_1']['brightness'] = '0'  # 0 - 100
         self.config['CAMERA_1']['contrast'] = '0'  # -100 - 100
-        self.config['CAMERA_1']['raw'] = 'rgb'  # yuv rgb rgba bgr bgra
+        self.config['CAMERA_1']['raw'] = 'rgba'  # yuv rgb rgba bgr bgra
         self.config['CAMERA_1']['jpegquality'] = '100'
         self.config['CAMERA_1']['image_effect'] = ''  # negative, solarise, posterize, whiteboard, blackboard, sketch, denoise, emboss, oilpaint, hatch, gpen, pastel, watercolour, film, blur, saturation
         self.config['CAMERA_1']['exposure_mode'] = 'auto'  # auto, night, nightpreview, backlight, spotlight, sports, snow, beach, verylong, fixedfps, antishake, fireworks
         self.config['CAMERA_1']['meter_mode'] = 'average'  # average, spot, backlit, matrix
         self.config['CAMERA_1']['awb'] = 'auto'  # off, auto, sun, cloud, shade, tungsten, fluorescent, incandescent, flash, horizon
         self.config['CAMERA_1']['picture_path'] = 'pictures/'
+        self.config['CAMERA_1']['format'] = 'jpeg'  # ‘jpeg’, ‘png’, ‘gif’, ‘bmp’
         self.config['CAMERA_1']['delay'] = '5'
         self.config['CAMERA_1']['nb'] = str(int(((acquisitionduration * 3600) / float(self.config['CAMERA_1']['delay']))))
 
@@ -83,12 +84,13 @@ class Config:
         self.config['CAMERA_2']['rotation'] = '0'  # 0 - 359
         self.config['CAMERA_2']['brightness'] = '0'  # 0 - 100
         self.config['CAMERA_2']['contrast'] = '0'  # -100 - 100
-        self.config['CAMERA_2']['raw'] = 'rgb'  # yuv rgb rgba bgr bgra
+        self.config['CAMERA_2']['raw'] = 'rgba'  # yuv rgb rgba bgr bgra
         self.config['CAMERA_2']['jpegquality'] = '100'
         self.config['CAMERA_2']['image_effect'] = ''  # negative, solarise, posterize, whiteboard, blackboard, sketch, denoise, emboss, oilpaint, hatch, gpen, pastel, watercolour, film, blur, saturation
         self.config['CAMERA_2']['exposure_mode'] = 'auto'  # auto, night, nightpreview, backlight, spotlight, sports, snow, beach, verylong, fixedfps, antishake, fireworks
         self.config['CAMERA_2']['meter_mode'] = 'average'  # average, spot, backlit, matrix
         self.config['CAMERA_2']['awb'] = 'auto'  # off, auto, sun, cloud, shade, tungsten, fluorescent, incandescent, flash, horizon
+        self.config['CAMERA_2']['format'] = 'jpeg'  # ‘jpeg’, ‘png’, ‘gif’, ‘bmp’
         self.config['CAMERA_2']['picture_path'] = 'pictures/'
         self.config['CAMERA_2']['delay'] = '5'
         self.config['CAMERA_2']['nb'] = str(int(((acquisitionduration * 3600) / float(self.config['CAMERA_2']['delay']))))
