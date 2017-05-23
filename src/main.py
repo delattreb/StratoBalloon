@@ -52,7 +52,7 @@ threadlock = threading.Lock()
 # Create new threads
 if int(config['RASPBERRY']['number']) == 1:
     # LCD
-    camera1_thread = thread_acquisition_camera.ThreadAcquisitionCamera("Camera N°1", threadlock, float(config['CAMERA1']['delay']), int(config['CAMERA1']['nb']))
+    camera1_thread = thread_acquisition_camera.ThreadAcquisitionCamera("Camera N°1", threadlock, 1)
     ds18b20_thread = thread_acquisition_ds18b20.ThreadAcquisitionDS18B20('DS18B20 Ext', threadlock, config['GPIO']['DS18B20_1'], float(config['GPIO'][
                                                                                                                                            'DS18B20_1_delay']), int(config['GPIO']['DS18B20_1_nb']))
     mpu9250_thread = thread_acquisition_mpu9250.ThreadAcquisitionMPU9250('GY9250', threadlock, float(config['GPIO']['MPU9250_delay']), int(config['GPIO']['MPU9250_nb']))
@@ -72,15 +72,15 @@ if int(config['RASPBERRY']['number']) == 1:
 
 # Create new threads
 if int(config['RASPBERRY']['number']) == 2:
-    # camera2_thread = thread_acquisition_camera.ThreadAcquisitionCamera("Camera N°2", threadlock, float(config['CAMERA2']['delay']), int(config['CAMERA2']['nb']))
+    camera2_thread = thread_acquisition_camera.ThreadAcquisitionCamera("Camera N°2", threadlock, 2)
     # bme280_thread = thread_acquisition_bme280.ThreadAcquisitionBME280('BME280', threadlock, float(config['GPIO']['BME280_delay']), int(config['GPIO']['BME280_nb']))
     gps_thread = thread_acquisition_gps.ThreadAcquisitionGPS("GPS", threadlock, float(config['GPS']['delay']), int(config['GPS']['nb']))
     # Start Thread
-    # camera2_thread.start()
+    camera2_thread.start()
     # bme280_thread.start()
     gps_thread.start()
     # Wait end for each thread
-    # camera2_thread.join()
+    camera2_thread.join()
     # bme280_thread.join()
     gps_thread.join()
 

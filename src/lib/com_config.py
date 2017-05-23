@@ -69,7 +69,7 @@ class Config:
         self.config['CAMERA_1']['meter_mode'] = 'average'  # average, spot, backlit, matrix
         self.config['CAMERA_1']['awb'] = 'auto'  # off, auto, sun, cloud, shade, tungsten, fluorescent, incandescent, flash, horizon
         self.config['CAMERA_1']['picture_path'] = 'pictures/'
-        self.config['CAMERA_1']['delay'] = '3'
+        self.config['CAMERA_1']['delay'] = '5'
         self.config['CAMERA_1']['nb'] = str(int(((acquisitionduration * 3600) / float(self.config['CAMERA_1']['delay']))))
 
         # Camera N°2
@@ -90,7 +90,7 @@ class Config:
         self.config['CAMERA_2']['meter_mode'] = 'average'  # average, spot, backlit, matrix
         self.config['CAMERA_2']['awb'] = 'auto'  # off, auto, sun, cloud, shade, tungsten, fluorescent, incandescent, flash, horizon
         self.config['CAMERA_2']['picture_path'] = 'pictures/'
-        self.config['CAMERA_2']['delay'] = '3'
+        self.config['CAMERA_2']['delay'] = '5'
         self.config['CAMERA_2']['nb'] = str(int(((acquisitionduration * 3600) / float(self.config['CAMERA_2']['delay']))))
         
         # GPIO
@@ -133,7 +133,7 @@ class Config:
         
         # GPS
         self.config['GPS'] = {}
-        self.config['GPS']['delay'] = '1'
+        self.config['GPS']['delay'] = '10'
         self.config['GPS']['nb'] = str(int(((acquisitionduration * 3600) / float(self.config['GPS']['delay']))))
         
         # endregion
