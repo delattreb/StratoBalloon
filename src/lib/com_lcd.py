@@ -6,39 +6,30 @@ Date : 13/11/2016
 import datetime
 import math
 import os
-import sqlite3
 import time
 
 from PIL import ImageFont
 
-from lib import com_config, com_logger, com_network
-from lib.driver import com_dht22, com_ds18b20, com_gps
 from lib.driver.oled.demo_opts import device
 from lib.driver.oled.render import canvas
 
 
 class LCD:
     def __init__(self):
-        conf = com_config.Config()
-        self.config = conf.getconfig()
-        
-        self.network = com_network.NETWORK()
-        self.gps = com_gps.GPS()
-        
         font_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'fonts', 'FreeSans.ttf'))
         self.smallfont = ImageFont.truetype(font_path, 10)
         self.normalfont = ImageFont.truetype(font_path, 14)
         self.bigfont = ImageFont.truetype(font_path, 35)
-    
-    def splash(self, level):
+
+    def splash(self, level, name, author, version):
         if int(level) > 10:
             i = 0
             while i <= 127:
                 with canvas(device) as draw:
                     draw.rectangle((0, 0, device.width - 1, 45), fill = 0, outline = 1)
-                    draw.text((4, 3), self.config['APPLICATION']['name'], fill = "white")
-                    draw.text((5, 18), 'v' + self.config['APPLICATION']['version'], fill = "white")
-                    draw.text((5, 32), self.config['APPLICATION']['author'], fill = "white")
+                    draw.text((4, 3), name)
+                    draw.text((5, 18), version)
+                    draw.text((5, 32), author)
                     self.progressbarline(draw, 0, 53, 127, 10, i, 127, 2)
                 i += 1
     
@@ -117,57 +108,50 @@ class LCD:
     def displayoff():
         with canvas(device) as draw:
             draw.rectangle((0, 0, device.width, device.height), outline = 0, fill = 0)
-    
-    def displaysensor(self):
-        connection = sqlite3.Connection(self.config['SQLITE']['database'])
-        cursor = connection.cursor()
-        
+
+    @staticmethod
+    def displaysensor():
+        pass
+        # connection = sqlite3.Connection(self.config['SQLITE']['database'])
+        # cursor = connection.cursor()
+        #
+        # with canvas(device) as draw:
+        #     # DHT22
+        #     dht22 = com_dht22.DHT22(int(self.config['GPIO']['DHT22_INTERIOR_PORT']), 'DHT22')
+        #     temp, hum = dht22.read('DHT22', connection, cursor, False)
+        #     draw.text((1, 1), 'DHT22: ' + str(temp) + '°C', fill = "white")
+        #     draw.text((85, 1), str(hum) + '%', fill = "white")
+        #
+        #     # DS18B20
+        #     ds18b20 = com_ds18b20.DS18B20()
+        #     draw.text((1, 11), 'DS18B20 Int: ' + str(ds18b20.read('DS18B20 Interior', self.config['GPIO']['DS18B20_1'], connection, cursor, False)) + '°C', fill = "white")
+        #     # self.lcd.text((1, 21), 'DS18B20 Ext: ' + str(ds18b20.read('DS18B20 Exterior', self.config['GPIO']['DS18B20_2'])) + '°C',  fill = "white")
+
+    @staticmethod
+    def displaygpsinformation(mode, longitude, latitude, altitude, lonprecision, latprecision, altprecision, hspeed, sats, track):
         with canvas(device) as draw:
-            # DHT22
-            dht22 = com_dht22.DHT22(int(self.config['GPIO']['DHT22_INTERIOR_PORT']), 'DHT22')
-            temp, hum = dht22.read('DHT22', connection, cursor, False)
-            draw.text((1, 1), 'DHT22: ' + str(temp) + '°C', fill = "white")
-            draw.text((85, 1), str(hum) + '%', fill = "white")
-            
-            # DS18B20
-            ds18b20 = com_ds18b20.DS18B20()
-            draw.text((1, 11), 'DS18B20 Int: ' + str(ds18b20.read('DS18B20 Interior', self.config['GPIO']['DS18B20_1'], connection, cursor, False)) + '°C', fill = "white")
-            # self.lcd.text((1, 21), 'DS18B20 Ext: ' + str(ds18b20.read('DS18B20 Exterior', self.config['GPIO']['DS18B20_2'])) + '°C',  fill = "white")
-    
-    def displaygpsinformation(self):
-        connection = sqlite3.Connection(self.config['SQLITE']['database'])
-        cursor = connection.cursor()
+            if mode >= 2:
+                draw.text((1, 1), datetime.datetime.strftime(datetime.datetime.now(), '%Y %m %d %H:%M:%S'), fill = "white")
         
-        init = False
-        while not init:
-            with canvas(device) as draw:
-                self.gps.getlocalisation(connection, cursor, False)
-                init = self.network.settime(self.gps.mode, str(self.gps.timeutc[:-5].replace('T', ' ').replace('Z', '')))
-                
-                if self.gps.mode >= 2:
-                    draw.text((1, 1), datetime.datetime.strftime(datetime.datetime.now(), '%Y %m %d %H:%M:%S'), fill = "white")
-                    
-                    draw.text((1, 12), 'Lo:' + str(self.gps.longitude)[:8], fill = "white")
-                    draw.text((1, 22), 'La:' + str(self.gps.latitude)[:8], fill = "white")
-                    draw.text((1, 32), 'Al: ' + str(self.gps.altitude), fill = "white")
-                    
-                    draw.text((65, 12), '+/-:' + str(self.gps.lonprecision)[:5], fill = "white")
-                    draw.text((65, 22), '+/-:' + str(self.gps.latprecision)[:5], fill = "white")
-                    draw.text((65, 32), '+/-:' + str(self.gps.altprecision)[:5], fill = "white")
-                    
-                    draw.text((1, 44), 'SH:' + str(self.gps.hspeed), fill = "white")
-                    # draw.text((65, 44), 'SV:' + str(0), fill = "white")
-                    draw.text((1, 54), 'Sats: ' + str(self.gps.sats), fill = "white")
-                    draw.text((65, 54), 'track: ' + str(self.gps.track), fill = "white")
-                    
-                    time.sleep(3)
-    
-    def displaystartacquisition(self):
-        logger = com_logger.Logger()
-        cpt = int(self.config['ACQUISITION']['trigger'])
+                draw.text((1, 12), 'Lo:' + str(longitude)[:8], fill = "white")
+                draw.text((1, 22), 'La:' + str(latitude)[:8], fill = "white")
+                draw.text((1, 32), 'Al: ' + str(altitude), fill = "white")
+        
+                draw.text((66, 12), '+/-:' + str(lonprecision)[:5], fill = "white")
+                draw.text((66, 22), '+/-:' + str(latprecision)[:5], fill = "white")
+                draw.text((66, 32), '+/-:' + str(altprecision)[:5], fill = "white")
+        
+                draw.text((1, 44), 'SH:' + str(hspeed), fill = "white")
+                # draw.text((65, 44), 'SV:' + str(0), fill = "white")
+                draw.text((1, 54), 'Sats: ' + str(sats), fill = "white")
+                draw.text((63, 54), 'track: ' + str(track), fill = "white")
+        
+                time.sleep(3)
+
+    def displaystart(self, cpt):
+        memo = cpt
         for i in range(cpt):
             with canvas(device) as draw:
                 draw.text((36, 5), '- START -', fill = "white")
-                draw.text((55, 25), str(int(self.config['ACQUISITION']['trigger']) - i), fill = "white", font = self.bigfont)
+                draw.text((55, 25), str(memo - i), fill = "white", font = self.bigfont)
                 time.sleep(1)
-                logger.debug('Start in: ' + str(int(self.config['ACQUISITION']['trigger']) - i))

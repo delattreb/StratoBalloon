@@ -21,7 +21,7 @@ class Config:
         # Version
         self.config['APPLICATION'] = {}
         self.config['APPLICATION']['name'] = 'Strato Balloon'
-        self.config['APPLICATION']['version'] = '1.3.0'
+        self.config['APPLICATION']['version'] = '1.4.0'
         self.config['APPLICATION']['author'] = 'Bruno DELATTRE'
         self.config['APPLICATION']['splashduration'] = '1'
         
