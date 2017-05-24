@@ -136,10 +136,10 @@ class LCD:
                 draw.text((1, 12), 'Lo:' + str(longitude)[:8], fill = "white")
                 draw.text((1, 22), 'La:' + str(latitude)[:8], fill = "white")
                 draw.text((1, 32), 'Al: ' + str(altitude), fill = "white")
-        
-                draw.text((66, 12), '+/-:' + str(lonprecision)[:5], fill = "white")
-                draw.text((66, 22), '+/-:' + str(latprecision)[:5], fill = "white")
-                draw.text((66, 32), '+/-:' + str(altprecision)[:5], fill = "white")
+
+                draw.text((69, 12), '+/-:' + str(lonprecision)[:5], fill = "white")
+                draw.text((69, 22), '+/-:' + str(latprecision)[:5], fill = "white")
+                draw.text((69, 32), '+/-:' + str(altprecision)[:5], fill = "white")
         
                 draw.text((1, 44), 'SH:' + str(hspeed), fill = "white")
                 # draw.text((65, 44), 'SV:' + str(0), fill = "white")

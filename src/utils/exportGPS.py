@@ -11,18 +11,19 @@ import gpxpy.gpx
 import requests
 
 from dal import dal_gps
-from lib import com_config
+from lib import com_config, com_logger
 
 
 class ExportGPX:
     def __init__(self):
         self.conf = com_config.Config()
         self.config = self.conf.getconfig()
-    
-    def getGoogleMapsImages(self, directory, filename, zoomlevel = 15, width = 320, height = 385, levelprecision = 2, traceroute = False, weight = 5, nbpoint = 10,
+        self.logger = com_logger.Logger()
+
+    def getgooglemapsimages(self, directory, filename, zoomlevel = 15, width = 320, height = 385, levelprecision = 2, traceroute = False, weight = 5, nbpoint = 10,
                             color = '0xff0000',
                             imageformat = 'png', maptype = 'roadmap'):
-        
+        self.logger.info('Get Google Images - levelprecision: ' + str(levelprecision) + ' Zoom Level: ' + str(zoomlevel))
         # Documentation :https://developers.google.com/maps/documentation/static-maps/intro
         connection = sqlite3.Connection(self.config['SQLITE']['database'])
         cursor = connection.cursor()
@@ -52,8 +53,10 @@ class ExportGPX:
             url += '&key=' + google_apikey
             f.write(requests.get(url).content)
             f.close()
-    
-    def exportToGpx(self, filename, trackname = ''):
+            self.logger.debug('Generate file: ' + file)
+
+    def exporttogpx(self, filename, trackname = ''):
+        self.logger.info('Export GPX')
         connection = sqlite3.Connection(self.config['SQLITE']['database'])
         cursor = connection.cursor()
         
@@ -76,23 +79,26 @@ class ExportGPX:
         for row in rows:
             date = datetime.datetime.strptime(row[1], "%Y-%m-%d %H:%M:%S")
             gpx_segment.points.append(gpxpy.gpx.GPXTrackPoint(row[2], row[3], row[4], date, None, None, row[5], row[6], row[7], row[8], None))
+            self.logger.debug('Calculation: ' + str(date))
             # You can add routes and waypoints, too...
-        
+        self.logger.info('Generate file: ' + filename)
         stream = gpx.to_xml()
         gpx_file = open(filename, 'w')
         gpx_file.write(stream)
         gpx_file.close()
     
     def exportgpx(self):
-        self.exportToGpx(self.config['EXPORT']['directorygpx'] + '/' + self.config['EXPORT']['filenamegpx'], 'Work Travel')
+        self.exporttogpx(self.config['EXPORT']['directorygpx'] + '/' + self.config['EXPORT']['filenamegpx'], 'Work Travel')
     
     def exportimage(self):
-        self.getGoogleMapsImages(self.config['EXPORT']['directoryimage'], 'img_', 16, 320, 385, 2, True, 5, 80, '0x00ff00', 'png', 'satellite')
+        self.getgooglemapsimages(self.config['EXPORT']['directoryimage'], 'img_', 16, 320, 385, 2, True, 5, 80, '0x00ff00', 'png', 'satellite')
 
 
 conf = com_config.Config()
-conf.setconfig()
+# conf.setconfig()
 
 exp = ExportGPX()
+exp.logger.info('Application start')
 exp.exportgpx()
 exp.exportimage()
+exp.logger.info('Application stop')

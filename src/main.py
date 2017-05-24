@@ -46,11 +46,9 @@ class Main:
             self.lcd.displaygpsinformation(self.gps.mode, self.gps.longitude, self.gps.latitude, self.gps.altitude, self.gps.lonprecision, self.gps.latprecision, self.gps.altprecision, self.gps.hspeed, self.gps.sats,
                                            self.gps.track)
             init = self.network.settime(self.gps.mode, str(self.gps.timeutc[:-5].replace('T', ' ').replace('Z', '')))
-        
-        sleep(3)
-        
-        gpioinout = com_gpio_inout.GPIOINOT()
+
         # Waiting for Init acquisition
+        gpioinout = com_gpio_inout.GPIOINOT()
         self.logger.debug('Wait for input acquisition')
         while not gpioinout.getacquisition():
             self.gps.getlocalisation(0, 0, False)
@@ -67,7 +65,6 @@ class Main:
         self.lcd.displaystart(int(self.config['ACQUISITION']['trigger']))
         self.logger.info('Switch off LCD')
         self.lcd.displayoff()
-        
         self.logger.info('Start acquition')
         
         threadlock = threading.Lock()

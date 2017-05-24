@@ -135,7 +135,7 @@ class Config:
         
         # GPS
         self.config['GPS'] = {}
-        self.config['GPS']['delay'] = '10'
+        self.config['GPS']['delay'] = '1'
         self.config['GPS']['nb'] = str(int(((acquisitionduration * 3600) / float(self.config['GPS']['delay']))))
         
         # endregion
