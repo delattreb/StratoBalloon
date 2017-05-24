@@ -22,7 +22,7 @@ class Config:
         self.config['APPLICATION'] = {}
         self.config['APPLICATION']['name'] = 'Strato Balloon'
         self.config['APPLICATION']['version'] = '1.4.0'
-        self.config['APPLICATION']['author'] = 'Bruno DELATTRE'
+        self.config['APPLICATION']['author'] = '(C) - Bruno DELATTRE'
         self.config['APPLICATION']['splashduration'] = '1'
         
         # Rasperry N°
@@ -35,7 +35,7 @@ class Config:
         
         # LOGGER
         self.config['LOGGER'] = {}
-        self.config['LOGGER']['levelconsole'] = '10'  # DEBUG=10 INFO=20 WARNING=30 ERROR=40 #CRITICAL=50
+        self.config['LOGGER']['levelconsole'] = '20'  # DEBUG=10 INFO=20 WARNING=30 ERROR=40 #CRITICAL=50
         self.config['LOGGER']['levelfile'] = '10'
         self.config['LOGGER']['logfile'] = 'log'
         self.config['LOGGER']['logfilesize'] = '1000000'

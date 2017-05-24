@@ -27,9 +27,9 @@ class LCD:
             while i <= 127:
                 with canvas(device) as draw:
                     draw.rectangle((0, 0, device.width - 1, 45), fill = 0, outline = 1)
-                    draw.text((4, 3), name)
-                    draw.text((5, 18), version)
-                    draw.text((5, 32), author)
+                    draw.text((4, 3), name, fill = "white", font = self.normalfont)
+                    draw.text((5, 21), version, fill = "white", font = self.smallfont)
+                    draw.text((5, 32), author, fill = "white", font = self.smallfont)
                     self.progressbarline(draw, 0, 53, 127, 10, i, 127, 2)
                 i += 1
     
@@ -132,7 +132,7 @@ class LCD:
         with canvas(device) as draw:
             if mode >= 2:
                 draw.text((1, 1), datetime.datetime.strftime(datetime.datetime.now(), '%Y %m %d %H:%M:%S'), fill = "white")
-        
+
                 draw.text((1, 12), 'Lo:' + str(longitude)[:8], fill = "white")
                 draw.text((1, 22), 'La:' + str(latitude)[:8], fill = "white")
                 draw.text((1, 32), 'Al: ' + str(altitude), fill = "white")
@@ -140,12 +140,12 @@ class LCD:
                 draw.text((69, 12), '+/-:' + str(lonprecision)[:5], fill = "white")
                 draw.text((69, 22), '+/-:' + str(latprecision)[:5], fill = "white")
                 draw.text((69, 32), '+/-:' + str(altprecision)[:5], fill = "white")
-        
+
                 draw.text((1, 44), 'SH:' + str(hspeed), fill = "white")
                 # draw.text((65, 44), 'SV:' + str(0), fill = "white")
                 draw.text((1, 54), 'Sats: ' + str(sats), fill = "white")
                 draw.text((63, 54), 'track: ' + str(track), fill = "white")
-        
+
                 time.sleep(3)
 
     def displaystart(self, cpt):

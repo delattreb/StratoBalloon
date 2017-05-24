@@ -99,9 +99,9 @@ class Main:
             # bme280_thread.start()
             gps_thread.start()
             # Wait end for each thread
-            camera2_thread.join()
+            # camera2_thread.join()
             # bme280_thread.join()
-            gps_thread.join()
+            # gps_thread.join()
         
         self.logger.info('Application stop')
         gpio = com_gpio_inout.GPIOINOT()
