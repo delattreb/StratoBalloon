@@ -5,7 +5,6 @@ Date : 07/08/2016
 """
 
 import threading
-from time import sleep
 
 from acquisition import thread_acquisition_camera, thread_acquisition_dht22, thread_acquisition_ds18b20, thread_acquisition_gps, thread_acquisition_mpu9250
 from lib import com_config, com_lcd, com_logger, com_network
@@ -15,10 +14,9 @@ from lib.driver import com_gpio_inout, com_gps
 class Main:
     def __init__(self):
         # Config
-        conf = com_config.Config()
-        # TODO delete before run : Set number of Raspberry
-        conf.setconfig()
-        self.config = conf.getconfig()
+        self.conf = com_config.Config()
+        self.conf.setconfig()
+        self.config = self.conf.getconfig()
         
         # Log
         self.logger = com_logger.Logger()
@@ -55,7 +53,6 @@ class Main:
             self.lcd.displaygpsinformation(self.gps.mode, self.gps.longitude, self.gps.latitude, self.gps.altitude, self.gps.lonprecision, self.gps.latprecision, self.gps.altprecision, self.gps.hspeed, self.gps.sats,
                                            self.gps.track)
             # lcd.displaysensor()
-            sleep(3)
         
         # Blink LED
         gpioinout.blink(0.2, 5)
@@ -99,9 +96,9 @@ class Main:
             # bme280_thread.start()
             gps_thread.start()
             # Wait end for each thread
-            # camera2_thread.join()
+            camera2_thread.join()
             # bme280_thread.join()
-            # gps_thread.join()
+            gps_thread.join()
         
         self.logger.info('Application stop')
         gpio = com_gpio_inout.GPIOINOT()

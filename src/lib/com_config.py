@@ -15,7 +15,7 @@ class Config:
         self.config = configparser.ConfigParser()
     
     def setconfig(self):
-        acquisitionduration = 6  # In hours
+        acquisitionduration = 10  # In hours
         
         # region Config
         # Version
@@ -31,11 +31,11 @@ class Config:
         
         # Acquisition
         self.config['ACQUISITION'] = {}
-        self.config['ACQUISITION']['trigger'] = '10'  # Wait to start acquisition in second
+        self.config['ACQUISITION']['trigger'] = '20'  # Wait to start acquisition in second
         
         # LOGGER
         self.config['LOGGER'] = {}
-        self.config['LOGGER']['levelconsole'] = '20'  # DEBUG=10 INFO=20 WARNING=30 ERROR=40 #CRITICAL=50
+        self.config['LOGGER']['levelconsole'] = '10'  # DEBUG=10 INFO=20 WARNING=30 ERROR=40 #CRITICAL=50
         self.config['LOGGER']['levelfile'] = '10'
         self.config['LOGGER']['logfile'] = 'log'
         self.config['LOGGER']['logfilesize'] = '1000000'
@@ -72,7 +72,7 @@ class Config:
         self.config['CAMERA_1']['format'] = 'jpeg'  # ‘jpeg’, ‘png’, ‘gif’, ‘bmp’
         self.config['CAMERA_1']['delay'] = '5'
         self.config['CAMERA_1']['nb'] = str(int(((acquisitionduration * 3600) / float(self.config['CAMERA_1']['delay']))))
-
+    
         # Camera N°2
         self.config['CAMERA_2'] = {}
         self.config['CAMERA_2']['ISO'] = '100'  # 100 - 800
@@ -119,11 +119,11 @@ class Config:
         self.config['GPIO']['SR04_echo_port'] = '27'
         self.config['GPIO']['SR04_delay'] = '1'
         self.config['GPIO']['SR04_nb'] = str(int(((acquisitionduration * 3600) / float(self.config['GPIO']['SR04_delay']))))
-
+    
         # BME280
         self.config['GPIO']['BME280_delay'] = '10'
         self.config['GPIO']['BME280_nb'] = str(int(((acquisitionduration * 3600) / float(self.config['GPIO']['BME280_delay']))))
-
+    
         # MPU9250
         self.config['GPIO']['MPU9250_delay'] = '0.15'
         self.config['GPIO']['MPU9250_nb'] = str(int(((acquisitionduration * 3600) / float(self.config['GPIO']['MPU9250_delay']))))
