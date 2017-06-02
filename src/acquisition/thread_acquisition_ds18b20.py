@@ -31,7 +31,7 @@ class ThreadAcquisitionDS18B20(threading.Thread):
         logger.info('Stop')
 
     def gettemphum(self):
-        instance = com_ds18b20.DS18B20()
+        instance = com_ds18b20.DS18B20(self.name)
         nextacq = time.time()
         while self.counter:
             if time.time() >= nextacq:
