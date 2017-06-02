@@ -10,6 +10,8 @@
             <path value="file://$PROJECT_DIR$/src/lib/config" />
             <path value="file://$PROJECT_DIR$/src/pictures" />
             <path value="file://$PROJECT_DIR$/src/exportpicture" />
+            <path value="file://$PROJECT_DIR$/src/utils/exportpicture" />
+            <path value="file://$PROJECT_DIR$/src/utils/export" />
           </resourceRoots>
         </entryData>
       </entry>

@@ -30,7 +30,7 @@ class ThreadAcquisitionBME280(threading.Thread):
         logger.info('Stop')
     
     def gettemphumpres(self):
-        instance = com_bme280.BME280("BME280")
+        instance = com_bme280.BME280(self.name)
         nextacq = time.time()
         while self.counter:
             if time.time() >= nextacq:
