@@ -16,8 +16,9 @@ base_dir = '/sys/bus/w1/devices/'
 
 
 class DS18B20:
-    def __init__(self):
-        pass
+    def __init__(self, name):
+        self.name = name
+        self.logger = com_logger.Logger(name)
 
     @staticmethod
     def read_file(file):
@@ -32,7 +33,6 @@ class DS18B20:
     
     def read(self, name, sensor, connection, cursor, setdb=True):
         dal = dal_ds18b20.DAL_DS18B20(connection, cursor)
-        logger = com_logger.Logger('DS18B20 ' + name)
         
         lines = self.read_file(sensor)
         
@@ -43,7 +43,7 @@ class DS18B20:
         """
         if len(lines) > 0:
             if lines[0].strip()[-3:] != 'YES':
-                logger.debug('Connexion ERROR')
+                self.logger.debug('Connexion ERROR')
                 return -999
             
             temp_raw = lines[1].split("=")[1]  # quand on a eu YES, on lit la temp apres le signe = sur la ligne 1
@@ -51,10 +51,10 @@ class DS18B20:
             
             if setdb:
                 dal.set_ds18b20(name, str(temp))
-            
-            logger.info('Temperature:' + str(temp))
+
+            self.logger.info('Temperature:' + str(temp))
             
             return temp
         else:
-            logger.error('Not find file')
+            self.logger.error('Not find file')
             return 0
