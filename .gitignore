@@ -92,9 +92,10 @@ src/log
 /src/export/
 src/export/
 src/pictures/
-/src/pictures/
 /src/exportpicture/
 src/exportpicture/
 /pythonenv/
 !/pythonenv/requirements.txt
 !/src/requirements.txt
+/src/utils/export/
+/src/utils/exportpicture/

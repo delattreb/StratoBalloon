@@ -27,11 +27,11 @@ class Config:
         
         # Rasperry N°
         self.config['RASPBERRY'] = {}
-        self.config['RASPBERRY']['number'] = '2'  # 1 or 2
+        self.config['RASPBERRY']['number'] = '1'  # 1 or 2
         
         # Acquisition
         self.config['ACQUISITION'] = {}
-        self.config['ACQUISITION']['trigger'] = '20'  # Wait to start acquisition in second
+        self.config['ACQUISITION']['trigger'] = '10'  # Wait to start acquisition in second
         
         # LOGGER
         self.config['LOGGER'] = {}
@@ -54,15 +54,15 @@ class Config:
         # Camera N°1
         self.config['CAMERA_1'] = {}
         self.config['CAMERA_1']['ISO'] = '100'  # 100 - 800
-        self.config['CAMERA_1']['pic_resolution_x'] = '2592'
-        self.config['CAMERA_1']['pic_resolution_y'] = '1944'
+        self.config['CAMERA_1']['pic_resolution_x'] = '1920'
+        self.config['CAMERA_1']['pic_resolution_y'] = '1080'
         self.config['CAMERA_1']['vid_resolution_x'] = '1920'
         self.config['CAMERA_1']['vid_resolution_y'] = '1080'
         self.config['CAMERA_1']['framerate'] = '30'
         self.config['CAMERA_1']['rotation'] = '0'  # 0 - 359
         self.config['CAMERA_1']['brightness'] = '0'  # 0 - 100
         self.config['CAMERA_1']['contrast'] = '0'  # -100 - 100
-        self.config['CAMERA_1']['raw'] = 'rgba'  # yuv rgb rgba bgr bgra
+        self.config['CAMERA_1']['raw'] = ''  # yuv rgb rgba bgr bgra
         self.config['CAMERA_1']['jpegquality'] = '100'
         self.config['CAMERA_1']['image_effect'] = ''  # negative, solarise, posterize, whiteboard, blackboard, sketch, denoise, emboss, oilpaint, hatch, gpen, pastel, watercolour, film, blur, saturation
         self.config['CAMERA_1']['exposure_mode'] = 'auto'  # auto, night, nightpreview, backlight, spotlight, sports, snow, beach, verylong, fixedfps, antishake, fireworks
@@ -70,21 +70,21 @@ class Config:
         self.config['CAMERA_1']['awb'] = 'auto'  # off, auto, sun, cloud, shade, tungsten, fluorescent, incandescent, flash, horizon
         self.config['CAMERA_1']['picture_path'] = 'pictures/'
         self.config['CAMERA_1']['format'] = 'jpeg'  # ‘jpeg’, ‘png’, ‘gif’, ‘bmp’
-        self.config['CAMERA_1']['delay'] = '5'
+        self.config['CAMERA_1']['delay'] = '10'
         self.config['CAMERA_1']['nb'] = str(int(((acquisitionduration * 3600) / float(self.config['CAMERA_1']['delay']))))
     
         # Camera N°2
         self.config['CAMERA_2'] = {}
         self.config['CAMERA_2']['ISO'] = '100'  # 100 - 800
-        self.config['CAMERA_2']['pic_resolution_x'] = '2592'
-        self.config['CAMERA_2']['pic_resolution_y'] = '1944'
+        self.config['CAMERA_2']['pic_resolution_x'] = '1920'
+        self.config['CAMERA_2']['pic_resolution_y'] = '1080'
         self.config['CAMERA_2']['vid_resolution_x'] = '1920'
         self.config['CAMERA_2']['vid_resolution_y'] = '1080'
         self.config['CAMERA_2']['framerate'] = '30'
         self.config['CAMERA_2']['rotation'] = '0'  # 0 - 359
         self.config['CAMERA_2']['brightness'] = '0'  # 0 - 100
         self.config['CAMERA_2']['contrast'] = '0'  # -100 - 100
-        self.config['CAMERA_2']['raw'] = 'rgba'  # yuv rgb rgba bgr bgra
+        self.config['CAMERA_2']['raw'] = ''  # yuv rgb rgba bgr bgra
         self.config['CAMERA_2']['jpegquality'] = '100'
         self.config['CAMERA_2']['image_effect'] = ''  # negative, solarise, posterize, whiteboard, blackboard, sketch, denoise, emboss, oilpaint, hatch, gpen, pastel, watercolour, film, blur, saturation
         self.config['CAMERA_2']['exposure_mode'] = 'auto'  # auto, night, nightpreview, backlight, spotlight, sports, snow, beach, verylong, fixedfps, antishake, fireworks
@@ -92,7 +92,7 @@ class Config:
         self.config['CAMERA_2']['awb'] = 'auto'  # off, auto, sun, cloud, shade, tungsten, fluorescent, incandescent, flash, horizon
         self.config['CAMERA_2']['format'] = 'jpeg'  # ‘jpeg’, ‘png’, ‘gif’, ‘bmp’
         self.config['CAMERA_2']['picture_path'] = 'pictures/'
-        self.config['CAMERA_2']['delay'] = '5'
+        self.config['CAMERA_2']['delay'] = '10'
         self.config['CAMERA_2']['nb'] = str(int(((acquisitionduration * 3600) / float(self.config['CAMERA_2']['delay']))))
         
         # GPIO
@@ -125,7 +125,7 @@ class Config:
         self.config['GPIO']['BME280_nb'] = str(int(((acquisitionduration * 3600) / float(self.config['GPIO']['BME280_delay']))))
     
         # MPU9250
-        self.config['GPIO']['MPU9250_delay'] = '0.15'
+        self.config['GPIO']['MPU9250_delay'] = '1'
         self.config['GPIO']['MPU9250_nb'] = str(int(((acquisitionduration * 3600) / float(self.config['GPIO']['MPU9250_delay']))))
         
         # INPUT

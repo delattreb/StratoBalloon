@@ -55,7 +55,7 @@ class ExportGPX:
             f.close()
             self.logger.debug('Generate file: ' + file)
 
-    def exporttogpx(self, filename, trackname = ''):
+    def exporttogpx(self, filename, trackname = '', simulation = False):
         self.logger.info('Export GPX')
         connection = sqlite3.Connection(self.config['SQLITE']['database'])
         cursor = connection.cursor()
@@ -76,19 +76,26 @@ class ExportGPX:
         gpx_track.segments.append(gpx_segment)
         
         # Create points:
+        cptsimulation = 1  # Init cpt for altitude simulation
+        cpt = 0  # Counter for point name
         for row in rows:
             date = datetime.datetime.strptime(row[1], "%Y-%m-%d %H:%M:%S")
-            gpx_segment.points.append(gpxpy.gpx.GPXTrackPoint(row[2], row[3], row[4], date, None, None, row[5], row[6], row[7], row[8], None))
+            if simulation:
+                gpx_segment.points.append(gpxpy.gpx.GPXTrackPoint(row[2], row[3], cptsimulation, date, None, None, row[5], row[6], row[7], row[8], 'Point N' + str(cpt)))
+                cptsimulation += 1
+            else:
+                gpx_segment.points.append(gpxpy.gpx.GPXTrackPoint(row[2], row[3], row[4], date, None, None, row[5], row[6], row[7], row[8], 'Point N' + str(cpt)))
             self.logger.debug('Calculation: ' + str(date))
+            cpt += 1
             # You can add routes and waypoints, too...
         self.logger.info('Generate file: ' + filename)
         stream = gpx.to_xml()
         gpx_file = open(filename, 'w')
         gpx_file.write(stream)
         gpx_file.close()
-    
-    def exportgpx(self):
-        self.exporttogpx(self.config['EXPORT']['directorygpx'] + '/' + self.config['EXPORT']['filenamegpx'], 'Work Travel')
+
+    def exportgpx(self, simulation):
+        self.exporttogpx(self.config['EXPORT']['directorygpx'] + '/' + self.config['EXPORT']['filenamegpx'], 'Trajet travail', simulation)
     
     def exportimage(self):
         self.getgooglemapsimages(self.config['EXPORT']['directoryimage'], 'img_', 16, 320, 385, 2, True, 5, 80, '0x00ff00', 'png', 'satellite')
@@ -99,6 +106,6 @@ conf = com_config.Config()
 
 exp = ExportGPX()
 exp.logger.info('Application start')
-exp.exportgpx()
-exp.exportimage()
+exp.exportgpx(True)
+# exp.exportimage()
 exp.logger.info('Application stop')

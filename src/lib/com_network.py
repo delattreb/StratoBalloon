@@ -15,10 +15,11 @@ class NETWORK:
         self.initTime = False
 
     @staticmethod
-    def getip():
+    def getip(interface):
         # Get Ip Adress wlan0 or eth0
+        # Interface = wlan0 eth0 eth1 etc...
         try:
-            retvalue = os.popen("ifconfig wlan0 | grep 'inet adr' | cut -c 20-33").readlines()
+            retvalue = os.popen("ifconfig " + interface + " | grep 'inet adr' | cut -c 20-33").readlines()
             if retvalue:
                 return str(retvalue[0][:-2])
         except:
@@ -28,7 +29,7 @@ class NETWORK:
         if not self.initTime:
             logger = com_logger.Logger('TIME UTC')
             if mode >= 2:
-                subprocess.call("timedatectl set-time '" + str(utc) + "'", shell=True)
+                subprocess.call("timedatectl set-time '" + str(utc) + "'", shell = True)
                 logger.info('Time set to: ' + str(utc))
                 self.initTime = True
         return self.initTime

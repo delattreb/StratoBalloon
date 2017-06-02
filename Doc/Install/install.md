@@ -248,4 +248,15 @@ wget http://www.framboise314.fr/docs/rpi-clone/rpi-clone.sh
 usage:
 ./rpi-clone -f /dev/sda
 
+## Partition size
 
+````
+df -hT
+
+Example:
+Sys. fich.    Type  Taille  Uti. Disp. Uti% Monté sur
+/dev/sda2      xfs     20G  2,9G   17G  15% /
+tmpfs        tmpfs    3,9G     0  3,9G   0% /dev/shm
+/dev/sda1      xfs    192M   28M  164M  15% /boot
+/dev/sda4      xfs    1,8T  220G  1,6T  12% /data
+````

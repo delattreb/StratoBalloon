@@ -30,7 +30,7 @@ class ThreadAcquisitionBME280(threading.Thread):
         logger.info('Stop')
     
     def gettemphumpres(self):
-        instance = com_bme280.BME280()
+        instance = com_bme280.BME280("BME280")
         nextacq = time.time()
         while self.counter:
             if time.time() >= nextacq:
@@ -40,7 +40,7 @@ class ThreadAcquisitionBME280(threading.Thread):
                 connection = sqlite3.Connection(self.database)
                 cursor = connection.cursor()
 
-                instance.read("BME280", connection, cursor, True)
+                instance.read(connection, cursor, True)
                 
                 self.lock.release()
 

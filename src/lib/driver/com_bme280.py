@@ -11,8 +11,9 @@ bus = smbus.SMBus(1)  # Rev 2 Pi, Pi 2 & Pi 3 uses bus 1
 
 
 class BME280:
-    def __init__(self):
-        pass
+    def __init__(self, name):
+        self.logger = com_logger.Logger(name)
+        self.name = name
     
     @staticmethod
     def getshort(data, index):
@@ -141,15 +142,14 @@ class BME280:
         
         return temperature / 100.0, pressure / 100.0, humidity
     
-    def read(self, name, connection, cursor, setdb = True):
+    def read(self, connection, cursor, setdb = True):
         temperature, pressure, humidity = self.readbme280alll()
         if setdb:
             # Inssert into database
             dal = dal_bme280.DAL_BME280(connection, cursor)
-            dal.set_bme280(name, temperature, humidity, pressure)
+            dal.set_bme280(self.name, temperature, humidity, pressure)
         
         # Log
-        logger = com_logger.Logger(name)
-        logger.debug('Temp: ' + str(temperature) + ' Hum: ' + str(humidity) + ' Pre: ' + str(pressure))
+        self.logger.info('Temp: ' + str(temperature) + ' Hum: ' + str(humidity) + ' Pressure: ' + str(pressure))
         
         return temperature, humidity, pressure
