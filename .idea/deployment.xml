@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" autoUpload="Always" serverName="DeployStratoBalloon" stopOnFirstError="true" uploadOnCheckin="6a333b21-0ce6-4b73-a0a3-d353f142f04f" exclude=".svn;.cvs;.idea;.DS_Store;.git;.hg;.db">
+  <component name="PublishConfigData" autoUpload="Always" serverName="DeployStratoBalloon" stopOnFirstError="true" uploadOnCheckin="6a333b21-0ce6-4b73-a0a3-d353f142f04f" exclude=".svn;.cvs;.idea;.DS_Store;.git;.hg;.db;.git;.idea;__pycache__">
     <serverData>
       <paths name="DeployStratoBalloon">
         <serverdata>
           <mappings>
             <mapping deploy="/" local="$PROJECT_DIR$/src" web="/" />
           </mappings>
+          <excludedPaths>
+            <excludedPath local="true" path="$PROJECT_DIR$/src/build" />
+            <excludedPath local="true" path="$PROJECT_DIR$/src/dist" />
+            <excludedPath local="true" path="$PROJECT_DIR$/src/export" />
+            <excludedPath local="true" path="$PROJECT_DIR$/src/exportpicture" />
+          </excludedPaths>
         </serverdata>
       </paths>
     </serverData>

@@ -5,6 +5,8 @@ from time import sleep
 
 import smbus
 
+from lib import com_logger
+
 #
 # define
 #
@@ -36,8 +38,10 @@ MAGNET_ZOUT_H = 0x08
 
 
 class MPU9250:
-    def __init__(self):
+    def __init__(self, name):
         self.bus = smbus.SMBus(1)
+        self.name = name
+        self.logger = com_logger.Logger(name)
     
     def write(self, address, register, value):
         self.bus.write_byte_data(address, register, value)
@@ -66,6 +70,10 @@ class MPU9250:
         x = 2.0 * xout / 32768.0
         y = 2.0 * yout / 32768.0
         z = 2.0 * zout / 32768.0
+
+        # Log
+        self.logger.info("Acceleration X:" + str(x) + " Y:" + str(y) + " Z:" + str(z))
+        
         return [x, y, z]
     
     def readgyro(self):
@@ -75,11 +83,19 @@ class MPU9250:
         x = 250.0 * xout / 32768.0
         y = 250.0 * yout / 32768.0
         z = 250.0 * zout / 32768.0
+
+        # Log
+        self.logger.info("Gyro X:" + str(x) + " Y:" + str(y) + " Z:" + str(z))
+        
         return [x, y, z]
     
     def readtemp(self):
         temp_out = self.readline(MPU9250_ADDRESS, TEMP_OUT_H, TEMP_OUT_L)
         temp = temp_out / 340.0 + 36.53
+
+        # Log
+        self.logger.info("Temp: " + str(temp))
+        
         return temp
     
     def readlmagnet(self):
@@ -91,4 +107,8 @@ class MPU9250:
         x = 1200.0 * xout / 4096.0
         y = 1200.0 * yout / 4096.0
         z = 1200.0 * zout / 4096.0
+
+        # Log
+        self.logger.info("Magnitude X:" + str(x) + " Y:" + str(y) + " Z:" + str(z))
+        
         return [x, y, z]

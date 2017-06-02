@@ -31,7 +31,7 @@ class ThreadAcquisitionMPU9250(threading.Thread):
         logger.info('Stop')
     
     def gettemphumpres(self):
-        instance = com_mpu9250.MPU9250()
+        instance = com_mpu9250.MPU9250(self.name)
         instance.ready()
         nextacq = time.time()
         # rpy = RollPitchYaw.RollPitchYaw()
@@ -39,24 +39,24 @@ class ThreadAcquisitionMPU9250(threading.Thread):
             if time.time() >= nextacq:
                 nextacq += self.delay
                 self.lock.acquire()
-        
+
                 connection = sqlite3.Connection(self.database)
                 cursor = connection.cursor()
-        
+
                 acc = instance.readaccel()
                 gyro = instance.readgyro()
                 magn = instance.readlmagnet()
-                temp = instance.readtemp()
-        
+                temp = 0  # instance.readtemp()
+                
                 # calc roll, pitch, yaw
                 # roll = rpy.calcRoll(acc)
                 # pitch = rpy.calcPitch(acc)
                 # yaw = rpy.calcYaw(acc, roll, pitch)
-        
+
                 # print(math.degrees(roll), math.degrees(pitch), math.degrees(yaw))
                 dal = dal_mpu9250.DAL_MPU950(connection, cursor)
                 dal.set_mpu9250(self.name, gyro[0], gyro[1], gyro[2], acc[0], acc[1], acc[2], magn[0], magn[1], magn[2], temp)
-        
+
                 self.lock.release()
-        
+
                 self.counter -= 1
