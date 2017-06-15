@@ -25,10 +25,6 @@ class Config:
         self.config['APPLICATION']['author'] = '(C) - Bruno DELATTRE'
         self.config['APPLICATION']['splashduration'] = '1'
         
-        # Rasperry N°
-        self.config['RASPBERRY'] = {}
-        self.config['RASPBERRY']['number'] = '1'  # 1 or 2
-        
         # Acquisition
         self.config['ACQUISITION'] = {}
         self.config['ACQUISITION']['trigger'] = '10'  # Wait to start acquisition in second
@@ -36,7 +32,7 @@ class Config:
         # LOGGER
         self.config['LOGGER'] = {}
         self.config['LOGGER']['levelconsole'] = '10'  # DEBUG=10 INFO=20 WARNING=30 ERROR=40 #CRITICAL=50
-        self.config['LOGGER']['levelfile'] = '10'
+        self.config['LOGGER']['levelfile'] = '20'
         self.config['LOGGER']['logfile'] = 'log'
         self.config['LOGGER']['logfilesize'] = '1000000'
         
@@ -111,7 +107,7 @@ class Config:
         self.config['GPIO']['DS18B20_1_nb'] = str(int(((acquisitionduration * 3600) / float(self.config['GPIO']['DS18B20_1_delay']))))
         
         self.config['GPIO']['DS18B20_2'] = ''
-        self.config['GPIO']['DS18B20_2_delay'] = '10'
+        self.config['GPIO']['DS18B20_2_delay'] = '15'
         self.config['GPIO']['DS18B20_2_nb'] = str(int(((acquisitionduration * 3600) / float(self.config['GPIO']['DS18B20_2_delay']))))
         
         # SR04
@@ -125,7 +121,7 @@ class Config:
         self.config['GPIO']['BME280_nb'] = str(int(((acquisitionduration * 3600) / float(self.config['GPIO']['BME280_delay']))))
     
         # MPU9250
-        self.config['GPIO']['MPU9250_delay'] = '1'
+        self.config['GPIO']['MPU9250_delay'] = '0.5'
         self.config['GPIO']['MPU9250_nb'] = str(int(((acquisitionduration * 3600) / float(self.config['GPIO']['MPU9250_delay']))))
         
         # INPUT
