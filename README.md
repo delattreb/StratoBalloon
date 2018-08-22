@@ -7,7 +7,7 @@ This project manage a strato spherical balloon.
 Acquisition picture by two camera, temperature interior and exterior, GPS.
 GPIO gasture on Raspberry Pi.
 
-## Gestion of many sensor:
+## Sensor gesture:
 - DHT 11 (Humidity and temperature)
 - DHT 22 x2 (Humidity and temperature)
 - DS18B20 x2 (Temperature)
